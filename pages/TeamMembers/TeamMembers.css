@@ -1,0 +1,430 @@
+/* ============================================================
+   Team Members page styles.
+   The edit modal lives in src/styles/edit-modal.css (shared with
+   Stakeholders). The pencil button lives there too.
+   ============================================================ */
+
+/* Same chrome as the Stakeholders table but a fresh column template
+   since the columns are different. */
+.team-members-table-head,
+.team-members-table-row {
+    display: grid;
+    align-items: center;
+    grid-template-columns: minmax(220px, 1.2fr) minmax(190px, 1fr) minmax(190px, 1fr) 48px;
+    gap: 12px;
+}
+
+.team-members-table-head {
+    padding: 12px 14px;
+    border: 0;
+    border-radius: 8px 8px 0 0;
+    background: #bfe6f8;
+    color: #005f86;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.team-members-table-row {
+    padding: 12px 14px;
+    margin-top: 8px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    background: #fff;
+}
+
+.team-members-table-row > span {
+    min-width: 0;
+}
+
+@media (max-width: 720px) {
+    .team-members-table-head {
+        display: none;
+    }
+
+    .team-members-table-row {
+        grid-template-columns: 1fr;
+        gap: 4px;
+    }
+}
+
+/* iPad / tablet fit — same content-width budget as the Stakeholders table.
+   Slightly tighter column minimums so Name and Participation get room
+   before the row hits horizontal-scroll territory. */
+@media (min-width: 721px) and (max-width: 1199px) {
+    .team-members-table-head,
+    .team-members-table-row {
+        grid-template-columns:
+            minmax(160px, 1.3fr)   /* Name */
+            minmax(120px, 1fr)     /* Role */
+            minmax(140px, 1.1fr)   /* Participation */
+            36px;                  /* Edit */
+        gap: 8px;
+    }
+}
+
+/* Critical-Activities-style table treatment for Team Members. */
+.page-team-members .stakeholder-table-card {
+    overflow-x: hidden;
+}
+
+.page-team-members .team-members-table-head,
+.page-team-members .team-members-table-row {
+    display: grid;
+    grid-template-columns:
+        minmax(244px, 1.28fr)
+        minmax(230px, 1.18fr)
+        minmax(170px, 0.9fr)
+        68px !important;
+    gap: 0 !important;
+    align-items: stretch;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0 !important;
+}
+
+.page-team-members .team-members-table-head {
+    min-height: 38px;
+    padding: 0 !important;
+    overflow: hidden;
+    border-radius: 8px 8px 0 0;
+    background: #bfe6f8;
+    color: #005f86;
+    font-size: 9.2px;
+    font-weight: 900;
+    line-height: 1.08;
+    letter-spacing: 0;
+    text-transform: uppercase;
+}
+
+.page-team-members .team-members-table-head > span {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    min-width: 0;
+    min-height: 38px;
+    padding: 0 12px;
+    border-right: 0;
+    box-sizing: border-box;
+}
+
+.page-team-members .team-members-table-head > span:last-child {
+    border-right: 0;
+}
+
+.page-team-members .team-members-table-row {
+    min-height: 52px;
+    padding: 0 !important;
+    margin-top: 0;
+    border: 0;
+    border-top: 1px solid #d9ecf5;
+    border-left: 4px solid #0b86b8;
+    border-radius: 0;
+    background: #fff;
+}
+
+.page-team-members .team-members-table-row:hover {
+    background: #f5fbfd;
+}
+
+.page-team-members .team-members-table-row > span {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    min-width: 0;
+    min-height: 52px;
+    padding: 8px 12px;
+    overflow: hidden;
+    border-right: 1px solid #d9ecf5;
+    box-sizing: border-box;
+    color: var(--ink);
+    font-size: 10.8px;
+    font-weight: 650;
+    line-height: 1.16;
+    text-align: left;
+}
+
+.page-team-members .team-members-table-row > span:last-child {
+    border-right: 0;
+}
+
+.page-team-members .team-members-table-row strong {
+    color: #092b3a;
+    font-size: 12px;
+    font-weight: 850;
+    line-height: 1.16;
+}
+
+.page-team-members .team-member-record-link {
+    color: #0079a7;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+}
+
+.page-team-members .team-member-record-link strong {
+    color: inherit;
+}
+
+.page-team-members .team-member-record-link:hover,
+.page-team-members .team-member-record-link:focus {
+    color: #005f84;
+}
+
+.page-team-members .stakeholder-row-actions {
+    justify-content: center !important;
+    gap: 0;
+    padding: 0 12px !important;
+}
+
+.page-team-members .stakeholder-edit-button {
+    width: 26px;
+    height: 26px;
+    border-radius: 5px;
+}
+
+.page-team-members .stakeholder-edit-button svg {
+    width: 13px;
+    height: 13px;
+}
+
+@media (min-width: 721px) and (max-width: 1199px) {
+    .page-team-members .team-members-table-head,
+    .page-team-members .team-members-table-row {
+        grid-template-columns:
+            180px
+            178px
+            120px
+            44px !important;
+    }
+
+    .page-team-members .team-members-table-head {
+        min-height: 34px;
+        font-size: 8px;
+    }
+
+    .page-team-members .team-members-table-head > span {
+        min-height: 34px;
+        padding: 0 6px;
+    }
+
+    .page-team-members .team-members-table-row {
+        min-height: 48px;
+    }
+
+    .page-team-members .team-members-table-row > span {
+        min-height: 48px;
+        padding: 6px;
+        font-size: 9.4px;
+    }
+
+    .page-team-members .team-members-table-row strong {
+        font-size: 10.2px;
+    }
+
+    .page-team-members .stakeholder-edit-button {
+        width: 23px;
+        height: 23px;
+    }
+
+    .page-team-members .stakeholder-row-actions {
+        padding: 0 5px !important;
+    }
+}
+
+/* Account-Insights-style table row cards. */
+.page-team-members .stakeholder-table-card {
+    overflow-x: hidden;
+}
+
+.page-team-members .team-members-table-head {
+    overflow: hidden;
+    border-radius: 10px 10px 0 0;
+}
+
+.page-team-members .team-members-table-row {
+    overflow: hidden;
+    margin-top: 8px;
+    border: 1px solid #d7ebf5 !important;
+    border-left: 4px solid #0b86b8 !important;
+    border-radius: 10px !important;
+    background: #fff !important;
+    box-shadow: 0 8px 20px rgba(12, 82, 120, 0.06);
+}
+
+.page-team-members .team-members-table-row:hover {
+    background: #f5fbfd !important;
+}
+
+.page-team-members .team-members-table-row > span {
+    border-right: 0 !important;
+    border-left: 1px solid #e7f2f8 !important;
+    background: transparent;
+}
+
+.page-team-members .team-members-table-row > span:first-child {
+    border-left: 0 !important;
+}
+
+/* Balanced iPad row allocation: give Role enough room to read, let
+   Participation flex, and keep the edit icon pinned to the row edge. */
+@media (min-width: 721px) and (max-width: 1199px) {
+    .page-team-members .team-members-table-head,
+    .page-team-members .team-members-table-row {
+        grid-template-columns: minmax(184px, 1.28fr) minmax(188px, 1.32fr) minmax(128px, 0.9fr) 62px !important;
+    }
+
+    .page-team-members .team-members-table-row > span:nth-child(2) {
+        white-space: normal;
+        overflow-wrap: anywhere;
+        line-height: 1.18;
+    }
+
+    .page-team-members .stakeholder-row-actions {
+        justify-content: center !important;
+        padding: 0 10px !important;
+    }
+
+    .page-team-members .stakeholder-edit-button {
+        width: 26px;
+        height: 26px;
+    }
+}
+
+/* Team Members header: no table title, count sits as a pill beside Add. */
+.page-team-members .team-members-action-head {
+    display: flex;
+    align-items: center !important;
+    justify-content: flex-end !important;
+    min-height: 34px;
+    margin-bottom: 10px;
+}
+
+.page-team-members .team-members-header-actions {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex: 0 0 auto;
+    gap: 8px;
+    width: auto;
+    margin-left: auto;
+}
+
+.page-team-members .team-members-count-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 28px;
+    padding: 0 11px;
+    border: 1px solid #bfe1ef;
+    border-radius: 999px;
+    background: #eaf8fe;
+    color: #005f86;
+    font-size: 10.8px;
+    font-weight: 850;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.page-team-members .team-members-action-head .stakeholder-add-button {
+    align-self: center !important;
+    height: 34px !important;
+    min-height: 34px !important;
+}
+
+/* Final table-header readability pass. */
+.page-team-members .team-members-table-head {
+    font-size: 11px !important;
+    line-height: 1.1 !important;
+}
+
+.page-team-members .team-members-table-head > span {
+    font-size: inherit !important;
+}
+
+@media (min-width: 721px) and (max-width: 1199px) {
+    .page-team-members .team-members-table-head {
+        font-size: 9.8px !important;
+    }
+}
+
+/* Full-label sortable header alignment, matching the Critical Activities
+   table treatment without letting the arrow drift to the column edge. */
+.page-team-members .team-members-table-head {
+    min-height: 44px !important;
+    font-size: 9.8px !important;
+    line-height: 1.05 !important;
+    text-align: left !important;
+}
+
+.page-team-members .team-members-table-head > span {
+    align-items: center !important;
+    justify-content: flex-start !important;
+    min-height: 44px !important;
+    padding: 5px 9px !important;
+    overflow: hidden;
+    text-align: left !important;
+}
+
+.page-team-members .team-members-table-head .table-sort-button {
+    align-items: center;
+    justify-content: flex-start;
+    gap: 3px;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    min-height: 0;
+    text-align: left;
+    white-space: normal;
+}
+
+.page-team-members .team-members-table-head .table-sort-copy {
+    flex: 0 1 auto;
+    overflow: visible;
+}
+
+.page-team-members .team-members-table-head .table-sort-label {
+    overflow: visible;
+    line-height: 1.05;
+    text-align: left;
+    text-overflow: clip;
+    white-space: normal;
+}
+
+.page-team-members .team-members-table-head .activity-sort-arrow {
+    margin-left: 1px;
+}
+
+.page-team-members .team-members-table-row > span {
+    justify-content: flex-start !important;
+    text-align: left !important;
+    font-size: 12px !important;
+    line-height: 1.15 !important;
+}
+
+.page-team-members .team-members-table-row strong {
+    font-size: 13px !important;
+    line-height: 1.15 !important;
+    text-align: left !important;
+}
+
+@media (min-width: 721px) and (max-width: 1199px) {
+    .page-team-members .team-members-table-head {
+        min-height: 48px !important;
+        font-size: 8.8px !important;
+    }
+
+    .page-team-members .team-members-table-head > span {
+        min-height: 48px !important;
+        padding: 4px 6px !important;
+    }
+
+    .page-team-members .team-members-table-row > span {
+        font-size: 9px !important;
+    }
+
+    .page-team-members .team-members-table-row strong {
+        font-size: 9.8px !important;
+    }
+}

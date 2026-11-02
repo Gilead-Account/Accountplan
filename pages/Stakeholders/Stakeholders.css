@@ -1,0 +1,1358 @@
+/* ============================================================
+   Stakeholders page styles.
+   Older `.stakeholder-table-*` chrome still lives in src/styles/main.css;
+   this file owns the row-cell tweaks added during the redesign and the
+   expanded-row Barriers/Drivers panel. The edit modal lives in
+   src/styles/edit-modal.css (shared with TeamMembers).
+   ============================================================ */
+
+/* Toolbar card matches the Critical Activities pattern: filter row on the
+   left, Add button on the right, with breathing room between the toolbar
+   card and the table card below. */
+.stakeholder-toolbar-card {
+    padding: 12px 16px;
+    margin-bottom: 12px;
+}
+
+.stakeholder-filter-row {
+    /* Compact two-up filter row that stays on a single line at typical
+       breakpoints. The previous 460px cap was too wide; this one keeps the
+       filters tight against the left edge of the toolbar and frees up
+       horizontal space for the Add button on the right. */
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 8px;
+    flex: 0 1 auto;
+    max-width: 360px;
+}
+
+.stakeholder-filter-row .select-shell {
+    flex: 1 1 0;
+    min-width: 0;
+}
+
+.stakeholder-filter-row select {
+    width: 100%;
+    min-width: 0;
+    min-height: 34px;
+    padding: 0 26px 0 10px;
+    font-size: 12px;
+}
+
+.stakeholder-add-button {
+    flex: 0 0 auto;
+    min-height: 38px;
+    white-space: nowrap;
+}
+
+@media (max-width: 720px) {
+    .stakeholder-filter-row {
+        flex-wrap: wrap;
+        max-width: none;
+    }
+
+    .stakeholder-filter-row .select-shell {
+        flex: 1 1 140px;
+    }
+
+    .stakeholder-add-button {
+        width: 100%;
+    }
+}
+
+/* Row cells -------------------------------------------------- */
+
+.stakeholder-influence-triplet {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.6px;
+}
+
+.stakeholder-parent-cell {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Expanded-row detail: outlined cards for Barriers + Drivers ---
+   Same chrome (border, left-accent stripe, soft shadow) as the
+   home-activity-card pattern so the panel reads as part of the same
+   design language. */
+.stakeholder-bd-expand {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    padding: 16px 18px 20px;
+    border-top: 1px solid rgba(30, 139, 151, 0.15);
+    background: linear-gradient(180deg, #f4fafd 0%, #fafcfe 100%);
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.stakeholder-bd-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 14px 16px;
+    border: 1px solid #cde7f0;
+    border-left: 4px solid var(--bd-accent, #007fa7);
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(16, 48, 64, 0.05);
+    min-width: 0;
+}
+
+.stakeholder-bd-card.is-barrier {
+    --bd-accent: #c0392b;
+    --bd-soft: rgba(192, 57, 43, 0.08);
+}
+
+.stakeholder-bd-card.is-driver {
+    --bd-accent: #1e8b6e;
+    --bd-soft: rgba(30, 139, 110, 0.08);
+}
+
+/* DLBCL cards use the brand blue accent; the icon still differentiates
+   barrier vs driver. */
+.stakeholder-bd-card.is-dlbcl {
+    --bd-accent: #007fa9;
+    --bd-soft: rgba(0, 127, 169, 0.10);
+}
+
+/* MM cards use the purple MM accent (overrides the barrier/driver red/green);
+   the icon still differentiates barrier vs driver. */
+.stakeholder-bd-card.is-mm {
+    --bd-accent: #6a4fb0;
+    --bd-soft: rgba(106, 79, 176, 0.10);
+}
+
+.stakeholder-bd-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.stakeholder-bd-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
+    background: var(--bd-soft);
+    color: var(--bd-accent);
+    flex: 0 0 auto;
+}
+
+.stakeholder-bd-label {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--bd-accent);
+}
+
+.stakeholder-bd-body {
+    margin: 0;
+    color: var(--ink);
+    font-size: 14px;
+    line-height: 1.55;
+}
+
+.stakeholder-bd-empty {
+    font-style: italic;
+    color: var(--ink-soft);
+}
+
+@media (max-width: 720px) {
+    .stakeholder-bd-expand {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Stakeholder table row values — 25% font-size reduction. Applies only to
+   row content (names, IDs, roles, priority chips, influence triplets,
+   primary parent). Column headers (`.stakeholder-table-head`) and the
+   expanded barriers/drivers panel keep their original sizes.
+   Scoped to `.page-stakeholders-team` so the same `.stakeholder-table-row`
+   class on the Team Members page isn't affected. */
+.page-stakeholders-team .stakeholder-table-row {
+    font-size: 12px; /* was inheriting 16px */
+}
+
+.page-stakeholders-team .stakeholder-table-row .stakeholder-influence-triplet {
+    font-size: 10.5px; /* was 14px */
+}
+
+.page-stakeholders-team .stakeholder-table-row .chip-blue {
+    font-size: 9px; /* was 12px */
+}
+
+/* Target Priority shows DLBCL (blue) / MM (purple), e.g. "P1 / P2". */
+.page-stakeholders-team .stakeholder-priority-cell {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    min-width: 0;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+}
+
+.page-stakeholders-team .stakeholder-priority-cell .chip {
+    flex: 0 0 auto;
+    white-space: nowrap;
+    min-height: 18px;
+    padding: 0 6px;
+}
+
+.page-stakeholders-team .stakeholder-priority-sep {
+    color: #9aa7b1;
+    font-size: 9px;
+}
+
+.page-stakeholders-team .stakeholder-table-row .chip-mm {
+    font-size: 9px;
+    background: rgba(106, 79, 176, 0.14);
+    color: #4b3a82;
+}
+
+.page-stakeholders-team .stakeholder-table-row .stakeholder-name-cell small {
+    font-size: 9px;
+}
+
+/* iPad / tablet fit — sidebar + Veeva chrome leaves roughly 880–940px for
+   the table area. The desktop grid (defined in main.css) sets a 820px
+   min-width and 170px min for Primary Parent, which is enough that the
+   small chip columns get plenty of room while Primary Parent ellipsizes
+   away long hospital names. In this range, tighten the chip columns and
+   let Primary Parent wrap to two lines instead. */
+@media (min-width: 721px) and (max-width: 1199px) {
+    .page-stakeholders-team .stakeholder-table-head,
+    .page-stakeholders-team .stakeholder-table-row {
+        grid-template-columns:
+            minmax(132px, 1.28fr)  /* Name */
+            minmax(86px, 0.82fr)   /* Role */
+            minmax(60px, 0.48fr)   /* Target Priority chip */
+            minmax(72px, 0.6fr)    /* DLBCL Influence triplet */
+            minmax(112px, 1.05fr)  /* Primary Parent */
+            28px;                  /* Edit */
+        gap: 5px;
+        width: 100%;
+        max-width: 100%;
+        min-width: 0 !important;
+    }
+
+    .page-stakeholders-team .stakeholder-table-head {
+        padding: 0 7px 7px;
+        font-size: 8.8px;
+        line-height: 1.05;
+    }
+
+    .page-stakeholders-team .stakeholder-table-row {
+        padding: 7px 7px;
+        font-size: 9.4px;
+    }
+
+    .page-stakeholders-team .stakeholder-table-item {
+        width: 100%;
+        max-width: 100%;
+        min-width: 0 !important;
+    }
+
+    .page-stakeholders-team .stakeholder-name-cell {
+        grid-template-columns: 24px minmax(0, 1fr);
+        gap: 6px;
+    }
+
+    .page-stakeholders-team .bd-expand-button {
+        width: 22px;
+        height: 22px;
+        font-size: 15px;
+    }
+
+    .page-stakeholders-team .stakeholder-parent-cell {
+        white-space: normal;
+        line-height: 1.18;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+    }
+
+    .page-stakeholders-team .stakeholder-influence-triplet {
+        font-size: 8.8px;
+        letter-spacing: 0.2px;
+    }
+
+    .page-stakeholders-team .stakeholder-row-actions {
+        justify-content: center;
+        flex-wrap: nowrap;
+        gap: 0;
+        min-width: 0;
+    }
+
+    .page-stakeholders-team .stakeholder-edit-button {
+        width: 24px;
+        height: 24px;
+        border-radius: 6px;
+    }
+
+    .page-stakeholders-team .stakeholder-edit-button svg {
+        width: 12px;
+        height: 12px;
+    }
+
+    .page-stakeholders-team .stakeholder-table-card {
+        overflow-x: hidden;
+    }
+}
+
+/* iPad / tablet — compact the KPI cards and section heading so the
+   stakeholders table itself gets more vertical room. Without this the
+   two big "Stakeholders" + "High DLBCL Influence" cards eat ~120px of
+   real estate before the first stakeholder row appears. */
+@media (min-width: 721px) and (max-width: 1400px) {
+    .page-stakeholders-team .mock-kpi-row {
+        gap: 8px;
+    }
+
+    .page-stakeholders-team .mock-kpi-card {
+        min-height: 46px;
+        padding: 7px 12px;
+    }
+
+    .page-stakeholders-team .mock-kpi-card span {
+        font-size: 13.2px;
+        line-height: 1.15;
+    }
+
+    .page-stakeholders-team .mock-kpi-card strong {
+        font-size: 19.2px;
+        line-height: 1.1;
+    }
+
+    .page-stakeholders-team .mock-section-head h3 {
+        font-size: 15px;
+    }
+
+    .stakeholder-toolbar-card {
+        padding: 8px 12px;
+        margin-bottom: 8px;
+    }
+}
+
+/* High Influence Stakeholder KPI — uses the shared FieldHelpButton
+   (`.field-help`) so the "i" icon and its popover match every other
+   info icon across the account plan. */
+.high-influence-kpi {
+    position: relative;
+}
+
+.high-influence-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    overflow: visible;
+}
+
+/* Critical-Activities-style table treatment for Stakeholders.
+   Keeps the existing columns and expand behaviour, but removes the loose
+   card spacing so headers and values line up like a sturdy CRM grid. */
+.page-stakeholders-team .stakeholder-table-card {
+    overflow-x: hidden;
+}
+
+/* Stakeholder iPad filter guard: mirrors the Barriers/Drivers filter strip
+   so iPad does not fall back to tiny native select sizing. */
+.page-stakeholders-team .critical-activity-toolbar {
+    width: 100%;
+    min-width: 0;
+}
+
+.page-stakeholders-team .mock-filter-row.bd-filter-strip.stakeholder-filter-row {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    align-items: center !important;
+    gap: 12px !important;
+    flex: 1 1 auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+}
+
+.page-stakeholders-team .stakeholder-filter-select-box {
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(150px, 1fr)) !important;
+    align-items: center !important;
+    gap: 10px !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    padding: 7px;
+    border: 1px solid rgba(143, 190, 209, 0.34);
+    border-radius: 11px;
+    background: rgba(255, 255, 255, 0.78);
+}
+
+.page-stakeholders-team .stakeholder-filter-select-box .select-shell {
+    position: relative !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    height: 42px !important;
+}
+
+.page-stakeholders-team .stakeholder-filter-select-box .select-shell select {
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    min-height: 42px !important;
+    height: 42px !important;
+    padding: 0 38px 0 14px !important;
+    border: 1px solid #d4e3ec !important;
+    border-radius: 9px !important;
+    background-color: #fff !important;
+    color: var(--ink) !important;
+    font-size: 13.5px !important;
+    font-weight: 800 !important;
+    line-height: 1.2 !important;
+}
+
+.page-stakeholders-team .stakeholder-filter-select-box .select-shell::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 14px;
+    width: 7px;
+    height: 7px;
+    border-right: 2px solid #1f5c78;
+    border-bottom: 2px solid #1f5c78;
+    pointer-events: none;
+    transform: translateY(-65%) rotate(45deg);
+}
+
+.page-stakeholders-team .stakeholder-add-button {
+    flex: 0 0 auto;
+    min-width: 148px;
+    min-height: 42px !important;
+    padding: 0 16px !important;
+    font-size: 13.5px !important;
+    line-height: 1.2 !important;
+}
+
+@media (max-width: 840px) {
+    .page-stakeholders-team .mock-filter-row.bd-filter-strip.stakeholder-filter-row {
+        grid-template-columns: 1fr !important;
+    }
+
+    .page-stakeholders-team .stakeholder-filter-select-box {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    .page-stakeholders-team .stakeholder-add-button {
+        width: 100% !important;
+    }
+}
+
+.page-stakeholders-team .stakeholder-table-head,
+.page-stakeholders-team .stakeholder-table-row {
+    display: grid;
+    grid-template-columns:
+        220px
+        170px
+        112px
+        150px
+        280px
+        58px !important;
+    gap: 0 !important;
+    align-items: stretch;
+    width: 100%;
+    min-width: 0 !important;
+}
+
+.page-stakeholders-team .stakeholder-table-head {
+    min-height: 46px;
+    padding: 0 !important;
+    overflow: hidden;
+    border-radius: 8px 8px 0 0;
+    background: #bfe6f8;
+    color: #005f86;
+    font-size: 9.2px;
+    font-weight: 900;
+    line-height: 1.08;
+    letter-spacing: 0;
+    text-transform: uppercase;
+}
+
+.page-stakeholders-team .stakeholder-table-head > span {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    min-width: 0;
+    min-height: 46px;
+    padding: 0 12px;
+    border-right: 0;
+    box-sizing: border-box;
+}
+
+.page-stakeholders-team .stakeholder-table-head > span:last-child {
+    border-right: 0;
+}
+
+.page-stakeholders-team .stakeholder-table-head small {
+    margin-top: 2px;
+    color: #246b86;
+    font-size: 8px;
+    font-weight: 800;
+    line-height: 1.05;
+}
+
+.page-stakeholders-team .stakeholder-table-item {
+    gap: 0;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0 !important;
+    margin-top: 0;
+}
+
+.page-stakeholders-team .stakeholder-table-row {
+    min-height: 54px;
+    padding: 0 !important;
+    border: 0;
+    border-top: 1px solid #d9ecf5;
+    border-left: 4px solid #0b86b8;
+    border-radius: 0;
+    background: #fff;
+    color: var(--ink);
+    cursor: pointer;
+}
+
+.page-stakeholders-team .stakeholder-table-row:hover {
+    background: #f5fbfd;
+}
+
+.page-stakeholders-team .stakeholder-table-row.is-expanded {
+    background: #f1fbfe;
+}
+
+.page-stakeholders-team .stakeholder-table-row > span,
+.page-stakeholders-team .stakeholder-table-row > .stakeholder-name-cell {
+    min-width: 0;
+    min-height: 54px;
+    padding: 8px 12px;
+    border-right: 1px solid #d9ecf5;
+    box-sizing: border-box;
+}
+
+.page-stakeholders-team .stakeholder-table-row > span {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    overflow: hidden;
+    text-align: left;
+}
+
+.page-stakeholders-team .stakeholder-table-row > span:last-child {
+    border-right: 0;
+}
+
+.page-stakeholders-team .stakeholder-name-cell {
+    grid-template-columns: 24px minmax(0, 1fr);
+    gap: 14px;
+    align-items: center;
+}
+
+.page-stakeholders-team .stakeholder-name-cell strong {
+    color: #092b3a;
+    font-size: 12px;
+    font-weight: 850;
+    line-height: 1.16;
+}
+
+.page-stakeholders-team .stakeholder-name-cell small {
+    margin-top: 2px;
+    font-size: 9px;
+    line-height: 1.1;
+}
+
+.page-stakeholders-team .stakeholder-influence-triplet,
+.page-stakeholders-team .stakeholder-parent-cell,
+.page-stakeholders-team .stakeholder-table-row > span {
+    font-size: 10.5px;
+    font-weight: 650;
+    line-height: 1.16;
+}
+
+.page-stakeholders-team .stakeholder-parent-cell {
+    white-space: normal;
+    display: -webkit-box !important;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.page-stakeholders-team .stakeholder-row-actions {
+    justify-content: center !important;
+    gap: 0;
+    padding: 0 8px !important;
+}
+
+.page-stakeholders-team .stakeholder-edit-button {
+    width: 26px;
+    height: 26px;
+    border-radius: 5px;
+}
+
+.page-stakeholders-team .stakeholder-edit-button svg {
+    width: 13px;
+    height: 13px;
+}
+
+@media (min-width: 721px) and (max-width: 1199px) {
+    .page-stakeholders-team .stakeholder-table-head,
+    .page-stakeholders-team .stakeholder-table-row {
+        grid-template-columns:
+            154px
+            112px
+            74px
+            86px
+            150px
+            44px !important;
+    }
+
+    .page-stakeholders-team .stakeholder-table-head {
+        min-height: 48px;
+        font-size: 8px;
+    }
+
+    .page-stakeholders-team .stakeholder-table-head > span {
+        min-height: 48px;
+        padding: 0 6px;
+    }
+
+    .page-stakeholders-team .stakeholder-table-head small {
+        font-size: 7.2px;
+    }
+
+    .page-stakeholders-team .stakeholder-table-row {
+        min-height: 50px;
+    }
+
+    .page-stakeholders-team .stakeholder-table-row > span,
+    .page-stakeholders-team .stakeholder-table-row > .stakeholder-name-cell {
+        min-height: 50px;
+        padding: 6px;
+    }
+
+    .page-stakeholders-team .stakeholder-name-cell strong,
+    .page-stakeholders-team .stakeholder-influence-triplet,
+    .page-stakeholders-team .stakeholder-parent-cell,
+    .page-stakeholders-team .stakeholder-table-row > span {
+        font-size: 9.4px;
+    }
+
+    .page-stakeholders-team .stakeholder-name-cell {
+        grid-template-columns: 22px minmax(0, 1fr);
+        gap: 8px;
+    }
+
+    .page-stakeholders-team .stakeholder-row-actions {
+        padding: 0 5px !important;
+    }
+}
+
+/* Account-Insights-style table row cards. */
+.page-stakeholders-team .stakeholder-table-card {
+    overflow-x: hidden;
+}
+
+.page-stakeholders-team .stakeholder-table-head {
+    overflow: hidden;
+    border-radius: 10px 10px 0 0;
+}
+
+.page-stakeholders-team .stakeholder-table-item {
+    gap: 0;
+    margin-top: 8px;
+}
+
+.page-stakeholders-team .stakeholder-table-row {
+    overflow: hidden;
+    border: 1px solid #d7ebf5 !important;
+    border-left: 4px solid #0b86b8 !important;
+    border-radius: 10px !important;
+    background: #fff !important;
+    box-shadow: 0 8px 20px rgba(12, 82, 120, 0.06);
+}
+
+.page-stakeholders-team .stakeholder-table-row:hover {
+    background: #f5fbfd !important;
+}
+
+.page-stakeholders-team .stakeholder-table-row.is-expanded {
+    border-bottom-right-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    background: #fff !important;
+}
+
+.page-stakeholders-team .stakeholder-table-row > span,
+.page-stakeholders-team .stakeholder-table-row > .stakeholder-name-cell {
+    border-right: 0 !important;
+    border-left: 1px solid #e7f2f8 !important;
+    background: transparent;
+}
+
+.page-stakeholders-team .stakeholder-table-row > .stakeholder-name-cell {
+    border-left: 0 !important;
+}
+
+.page-stakeholders-team .stakeholder-table-item .stakeholder-detail-panel {
+    border: 1px solid #d7ebf5;
+    border-top: 0;
+    border-left: 4px solid #0b86b8;
+    border-radius: 0 0 10px 10px;
+    box-shadow: 0 8px 20px rgba(12, 82, 120, 0.06);
+}
+
+/* Balanced iPad row allocation: Role and Primary Parent get readable width,
+   compact chip columns stay fixed, and the edit icon sits at the far edge. */
+@media (min-width: 721px) and (max-width: 1199px) {
+    .page-stakeholders-team .stakeholder-table-head,
+    .page-stakeholders-team .stakeholder-table-row {
+        grid-template-columns: minmax(156px, 1.18fr) minmax(132px, 1.02fr) 84px 96px minmax(198px, 1.48fr) 40px !important;
+    }
+
+    .page-stakeholders-team .stakeholder-table-row > span:nth-child(2) {
+        white-space: normal;
+        overflow-wrap: anywhere;
+        line-height: 1.18;
+    }
+
+    .page-stakeholders-team .stakeholder-parent-cell {
+        white-space: normal;
+        line-height: 1.18;
+        overflow: hidden;
+        display: -webkit-box !important;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+    }
+
+    .page-stakeholders-team .stakeholder-row-actions {
+        justify-content: flex-end !important;
+        padding: 0 8px 0 4px !important;
+    }
+}
+
+/* Stakeholders command panel: KPI summary on top, filters/actions below. */
+.page-stakeholders-team .stakeholder-toolbar-card {
+    display: grid;
+    gap: 0;
+    padding: 10px 12px 11px !important;
+    margin-bottom: 12px;
+    border: 1px solid #bfe1ef !important;
+    border-left: 4px solid #007fa9 !important;
+    border-radius: 12px !important;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(241, 250, 253, 0.92)) !important;
+    box-shadow:
+        inset 0 1px 0 rgba(255, 255, 255, 0.9),
+        0 12px 28px rgba(0, 74, 112, 0.08) !important;
+}
+
+.page-stakeholders-team .stakeholder-command-kpi-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0;
+    padding: 0 0 9px;
+    border-bottom: 1px solid rgba(143, 190, 209, 0.34);
+}
+
+.page-stakeholders-team .stakeholder-command-kpi-row .mock-kpi-card {
+    min-height: 36px !important;
+    padding: 0 14px !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+}
+
+.page-stakeholders-team .stakeholder-command-kpi-row .mock-kpi-card:not(:first-child) {
+    border-left: 1px solid rgba(143, 190, 209, 0.36) !important;
+}
+
+.page-stakeholders-team .stakeholder-command-kpi-row .mock-kpi-card span {
+    color: #42677b;
+    font-size: 11.4px !important;
+    font-weight: 750 !important;
+    line-height: 1.12 !important;
+}
+
+.page-stakeholders-team .stakeholder-command-kpi-row .mock-kpi-card strong {
+    color: #003f65;
+    font-size: 20px !important;
+    font-weight: 900;
+    line-height: 1 !important;
+}
+
+.page-stakeholders-team .stakeholder-toolbar-card .critical-activity-toolbar {
+    padding-top: 10px;
+}
+
+.page-stakeholders-team .mock-filter-row.bd-filter-strip.stakeholder-filter-row {
+    grid-template-columns: minmax(0, 1fr) auto !important;
+}
+
+.page-stakeholders-team .stakeholder-filter-select-box {
+    max-width: 390px !important;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+}
+
+.page-stakeholders-team .stakeholder-filter-select-box .select-shell {
+    height: 34px !important;
+}
+
+.page-stakeholders-team .stakeholder-filter-select-box .select-shell select {
+    min-height: 34px !important;
+    height: 34px !important;
+    padding: 0 30px 0 11px !important;
+    border-radius: 8px !important;
+    font-size: 11.6px !important;
+    line-height: 1.05 !important;
+}
+
+.page-stakeholders-team .stakeholder-add-button {
+    align-self: center !important;
+    height: 34px !important;
+    min-height: 34px !important;
+}
+
+@media (max-width: 840px) {
+    .page-stakeholders-team .stakeholder-command-kpi-row,
+    .page-stakeholders-team .mock-filter-row.bd-filter-strip.stakeholder-filter-row,
+    .page-stakeholders-team .stakeholder-filter-select-box {
+        grid-template-columns: 1fr !important;
+    }
+
+    .page-stakeholders-team .stakeholder-command-kpi-row .mock-kpi-card:not(:first-child) {
+        border-top: 1px solid rgba(143, 190, 209, 0.32) !important;
+        border-left: 0 !important;
+    }
+}
+
+/* Single-line command bar for Stakeholders. */
+.page-stakeholders-team .stakeholder-toolbar-card {
+    grid-template-columns: minmax(260px, 330px) minmax(0, 1fr) !important;
+    align-items: center !important;
+    gap: 12px !important;
+}
+
+.page-stakeholders-team .stakeholder-command-kpi-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    align-items: center !important;
+    padding: 0 12px 0 0 !important;
+    border-right: 1px solid rgba(143, 190, 209, 0.34) !important;
+    border-bottom: 0 !important;
+}
+
+.page-stakeholders-team .stakeholder-command-kpi-row .mock-kpi-card {
+    min-height: 34px !important;
+    padding: 0 10px !important;
+}
+
+.page-stakeholders-team .stakeholder-command-kpi-row .mock-kpi-card span {
+    overflow: hidden;
+    font-size: 10.5px !important;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.page-stakeholders-team .stakeholder-command-kpi-row .mock-kpi-card strong {
+    font-size: 18px !important;
+}
+
+.page-stakeholders-team .stakeholder-toolbar-card .critical-activity-toolbar {
+    padding-top: 0 !important;
+}
+
+.page-stakeholders-team .mock-filter-row.bd-filter-strip.stakeholder-filter-row {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    align-items: center !important;
+    gap: 10px !important;
+}
+
+.page-stakeholders-team .stakeholder-filter-select-box {
+    grid-template-columns: repeat(2, minmax(145px, 180px)) !important;
+    justify-content: start !important;
+    width: auto !important;
+    max-width: none !important;
+}
+
+@media (max-width: 900px) {
+    .page-stakeholders-team .stakeholder-toolbar-card {
+        grid-template-columns: minmax(240px, 300px) minmax(0, 1fr) !important;
+        gap: 10px !important;
+    }
+
+    .page-stakeholders-team .stakeholder-filter-select-box {
+        grid-template-columns: repeat(2, minmax(120px, 1fr)) !important;
+    }
+}
+
+@media (max-width: 840px) {
+    .page-stakeholders-team .stakeholder-toolbar-card {
+        grid-template-columns: 1fr !important;
+    }
+
+    .page-stakeholders-team .stakeholder-command-kpi-row {
+        padding: 0 0 8px !important;
+        border-right: 0 !important;
+        border-bottom: 1px solid rgba(143, 190, 209, 0.34) !important;
+    }
+
+    .page-stakeholders-team .stakeholder-toolbar-card .critical-activity-toolbar {
+        padding-top: 9px !important;
+    }
+}
+
+/* Final toolbar composition:
+   High Influence is the lone KPI card on the left; total stakeholder count
+   lives as a compact pill beside the Add button. */
+.page-stakeholders-team .stakeholder-toolbar-card {
+    grid-template-columns: max-content minmax(0, 1fr) !important;
+}
+
+.page-stakeholders-team .stakeholder-command-kpi-row {
+    grid-template-columns: 212px !important;
+    width: max-content !important;
+    padding: 0 12px 0 0 !important;
+    border-right: 1px solid rgba(143, 190, 209, 0.34) !important;
+    border-bottom: 0 !important;
+}
+
+.page-stakeholders-team .stakeholder-command-kpi-row .high-influence-kpi {
+    display: grid !important;
+    grid-template-columns: max-content auto minmax(0, 1fr) !important;
+    align-items: center !important;
+    column-gap: 5px !important;
+    width: 212px !important;
+    min-height: 34px !important;
+    padding: 0 10px !important;
+    border: 1px solid rgba(143, 190, 209, 0.42) !important;
+    border-radius: 8px !important;
+    background: rgba(255, 255, 255, 0.92) !important;
+    box-shadow: none !important;
+    color: #092b3a !important;
+    cursor: pointer;
+    font: inherit;
+    text-align: left;
+    overflow: visible;
+    appearance: none;
+    outline: none !important;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.page-stakeholders-team .stakeholder-command-kpi-row .high-influence-kpi.is-active {
+    border-color: #7dc8df !important;
+    background: #eaf8fe !important;
+    box-shadow: inset 0 -2px 0 #007fa9 !important;
+}
+
+.page-stakeholders-team .stakeholder-command-kpi-row .high-influence-kpi:focus,
+.page-stakeholders-team .stakeholder-command-kpi-row .high-influence-kpi:active {
+    outline: none !important;
+}
+
+.page-stakeholders-team .stakeholder-command-kpi-row .high-influence-kpi:focus-visible {
+    box-shadow: 0 0 0 2px rgba(0, 127, 169, 0.22) !important;
+}
+
+.page-stakeholders-team .stakeholder-command-kpi-row .high-influence-kpi .high-influence-label {
+    position: static;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+    overflow: visible !important;
+    color: #42677b;
+    font-size: 10.5px !important;
+    font-weight: 800 !important;
+    line-height: 1.1 !important;
+    white-space: nowrap;
+}
+
+.page-stakeholders-team .stakeholder-command-kpi-row .high-influence-kpi strong {
+    color: #003f65 !important;
+    font-size: 18px !important;
+    font-weight: 900 !important;
+    line-height: 1 !important;
+    justify-self: end;
+}
+
+/* The "i" uses the shared `.field-help` button so it matches every other
+   info icon in the plan — just keep it from stretching in the grid cell. */
+.page-stakeholders-team .stakeholder-command-kpi-row .high-influence-kpi .field-help {
+    justify-self: center;
+}
+
+.page-stakeholders-team .mock-filter-row.bd-filter-strip.stakeholder-filter-row {
+    grid-template-columns: max-content minmax(0, 1fr) !important;
+    width: 100% !important;
+}
+
+.page-stakeholders-team .stakeholder-filter-select-box {
+    grid-template-columns: repeat(2, 168px) !important;
+    width: max-content !important;
+}
+
+.page-stakeholders-team .stakeholder-toolbar-actions {
+    display: inline-flex;
+    align-items: center;
+    justify-self: end;
+    gap: 8px;
+    min-width: max-content;
+}
+
+.page-stakeholders-team .stakeholder-toolbar-actions::before {
+    content: '';
+    flex: 0 0 auto;
+    width: 1px;
+    height: 28px;
+    margin: 0 8px 0 2px;
+    border-radius: 999px;
+    background: #bfe1ef;
+}
+
+.page-stakeholders-team .stakeholder-count-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 28px;
+    padding: 0 11px;
+    border: 1px solid #bfe1ef;
+    border-radius: 999px;
+    background: #eaf8fe;
+    color: #005f86;
+    font-size: 10.8px;
+    font-weight: 850;
+    line-height: 1;
+    white-space: nowrap;
+}
+
+.page-stakeholders-team .stakeholder-table-card {
+    margin-top: 0 !important;
+    padding: 18px 20px 20px !important;
+    border: 1px solid #bfe1ef !important;
+    border-radius: 8px !important;
+    background: #fff !important;
+    box-shadow: 0 12px 28px rgba(0, 74, 112, 0.06) !important;
+}
+
+.page-stakeholders-team .stakeholder-toolbar-card {
+    margin-bottom: 2px !important;
+}
+
+.page-stakeholders-team .stakeholder-table-head,
+.page-stakeholders-team .stakeholder-table-row {
+    grid-template-columns: minmax(220px, 1.22fr) minmax(170px, 0.95fr) 168px 150px minmax(260px, 1.42fr) 58px !important;
+}
+
+.page-stakeholders-team .stakeholder-table-head,
+.page-stakeholders-team .stakeholder-table-item,
+.page-stakeholders-team .stakeholder-table-row {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-right: auto !important;
+    margin-left: auto !important;
+    box-sizing: border-box !important;
+}
+
+@media (max-width: 900px) {
+    .page-stakeholders-team .stakeholder-command-kpi-row {
+        grid-template-columns: 204px !important;
+    }
+
+    .page-stakeholders-team .stakeholder-command-kpi-row .high-influence-kpi {
+        width: 204px !important;
+    }
+
+    .page-stakeholders-team .stakeholder-filter-select-box {
+        grid-template-columns: repeat(2, 150px) !important;
+        width: max-content !important;
+    }
+}
+
+@media (max-width: 840px) {
+    .page-stakeholders-team .stakeholder-toolbar-actions {
+        justify-self: stretch;
+        justify-content: flex-end;
+        min-width: 0;
+    }
+}
+
+/* Final table-header readability pass. */
+.page-stakeholders-team .stakeholder-table-head {
+    font-size: 11px !important;
+    line-height: 1.1 !important;
+}
+
+.page-stakeholders-team .stakeholder-table-head > span {
+    font-size: inherit !important;
+}
+
+.page-stakeholders-team .stakeholder-table-head > span:nth-child(3),
+.page-stakeholders-team .stakeholder-table-head > span:nth-child(4),
+.page-stakeholders-team .stakeholder-table-head > span:nth-child(5) {
+    align-items: flex-start !important;
+    text-align: left !important;
+}
+
+.page-stakeholders-team .stakeholder-table-head small {
+    display: block !important;
+    align-self: flex-start !important;
+    width: auto;
+    margin-top: 3px !important;
+    font-size: 8.8px !important;
+    line-height: 1.05 !important;
+    text-align: left !important;
+}
+
+@media (min-width: 721px) and (max-width: 1199px) {
+    .page-stakeholders-team .stakeholder-table-head,
+    .page-stakeholders-team .stakeholder-table-row {
+        grid-template-columns: minmax(156px, 1.12fr) minmax(132px, 0.95fr) 112px 96px minmax(198px, 1.42fr) 40px !important;
+    }
+
+    .page-stakeholders-team .stakeholder-table-head {
+        font-size: 9.6px !important;
+    }
+
+    .page-stakeholders-team .stakeholder-table-head small {
+        font-size: 8px !important;
+    }
+}
+
+/* iPad-safe final table sizing: keep the grid centered inside the white
+   shell and keep the edit pencil inside the row, not pinned to the edge. */
+.page-stakeholders-team .stakeholder-table-card {
+    padding: 14px 18px 18px !important;
+}
+
+.page-stakeholders-team .stakeholder-table-head,
+.page-stakeholders-team .stakeholder-table-item {
+    width: calc(100% - 20px) !important;
+    max-width: 1120px !important;
+    margin-right: auto !important;
+    margin-left: auto !important;
+}
+
+.page-stakeholders-team .stakeholder-table-row {
+    width: 100% !important;
+    max-width: 100% !important;
+}
+
+.page-stakeholders-team .stakeholder-table-head,
+.page-stakeholders-team .stakeholder-table-row {
+    grid-template-columns: minmax(204px, 1.18fr) minmax(152px, 0.9fr) 156px 132px minmax(224px, 1.2fr) 68px !important;
+}
+
+.page-stakeholders-team .stakeholder-row-actions {
+    justify-content: center !important;
+    padding: 0 12px !important;
+}
+
+@media (min-width: 721px) and (max-width: 1199px) {
+    .page-stakeholders-team .stakeholder-table-card {
+        padding: 12px 14px 16px !important;
+    }
+
+    .page-stakeholders-team .stakeholder-table-head,
+    .page-stakeholders-team .stakeholder-table-item {
+        width: calc(100% - 18px) !important;
+        max-width: none !important;
+    }
+
+    .page-stakeholders-team .stakeholder-table-head,
+    .page-stakeholders-team .stakeholder-table-row {
+        grid-template-columns: minmax(150px, 1.08fr) minmax(116px, 0.82fr) 112px 92px minmax(158px, 1fr) 62px !important;
+    }
+
+    .page-stakeholders-team .stakeholder-row-actions {
+        justify-content: center !important;
+        padding: 0 10px !important;
+    }
+}
+
+/* Full-label sortable header alignment, mirroring the Critical Activities
+   table: left aligned copy, compact type, and the sort arrow beside the
+   label/help text instead of pushed to the column edge. */
+.page-stakeholders-team .stakeholder-table-head {
+    min-height: 52px !important;
+    font-size: 9.8px !important;
+    line-height: 1.05 !important;
+    text-align: left !important;
+}
+
+.page-stakeholders-team .stakeholder-table-head > span {
+    align-items: flex-start !important;
+    justify-content: center !important;
+    min-height: 52px !important;
+    padding: 5px 9px !important;
+    overflow: hidden;
+    text-align: left !important;
+}
+
+.page-stakeholders-team .stakeholder-table-head .table-sort-button {
+    align-items: center;
+    justify-content: flex-start;
+    gap: 3px;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    min-height: 0;
+    text-align: left;
+    white-space: normal;
+}
+
+.page-stakeholders-team .stakeholder-table-head .table-sort-copy {
+    flex: 0 1 auto;
+    overflow: visible;
+}
+
+.page-stakeholders-team .stakeholder-table-head .table-sort-label,
+.page-stakeholders-team .stakeholder-table-head .table-sort-button small {
+    overflow: visible;
+    line-height: 1.05;
+    text-align: left;
+    text-overflow: clip;
+    white-space: normal;
+}
+
+.page-stakeholders-team .stakeholder-table-head .activity-sort-arrow {
+    margin-left: 1px;
+}
+
+/* Keep the influence headers ("DLBCL Influence" / "MM Influence") on one line
+   now that Name/Role are narrower and these columns are wider. */
+.page-stakeholders-team .stakeholder-table-head > span:nth-child(4) .table-sort-label,
+.page-stakeholders-team .stakeholder-table-head > span:nth-child(5) .table-sort-label {
+    white-space: nowrap;
+}
+
+.page-stakeholders-team .stakeholder-table-row > span,
+.page-stakeholders-team .stakeholder-table-row > .stakeholder-name-cell {
+    justify-content: flex-start !important;
+    text-align: left !important;
+}
+
+.page-stakeholders-team .stakeholder-name-cell strong,
+.page-stakeholders-team .stakeholder-influence-triplet,
+.page-stakeholders-team .stakeholder-parent-cell,
+.page-stakeholders-team .stakeholder-table-row > span {
+    font-size: 12px !important;
+    line-height: 1.15 !important;
+    text-align: left !important;
+}
+
+/* Match the Team Members table: the name reads one step larger than the
+   other body cells. */
+.page-stakeholders-team .stakeholder-name-cell strong {
+    font-size: 13px !important;
+}
+
+.page-stakeholders-team .stakeholder-name-cell small {
+    font-size: 9.5px !important;
+}
+
+/* Keep the Primary Parent cell vertically centered while the value itself
+   keeps its two-line clamp. */
+.page-stakeholders-team .stakeholder-parent-cell {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+}
+
+.page-stakeholders-team .stakeholder-parent-value {
+    display: -webkit-box;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    /* Narrower column — allow the site name to wrap onto more lines. */
+    -webkit-line-clamp: 3;
+    line-height: 1.2;
+}
+
+@media (min-width: 721px) and (max-width: 1199px) {
+    .page-stakeholders-team .stakeholder-table-head {
+        min-height: 56px !important;
+        font-size: 8.4px !important;
+    }
+
+    .page-stakeholders-team .stakeholder-table-head > span {
+        min-height: 56px !important;
+        padding: 4px 6px !important;
+    }
+
+    .page-stakeholders-team .stakeholder-table-head .table-sort-button small {
+        font-size: 7.4px !important;
+    }
+
+    .page-stakeholders-team .stakeholder-name-cell strong,
+    .page-stakeholders-team .stakeholder-influence-triplet,
+    .page-stakeholders-team .stakeholder-parent-cell,
+    .page-stakeholders-team .stakeholder-table-row > span {
+        font-size: 9px !important;
+    }
+}
+
+/* Desktop stakeholder table width guard: match the full-width table card
+   treatment used by Team Members instead of keeping the iPad max-width cap. */
+@media (min-width: 1200px) {
+    .page-stakeholders-team .stakeholder-table-card,
+    .page-stakeholders-team .stakeholder-table-head,
+    .page-stakeholders-team .stakeholder-table-item {
+        width: 100% !important;
+        max-width: none !important;
+        box-sizing: border-box !important;
+    }
+}
+
+/* 7-column layout: Name | Role | Target Priority | DLBCL Influence |
+   MM Influence | Primary Parent | Edit. Declared last so it wins over the
+   earlier 6-column passes above. */
+.page-stakeholders-team .stakeholder-table-head,
+.page-stakeholders-team .stakeholder-table-row {
+    grid-template-columns:
+        minmax(150px, 0.92fr)  /* Name */
+        minmax(96px, 0.58fr)   /* Role */
+        116px                  /* Target Priority */
+        130px                  /* DLBCL Influence */
+        130px                  /* MM Influence */
+        minmax(170px, 1.05fr)  /* Primary Parent */
+        58px !important;       /* Edit */
+}
+
+@media (min-width: 721px) and (max-width: 1199px) {
+    .page-stakeholders-team .stakeholder-table-head,
+    .page-stakeholders-team .stakeholder-table-row {
+        grid-template-columns:
+            minmax(100px, 0.78fr)
+            minmax(76px, 0.48fr)
+            124px                  /* Target Priority — wide enough for "P1 / P2" on one line */
+            96px
+            96px
+            minmax(84px, 0.62fr)   /* Primary Parent — narrower; value wraps */
+            38px !important;
+    }
+}

@@ -1,0 +1,1362 @@
+/* ============================================================
+   Overview (Home) page styles.
+   Older home page rules still live in src/styles/main.css; this
+   file owns the additions made for the side-panel scroll caps.
+   ============================================================ */
+
+/* Cap the right-side widgets to ~5 visible cards and scroll the rest.
+   Uses CSS custom properties so the math reads explicitly and per-card
+   heights can vary between the two panels. `!important` is needed
+   because older media-query rules in main.css set max-height: none on
+   these same selectors. */
+.mock-home-page {
+    --home-left-column: minmax(0, 1.25fr);
+    --home-right-column: minmax(320px, 0.72fr);
+    --home-card-title-gap: 4px;
+    --home-card-header-height: 28px;
+}
+
+.mock-home-page .mock-section-head {
+    box-sizing: border-box;
+    flex-wrap: nowrap;
+    align-items: center !important;
+    min-height: var(--home-card-header-height) !important;
+    margin-bottom: 0 !important;
+    gap: 6px !important;
+}
+
+.mock-home-page .mock-section-head h3 {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.mock-home-page .home-title-with-help {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    min-width: 0;
+}
+
+.mock-home-page .home-title-with-help > span:first-child,
+.mock-home-page .home-summary-table-title > span,
+.mock-home-page .mock-info-card-label > span {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.mock-home-page .home-field-help {
+    align-self: center;
+}
+
+.mock-home-page .home-field-help .field-help-button {
+    width: 15px;
+    height: 15px;
+    border-color: #a8d4e6;
+    color: #006f96;
+    font-size: 9.5px;
+}
+
+.mock-home-page .home-field-help .field-help-button span,
+.mock-home-page .mock-info-card .field-help-button span {
+    color: inherit !important;
+    font-size: inherit !important;
+    line-height: 1 !important;
+}
+
+.mock-home-page .mock-info-card-label {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    min-width: 0;
+    color: var(--ink-soft);
+    font-size: 10.5px;
+    line-height: 1.15;
+}
+
+.mock-home-page .home-info-card-help .field-help-button {
+    width: 14px;
+    height: 14px;
+    font-size: 9px;
+}
+
+.mock-home-page .mock-info-grid {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.customer-goals-card,
+.home-kite-strategy-card,
+.home-side-stack .home-panel-card {
+    gap: var(--home-card-title-gap) !important;
+}
+
+.mock-home-page .mock-home-top-grid > .mock-card {
+    padding: 14px 18px !important;
+}
+
+.mock-home-page .customer-goals-card {
+    /* Header sits at the top; the goals text fills the rest so the card
+       grows together with the Kite Strategy card (the top grid uses
+       align-items: stretch). */
+    grid-template-rows: auto 1fr !important;
+    align-content: stretch !important;
+    height: auto !important;
+    min-height: 118px !important;
+    overflow: hidden;
+}
+
+.mock-home-page .home-kite-strategy-card {
+    grid-template-rows: auto auto auto !important;
+    align-content: start !important;
+    /* Grows to fit both the DLBCL and MM strategy sections instead of the
+       old single-panel 118px cap, which clipped the strategy values. */
+    height: auto !important;
+    min-height: 118px !important;
+    overflow: visible;
+}
+
+.customer-goals-card .text-button,
+.home-bd-summary-card .text-button {
+    min-height: var(--home-card-header-height) !important;
+    height: var(--home-card-header-height) !important;
+    padding: 0 10px !important;
+    font-size: 11px !important;
+    line-height: 1 !important;
+}
+
+.mock-home-page .text-button:disabled,
+.mock-home-page .home-summary-row:disabled,
+.mock-home-page .home-activity-card:disabled,
+.mock-home-page .home-pod-card:disabled {
+    border-color: #c7d2d9 !important;
+    background: #edf1f4 !important;
+    color: #6f7b84 !important;
+    box-shadow: none !important;
+    cursor: not-allowed !important;
+    opacity: 1 !important;
+}
+
+.mock-home-page .home-summary-row:disabled > span,
+.mock-home-page .home-summary-row:disabled > strong,
+.mock-home-page .home-activity-card:disabled strong,
+.mock-home-page .home-activity-card:disabled small,
+.mock-home-page .home-activity-card:disabled time,
+.mock-home-page .home-activity-card:disabled time strong,
+.mock-home-page .home-activity-card:disabled time small,
+.mock-home-page .home-pod-card:disabled strong,
+.mock-home-page .home-pod-card:disabled small,
+.mock-home-page .home-pod-card:disabled .home-pod-participation {
+    color: #6f7b84 !important;
+}
+
+.home-widget-count {
+    min-height: 0 !important;
+    padding: 3px 7px !important;
+    font-size: 10px !important;
+    line-height: 1.15 !important;
+}
+
+.customer-goals-card p {
+    margin-top: 0 !important;
+}
+
+.customer-goals-text {
+    min-height: 0;
+    overflow: auto;
+    font-size: 14px !important;
+    line-height: 1.35 !important;
+    letter-spacing: 0;
+}
+
+.customer-goals-text.is-long {
+    font-size: 12.2px !important;
+    line-height: 1.24 !important;
+}
+
+.customer-goals-text.is-max-length {
+    font-size: 10.8px !important;
+    line-height: 1.16 !important;
+}
+
+.home-strategy-scope-pill {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 22px;
+    padding: 0 9px;
+    border: 1px solid rgba(0, 127, 167, 0.22);
+    border-radius: 999px;
+    background: #eef8fc;
+    color: #00658c;
+    font-size: 10px;
+    font-weight: 850;
+    line-height: 1;
+}
+
+.home-dlbcl-strategy-panel {
+    position: relative;
+    display: grid;
+    align-content: start;
+    gap: 4px;
+    min-height: 0;
+    padding: 5px 8px 5px 14px;
+    overflow: hidden;
+    border: 1px solid #b9dce9;
+    border-radius: 8px;
+    background: linear-gradient(180deg, #f7fcff 0%, #ffffff 100%);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.92);
+}
+
+.home-dlbcl-strategy-panel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 4px;
+    background: #007fa7;
+}
+
+/* MM strategy panel mirrors the DLBCL panel with a distinct accent so the
+   two indications read as separate sections. */
+.home-mm-strategy-panel {
+    position: relative;
+    display: grid;
+    align-content: start;
+    gap: 4px;
+    min-height: 0;
+    padding: 5px 8px 5px 14px;
+    overflow: hidden;
+    border: 1px solid #d2ccec;
+    border-radius: 8px;
+    background: linear-gradient(180deg, #f9f8ff 0%, #ffffff 100%);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.92);
+}
+
+.home-mm-strategy-panel::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 4px;
+    background: #6a4fb0;
+}
+
+.home-strategy-indication-panel + .home-strategy-indication-panel {
+    margin-top: 8px;
+}
+
+.home-strategy-indication-label {
+    margin: 0 0 2px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: #0a3d57;
+}
+
+.home-mm-strategy-panel .home-strategy-indication-label {
+    color: #4b3a82;
+}
+
+.home-kite-strategy-card .strategy-column-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+    min-width: 0;
+}
+
+.home-kite-strategy-card .strategy-column {
+    display: grid;
+    align-content: start;
+    gap: 3px;
+    min-width: 0;
+}
+
+.home-kite-strategy-card .strategy-column + .strategy-column {
+    padding-left: 8px;
+    border-left: 1px solid rgba(0, 127, 167, 0.16);
+}
+
+.home-kite-strategy-card .strategy-column h4 {
+    justify-self: start;
+    margin: 0;
+    padding: 1px 6px;
+    border-radius: 999px;
+    background: #e4f5fb;
+    color: #005f86;
+    font-size: 9.6px;
+    font-weight: 900;
+    line-height: 1.1;
+    white-space: nowrap;
+}
+
+.home-kite-strategy-card .strategy-column-list {
+    display: grid;
+    gap: 2px;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.home-kite-strategy-card .strategy-column-item {
+    position: relative;
+    min-width: 0;
+    padding-left: 9px;
+    color: #092b3a;
+    font-size: 10.2px;
+    font-weight: 800;
+    line-height: 1.1;
+    overflow-wrap: anywhere;
+}
+
+.home-kite-strategy-card .strategy-column-item::before {
+    content: '';
+    position: absolute;
+    top: 4px;
+    left: 0;
+    width: 4px;
+    height: 4px;
+    border-radius: 999px;
+    background: #007fa7;
+}
+
+.home-kite-strategy-card .strategy-column-empty {
+    color: #6e8290;
+    font-size: 11px;
+    font-weight: 800;
+}
+
+@media (min-width: 721px) {
+    .mock-home-page .home-summary-columns,
+    .mock-home-page .home-summary-row {
+        grid-template-columns:
+            minmax(72px, 0.68fr)
+            minmax(188px, 1.64fr)
+            minmax(88px, 0.78fr)
+            minmax(64px, 0.5fr)
+            minmax(88px, 0.78fr)
+            minmax(64px, 0.5fr) !important;
+        gap: 8px;
+    }
+
+    .mock-home-page .home-summary-columns {
+        padding: 8px 10px;
+        font-size: 11.5px;
+    }
+
+    .mock-home-page .home-summary-columns > span {
+        box-sizing: border-box;
+        display: block;
+        min-width: 0;
+        max-width: 100%;
+        overflow-wrap: anywhere;
+        font-weight: 950;
+        letter-spacing: 0.01em;
+        line-height: 1.05;
+        white-space: normal;
+    }
+
+    .mock-home-page .home-summary-columns.barrier > span {
+        color: #00658c;
+    }
+
+    .mock-home-page .home-summary-columns.driver > span {
+        color: #176f45;
+    }
+
+    .mock-home-page .home-summary-table-head.barrier .summary-counts {
+        border-color: rgba(0, 127, 167, 0.36);
+        background: #eef8fc;
+        color: #00658c;
+    }
+
+    .mock-home-page .home-summary-table-head.barrier .summary-counts-combined small {
+        border-left-color: rgba(0, 95, 134, 0.28);
+        color: #42677b;
+    }
+
+    .mock-home-page .home-summary-table-head.driver .summary-counts {
+        border-color: rgba(23, 111, 69, 0.36);
+        background: #eef8f3;
+        color: #176f45;
+    }
+
+    .mock-home-page .home-summary-table-head.driver .summary-counts-combined small {
+        border-left-color: rgba(23, 111, 69, 0.28);
+        color: #2f6d4d;
+    }
+
+    .mock-home-page .home-summary-columns > span:nth-child(4),
+    .mock-home-page .home-summary-columns > span:nth-child(6) {
+        justify-self: center;
+        width: 100%;
+        line-height: 1;
+        max-width: 64px;
+        text-align: center;
+    }
+
+    .mock-home-page .home-summary-impact-cell,
+    .mock-home-page .home-summary-activity-count-cell {
+        justify-self: center;
+        justify-items: center;
+        width: 64px;
+        max-width: 64px;
+        text-align: center;
+    }
+
+    .mock-home-page .home-summary-row {
+        padding: 8px 10px;
+    }
+
+    .mock-home-page .home-summary-status-cell,
+    .mock-home-page .home-summary-impact-cell,
+    .mock-home-page .home-summary-indication-cell {
+        display: flex;
+        justify-content: center;
+        min-width: 0;
+    }
+
+    .mock-home-page .home-summary-tone-text,
+    .mock-home-page .home-summary-plain-text {
+        display: block;
+        width: 100%;
+        max-width: 100%;
+        overflow-wrap: anywhere;
+        font-size: 11.5px;
+        font-weight: 850;
+        line-height: 1.08;
+        text-align: center;
+    }
+
+    .mock-home-page .home-summary-plain-text {
+        color: #33566b;
+        font-weight: 800;
+    }
+
+    .mock-home-page .home-summary-tone-text.is-positive {
+        color: var(--green);
+    }
+
+    .mock-home-page .home-summary-tone-text.is-caution {
+        color: #7b5a00;
+    }
+
+    .mock-home-page .home-summary-tone-text.is-negative {
+        color: var(--danger);
+    }
+
+    .mock-home-page .home-summary-tone-text.is-neutral {
+        color: var(--ink-soft);
+    }
+}
+
+@media (min-width: 721px) and (max-width: 1400px) {
+    /* iPad: the BD summary sits in the narrower left column of the home
+       grid, so the table has to fit in ~390–470px. Keep the column
+       minimums small enough that the six columns never overflow the card
+       (which previously pushed the "Critical Activities" header past the
+       right edge). */
+    .mock-home-page .home-summary-table {
+        min-width: 0;
+        overflow-x: hidden;
+    }
+
+    .mock-home-page .home-summary-columns,
+    .mock-home-page .home-summary-row {
+        grid-template-columns:
+            minmax(40px, 0.52fr)
+            minmax(74px, 1.28fr)
+            minmax(46px, 0.6fr)
+            minmax(44px, 0.48fr)
+            minmax(50px, 0.56fr)
+            minmax(50px, 0.5fr) !important;
+        gap: 5px;
+    }
+
+    .mock-home-page .home-summary-columns {
+        font-size: 9px;
+    }
+
+    .mock-home-page .home-summary-row {
+        font-size: 11px;
+    }
+
+    .mock-home-page .home-summary-tone-text,
+    .mock-home-page .home-summary-plain-text {
+        font-size: 9.6px;
+    }
+
+    .mock-home-page .home-summary-columns > span:nth-child(4),
+    .mock-home-page .home-summary-columns > span:nth-child(6),
+    .mock-home-page .home-summary-impact-cell,
+    .mock-home-page .home-summary-activity-count-cell {
+        width: 50px;
+        max-width: 50px;
+    }
+}
+
+.home-activity-panel {
+    --home-side-card-height: 62px;
+    --home-side-list-gap: 6px;
+    --home-side-list-padding: 7px;
+}
+
+.home-pod-panel {
+    --home-side-card-height: 50px;
+    --home-side-list-gap: 8px;
+    --home-side-list-padding: 8px;
+}
+
+.home-activity-panel .home-widget-scroll,
+.home-pod-panel .home-widget-scroll {
+    max-height: calc(
+        var(--home-side-card-height) +
+        var(--home-side-card-height) +
+        var(--home-side-card-height) +
+        var(--home-side-card-height) +
+        var(--home-side-card-height) +
+        var(--home-side-list-gap) +
+        var(--home-side-list-gap) +
+        var(--home-side-list-gap) +
+        var(--home-side-list-gap) +
+        var(--home-side-list-padding) +
+        var(--home-side-list-padding)
+    ) !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain;
+}
+
+.home-activity-panel .home-activity-card,
+.home-pod-panel .home-pod-card {
+    min-height: var(--home-side-card-height) !important;
+}
+
+.home-pod-panel .home-pod-card {
+    grid-template-columns: minmax(0, 1fr) auto !important;
+    align-items: center !important;
+    gap: 10px !important;
+    padding: 7px 10px 7px 12px !important;
+}
+
+.home-pod-panel .home-card-copy {
+    display: grid;
+    align-content: center;
+    gap: 2px;
+}
+
+.home-bd-summary-card .mock-section-head {
+    margin-bottom: 2px !important;
+}
+
+.home-bd-summary-card .home-summary-table {
+    margin-top: 2px !important;
+}
+
+.home-summary-table-title {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    min-width: 0;
+}
+
+.home-summary-table-help .field-help-button {
+    width: 15px;
+    height: 15px;
+    font-size: 9.5px;
+}
+
+.home-bd-summary-card .home-summary-table + .home-summary-table {
+    margin-top: 8px !important;
+}
+
+.home-activity-panel .home-widget-scroll {
+    gap: var(--home-side-list-gap) !important;
+    padding: var(--home-side-list-padding) !important;
+}
+
+.home-activity-panel .home-activity-card {
+    grid-template-columns: minmax(0, 1fr) 94px !important;
+    align-items: center !important;
+    gap: 10px !important;
+    padding: 7px 13px 7px 10px !important;
+}
+
+.home-activity-panel .home-card-copy {
+    display: grid;
+    gap: 2px;
+    justify-self: start;
+    width: 100%;
+    min-width: 0;
+}
+
+.home-activity-panel .home-card-copy strong {
+    font-size: 13px !important;
+    line-height: 1.16 !important;
+}
+
+.home-activity-panel .home-card-copy small {
+    margin-top: 0 !important;
+    font-size: 11px;
+    line-height: 1.15;
+}
+
+.home-activity-panel .home-activity-card time {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    align-self: center;
+    justify-content: stretch !important;
+    justify-items: stretch !important;
+    justify-self: end;
+    gap: 2px !important;
+    width: 94px !important;
+    min-width: 94px;
+    max-width: 94px;
+    padding: 0 !important;
+    border: 0 !important;
+    background: transparent !important;
+    text-align: right;
+}
+
+.home-activity-panel .home-activity-card time strong {
+    justify-self: stretch;
+    width: 100% !important;
+    font-size: 12px !important;
+    line-height: 1.1 !important;
+    text-align: right !important;
+}
+
+.home-activity-panel .home-activity-card time small {
+    justify-self: stretch;
+    width: 100% !important;
+    max-width: 100%;
+    margin-top: 0 !important;
+    font-size: 10px !important;
+    line-height: 1.12;
+    text-align: right !important;
+}
+
+.overview-goals-modal {
+    width: min(680px, calc(100vw - 36px));
+}
+
+.overview-goals-modal textarea {
+    min-height: 180px;
+}
+
+.overview-character-count {
+    color: var(--ink-soft);
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.3;
+    text-align: right;
+}
+
+/* Home-only Barrier/Driver workspace. The shared editor accepts this content
+   slot, but these selectors keep the wider activity workspace exclusive to
+   the modal launched from Home. */
+.home-bd-detail-modal {
+    width: min(980px, calc(100vw - 36px));
+    border-color: #b6d9e6;
+    border-radius: 16px;
+    box-shadow: 0 30px 84px rgba(0, 42, 68, 0.3);
+}
+
+.home-bd-detail-modal::before {
+    height: 6px;
+    background: linear-gradient(90deg, #007ea8 0%, #00a37a 100%);
+}
+
+.home-bd-detail-modal .stakeholder-edit-head {
+    align-items: center;
+    padding: 17px 22px;
+    background:
+        radial-gradient(circle at 88% -35%, rgba(0, 163, 122, 0.14), transparent 42%),
+        linear-gradient(135deg, #f5fbfe 0%, #f8fcfb 100%);
+}
+
+.home-bd-detail-modal .stakeholder-edit-title {
+    gap: 3px;
+    min-width: 0;
+}
+
+.home-bd-detail-modal .stakeholder-edit-title h3 {
+    color: #0e3c51;
+    font-size: 22px;
+    font-weight: 900;
+    letter-spacing: -0.025em;
+}
+
+.home-bd-detail-modal .stakeholder-edit-title p {
+    max-width: min(720px, calc(100vw - 150px));
+    overflow: hidden;
+    color: #557483;
+    font-size: 12px;
+    font-weight: 650;
+    line-height: 1.25;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.home-bd-detail-modal .stakeholder-edit-body {
+    gap: 14px;
+    padding: 18px 22px 20px;
+    background: #f8fbfc;
+}
+
+.home-bd-detail-modal .stakeholder-edit-section {
+    border-color: #d7e7ed;
+    border-radius: 13px;
+    background: rgba(255, 255, 255, 0.94);
+    box-shadow: 0 8px 24px rgba(14, 67, 88, 0.045);
+}
+
+.home-bd-activities {
+    --home-bd-blue: #006f98;
+    --home-bd-teal: #008a68;
+    display: grid;
+    gap: 16px;
+    min-width: 0;
+    padding: 17px;
+    border: 1px solid #c8e0e9;
+    border-radius: 16px;
+    background:
+        radial-gradient(circle at 100% 0%, rgba(0, 163, 122, 0.08), transparent 32%),
+        linear-gradient(145deg, #f6fbfd 0%, #f8fcfb 100%);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+.home-bd-activities-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 18px;
+}
+
+.home-bd-activities-title-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+}
+
+.home-bd-activities-title-icon {
+    position: relative;
+    display: grid;
+    flex: 0 0 auto;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border: 1px solid #a9d8cc;
+    border-radius: 10px;
+    background: linear-gradient(145deg, #e8f8f3, #f7fffc);
+    box-shadow: 0 6px 14px rgba(0, 138, 104, 0.1);
+}
+
+.home-bd-activities-title-icon::before,
+.home-bd-activities-title-icon::after,
+.home-bd-activities-title-icon i {
+    content: '';
+    position: absolute;
+    left: 9px;
+    width: 13px;
+    height: 2px;
+    border-radius: 999px;
+    background: #087e61;
+}
+
+.home-bd-activities-title-icon::before { top: 9px; }
+.home-bd-activities-title-icon i { top: 15px; }
+.home-bd-activities-title-icon::after { top: 21px; }
+
+.home-bd-activities-title-icon i::before,
+.home-bd-activities-title-icon i::after {
+    content: '';
+    position: absolute;
+    left: -4px;
+    width: 2px;
+    height: 2px;
+    border-radius: 50%;
+    background: #087e61;
+}
+
+.home-bd-activities-head h4 {
+    margin: 0;
+    color: #113b50;
+    font-size: 18px;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+}
+
+.home-bd-activities-empty p,
+.home-bd-activity-detail-copy p,
+.home-bd-activity-comment p {
+    margin: 0;
+    color: #587384;
+    font-size: 12.5px;
+    line-height: 1.45;
+}
+
+.home-bd-activity-filters {
+    display: inline-grid;
+    flex: 0 0 auto;
+    grid-template-columns: repeat(3, auto);
+    gap: 4px;
+    padding: 4px;
+    border: 1px solid #cbdfe7;
+    border-radius: 14px;
+    background: rgba(231, 241, 245, 0.82);
+    box-shadow: inset 0 1px 2px rgba(20, 67, 87, 0.06);
+}
+
+.home-bd-activity-filter {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    min-height: 32px;
+    padding: 5px 9px 5px 12px;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    background: transparent;
+    color: #557180;
+    font: inherit;
+    font-size: 10px;
+    font-weight: 850;
+    line-height: 1;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: color 160ms ease, background 160ms ease, border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease;
+}
+
+.home-bd-activity-filter strong {
+    display: grid;
+    place-items: center;
+    min-width: 21px;
+    height: 21px;
+    padding: 0 5px;
+    border-radius: 7px;
+    background: rgba(87, 118, 132, 0.1);
+    color: #496876;
+    font-size: 10px;
+    font-weight: 900;
+}
+
+.home-bd-activity-filter:hover {
+    color: #164d63;
+    background: rgba(255, 255, 255, 0.72);
+}
+
+.home-bd-activity-filter.is-selected {
+    border-color: #b6d6e1;
+    background: #ffffff;
+    color: #075d7e;
+    box-shadow: 0 5px 14px rgba(17, 82, 108, 0.13);
+    transform: translateY(-1px);
+}
+
+.home-bd-activity-filter.is-open.is-selected {
+    border-color: #aedbce;
+    color: #087153;
+}
+
+.home-bd-activity-filter.is-closed.is-selected {
+    border-color: #bdcfd7;
+    color: #405f6d;
+}
+
+.home-bd-activity-filter.is-selected strong {
+    background: #e5f4f8;
+    color: currentColor;
+}
+
+.home-bd-activity-filter.is-open.is-selected strong { background: #e5f6ef; }
+.home-bd-activity-filter.is-closed.is-selected strong { background: #edf2f4; }
+
+.home-bd-activity-filter:focus-visible {
+    outline: 3px solid rgba(0, 126, 168, 0.26);
+    outline-offset: 2px;
+}
+
+.home-bd-activity-list {
+    display: grid;
+    gap: 10px;
+}
+
+.home-bd-activity-accordion {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #d1e2e8;
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.96);
+    box-shadow: 0 6px 18px rgba(21, 72, 94, 0.055);
+    animation: home-bd-activity-reveal 260ms cubic-bezier(.2, .8, .2, 1) both;
+    animation-delay: calc(var(--home-bd-activity-order) * 45ms);
+    transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+
+.home-bd-activity-accordion::before {
+    content: '';
+    position: absolute;
+    inset: 0 auto 0 0;
+    z-index: 1;
+    width: 4px;
+    background: #7d98a5;
+}
+
+.home-bd-activity-accordion.is-overdue::before { background: #d34a3e; }
+.home-bd-activity-accordion.is-due-soon::before { background: #d89218; }
+.home-bd-activity-accordion.is-on-track::before { background: #0d8db7; }
+.home-bd-activity-accordion.is-complete::before { background: #159163; }
+
+.home-bd-activity-accordion:hover,
+.home-bd-activity-accordion.is-expanded {
+    border-color: #91c8d8;
+    box-shadow: 0 16px 34px rgba(21, 72, 94, 0.12);
+}
+
+.home-bd-activity-accordion.is-expanded {
+    transform: translateY(-1px);
+}
+
+.home-bd-activity-summary-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: stretch;
+}
+
+.home-bd-activity-toggle {
+    display: grid;
+    grid-template-columns: 34px minmax(0, 1fr) 18px;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+    min-height: 72px;
+    padding: 12px 12px 12px 14px;
+    border: 0;
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    text-align: left;
+}
+
+.home-bd-activity-toggle:focus-visible,
+.home-bd-activity-edit:focus-visible {
+    outline: 3px solid rgba(0, 126, 168, 0.28);
+    outline-offset: -3px;
+}
+
+.home-bd-activity-index {
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    border: 1px solid #cbdde4;
+    border-radius: 10px;
+    background: #f1f6f8;
+    color: #54717e;
+    font-size: 10px;
+    font-weight: 950;
+    letter-spacing: 0.04em;
+}
+
+.home-bd-activity-accordion.is-overdue .home-bd-activity-index { border-color: #f1c3bf; background: #fff1ef; color: #a9372e; }
+.home-bd-activity-accordion.is-due-soon .home-bd-activity-index { border-color: #ecd5a6; background: #fff8e9; color: #8c5b00; }
+.home-bd-activity-accordion.is-on-track .home-bd-activity-index { border-color: #b7dce8; background: #edf9fc; color: #06799f; }
+.home-bd-activity-accordion.is-complete .home-bd-activity-index { border-color: #b9ddcf; background: #edf8f4; color: #0c744d; }
+
+.home-bd-activity-title-block {
+    display: grid;
+    gap: 7px;
+    min-width: 0;
+}
+
+.home-bd-activity-title-line,
+.home-bd-activity-glance {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+}
+
+.home-bd-activity-title-line {
+    gap: 8px;
+}
+
+.home-bd-activity-title-line > strong {
+    min-width: 0;
+    overflow: hidden;
+    color: #123e52;
+    font-size: 14.5px;
+    font-weight: 850;
+    line-height: 1.25;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.home-bd-activity-priority {
+    flex: 0 0 auto;
+    padding: 4px 8px;
+    border-radius: 999px;
+    background: #edf2f4;
+    color: #506b79;
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: 0.05em;
+    line-height: 1;
+    text-transform: uppercase;
+}
+
+.home-bd-activity-priority.is-overdue { background: #fff0ee; color: #a92e25; }
+.home-bd-activity-priority.is-due-soon { background: #fff7e5; color: #8c5a00; }
+.home-bd-activity-priority.is-on-track { background: #eaf7fb; color: #006b91; }
+.home-bd-activity-priority.is-complete { background: #eaf8f2; color: #0c744d; }
+
+.home-bd-activity-glance {
+    gap: 7px;
+    overflow: hidden;
+    color: #5c7785;
+    font-size: 10.5px;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.home-bd-activity-glance span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.home-bd-activity-chevron {
+    width: 9px;
+    height: 9px;
+    border-right: 2px solid #537383;
+    border-bottom: 2px solid #537383;
+    transform: rotate(45deg) translate(-2px, -2px);
+    transition: transform 180ms ease;
+}
+
+.home-bd-activity-accordion.is-expanded .home-bd-activity-chevron {
+    transform: rotate(225deg) translate(-1px, -1px);
+}
+
+.home-bd-activity-edit {
+    align-self: center;
+    min-width: 60px;
+    min-height: 34px;
+    margin-right: 14px;
+    border: 1px solid #a9cedb;
+    border-radius: 999px;
+    background: #fff;
+    color: #006b91;
+    cursor: pointer;
+    font-size: 11px;
+    font-weight: 900;
+}
+
+.home-bd-activity-edit:hover {
+    border-color: #007ea8;
+    background: #eaf8fb;
+    box-shadow: 0 6px 14px rgba(0, 126, 168, 0.12);
+}
+
+.home-bd-activity-panel {
+    display: grid;
+    gap: 13px;
+    padding: 16px 18px 18px 49px;
+    border-top: 1px solid #e1edf1;
+    background:
+        linear-gradient(90deg, rgba(0, 126, 168, 0.035), transparent 28%),
+        linear-gradient(180deg, #fbfdfe 0%, #f6fafb 100%);
+    animation: home-bd-panel-open 180ms ease-out both;
+}
+
+.home-bd-activity-detail-copy,
+.home-bd-activity-comment {
+    display: grid;
+    gap: 4px;
+}
+
+.home-bd-activity-detail-copy > span,
+.home-bd-activity-comment > span {
+    color: #476878;
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.home-bd-activity-meta-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.home-bd-activity-meta-item {
+    display: grid;
+    gap: 3px;
+    min-width: 0;
+    padding: 10px 11px;
+    border: 1px solid #d8e8ed;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.94);
+    box-shadow: 0 3px 10px rgba(21, 72, 94, 0.035);
+}
+
+.home-bd-activity-meta-item small {
+    color: #6a8593;
+    font-size: 9px;
+    font-weight: 900;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.home-bd-activity-meta-item strong {
+    overflow: hidden;
+    color: #20495c;
+    font-size: 11px;
+    line-height: 1.3;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.home-bd-activity-comment {
+    padding: 10px 12px;
+    border-left: 3px solid #77b9cd;
+    border-radius: 0 8px 8px 0;
+    background: #eff8fb;
+}
+
+.home-bd-activities-empty {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 74px;
+    padding: 14px;
+    border: 1px dashed #bcd7e1;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.72);
+}
+
+.home-bd-activities-empty > span {
+    display: grid;
+    flex: 0 0 auto;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #e8f7f1;
+    color: #0b8057;
+    font-weight: 900;
+}
+
+.home-bd-activities-empty strong {
+    color: #21495c;
+    font-size: 13px;
+}
+
+@keyframes home-bd-activity-reveal {
+    from { opacity: 0; transform: translateY(7px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes home-bd-panel-open {
+    from { opacity: 0; transform: translateY(-4px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 820px) {
+    .home-bd-detail-modal {
+        width: min(760px, calc(100vw - 24px));
+    }
+
+    .home-bd-activities {
+        padding: 14px;
+    }
+
+    .home-bd-activity-filters {
+        gap: 3px;
+        padding: 3px;
+        border-radius: 12px;
+    }
+
+    .home-bd-activity-filter {
+        gap: 5px;
+        min-height: 28px;
+        padding: 4px 6px 4px 8px;
+        border-radius: 9px;
+        font-size: 9px;
+    }
+
+    .home-bd-activity-filter strong {
+        min-width: 18px;
+        height: 18px;
+        padding: 0 4px;
+        border-radius: 6px;
+        font-size: 9px;
+    }
+
+    .home-bd-activity-meta-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 620px) {
+    .home-bd-activities-head {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .home-bd-activity-filters {
+        align-self: stretch;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .home-bd-activity-filter {
+        width: 100%;
+    }
+
+    .home-bd-activity-summary-row {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .home-bd-activity-edit {
+        width: calc(100% - 24px);
+        min-height: 44px;
+        margin: 0 12px 11px;
+    }
+
+    .home-bd-activity-glance {
+        flex-wrap: wrap;
+        white-space: normal;
+    }
+
+    .home-bd-activity-meta-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .home-bd-activity-filter,
+    .home-bd-activity-accordion,
+    .home-bd-activity-panel,
+    .home-bd-activity-chevron {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+@media (min-width: 721px) and (max-width: 1400px) {
+    .home-activity-panel {
+        --home-side-card-height: 60px;
+        --home-side-list-gap: 6px;
+        --home-side-list-padding: 7px;
+    }
+
+    .home-pod-panel {
+        --home-side-card-height: 44px;
+        --home-side-list-gap: 8px;
+        --home-side-list-padding: 8px;
+    }
+}
+
+.home-activity-section-head {
+    flex-wrap: nowrap !important;
+    gap: 5px !important;
+    min-width: 0;
+}
+
+.home-activity-title {
+    display: flex;
+    align-items: baseline;
+    flex: 1 1 auto;
+    gap: 4px;
+    min-width: 0;
+    line-height: 1.18;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.home-activity-section-head .home-widget-count {
+    flex: 0 0 auto;
+    white-space: nowrap;
+}
+
+.home-activity-title-main {
+    flex: 0 0 auto;
+}
+
+.home-activity-title-window {
+    flex: 0 1 auto;
+    min-width: 0;
+    overflow: hidden;
+    font-size: 13.5px;
+    line-height: 1;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Unified home-page card heading size. The Overdue/Upcoming Critical
+   Activities title is the longest single-line string we need to fit (it
+   lives in the narrow right-side widget panel), so it sets the upper
+   bound — and every other h3 on the home page (CART Service Line
+   Customer Goals, Kite Strategy, Barriers and Drivers, Account POD
+   Users) uses the same size for visual consistency. Bumped to 16px —
+   the largest size that still lets the Overdue/Upcoming title sit on a
+   single line on a desktop viewport. */
+.mock-home-page .mock-card > h3,
+.mock-home-page .mock-section-head > h3 {
+    font-size: 18px !important;
+    font-weight: 800 !important;
+    line-height: 1.12 !important;
+    white-space: nowrap;
+}
+
+.mock-home-page .home-activity-title {
+    font-size: 18px !important;
+    font-weight: 800 !important;
+    line-height: 1.12 !important;
+}
+
+@media (min-width: 721px) and (max-width: 1400px) {
+    /* On iPad the right-side widget panel is narrower, so the unified
+       title font drops to the iPad-max that still lets the
+       Overdue/Upcoming title fit on one line (51 chars + count tag in a
+       ~280px wide widget panel). 13px was too wide and clipped the date
+       suffix; 11px keeps the full title visible at bold weight. */
+    .mock-home-page .mock-card > h3,
+    .mock-home-page .mock-section-head > h3 {
+        font-size: 16px !important;
+        font-weight: 800 !important;
+    }
+
+    .mock-home-page .home-activity-title {
+        font-size: 16px !important;
+        font-weight: 800 !important;
+        /* Allow the long "(Overdue and Due Within 30 Days)" subtitle to drop
+           to its own line on the narrow iPad widget panel instead of being
+           clipped by the ellipsis. */
+        flex-wrap: wrap;
+        overflow: visible;
+        white-space: normal;
+    }
+
+    .mock-home-page .home-activity-title-window {
+        order: 2;
+        flex-basis: 100%;
+        overflow: visible;
+        font-size: 9.5px;
+        font-weight: 700;
+        white-space: nowrap;
+        text-overflow: clip;
+    }
+
+    .home-activity-section-head .home-widget-count {
+        font-size: 9.5px;
+    }
+}
