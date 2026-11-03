@@ -1120,21 +1120,14 @@ const createdRecordId = (result) => {
   return null;
 };
 
+// Look up an existing Plan Strategy row only. Auto-creating rows was tried and
+// CRM rejected it (400), so do not create unranked KPH_Strategy__c records here.
 const resolvePlanStrategy = (planId, strategy) => {
   const strategyValue = String(strategy || '').trim();
   if (!strategyValue) return Promise.resolve(null);
-  return fetchPlanStrategyByValue(planId, strategyValue).then((existing) => {
-    if (existing?.id) return existing.id;
-    return createRecord(PLAN_STRATEGY_OBJECT, {
-      [PLAN_STRATEGY_ACCOUNT_PLAN_FIELD]: planId,
-      [PLAN_STRATEGY_VALUE_FIELD]: strategyValue,
-    })
-      .then(createdRecordId)
-      .catch((error) => {
-        console.warn('[planStrategy] create failed', error);
-        return null;
-      });
-  });
+  return fetchPlanStrategyByValue(planId, strategyValue).then((existing) =>
+    existing?.id ? existing.id : null
+  );
 };
 
 // const buildBarrierDriverWriteFieldsWithPlanStrategy = (planId, form) => {
@@ -1185,6 +1178,16 @@ const retryBarrierDriverWriteWithoutOptional = (writer, fields, omittedOptionalF
     let raw = '';
     try { raw = JSON.stringify(error, Object.getOwnPropertyNames(error || {}), 2); } catch (e) { raw = String(error); }
     console.error('[BD-DEBUG] write failed. RAW ERROR:', raw);
+    try {
+      const body = error && error.errors ? error.errors.body : null;
+      console.error(
+        '[BD-DEBUG] CRM RESPONSE BODY:',
+        typeof body === 'string' ? body : JSON.stringify(body, null, 2)
+      );
+      console.error('[BD-DEBUG] HTTP status:', error && error.errors && error.errors.status);
+    } catch (e) {
+      console.error('[BD-DEBUG] could not read body', e);
+    }
     const field = inaccessibleFieldFromError(error);
     if (
       field &&
