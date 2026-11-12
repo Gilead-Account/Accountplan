@@ -1,0 +1,1365 @@
+/* ============================================================
+   Shared edit modal styles.
+   Used by:
+     - src/pages/Stakeholders/StakeholderEditModal.jsx
+     - src/pages/TeamMembers/TeamMemberEditModal.jsx
+   The pencil button (.stakeholder-edit-button) is also defined here
+   since both pages render it the same way.
+   ============================================================ */
+
+/* Pencil icon button shown at the end of each table row. */
+.stakeholder-edit-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: 1px solid var(--line);
+    border-radius: 6px;
+    background: #fff;
+    color: var(--ink);
+    cursor: pointer;
+    transition: background 120ms ease, border-color 120ms ease;
+}
+
+.stakeholder-edit-button:hover:not([disabled]) {
+    background: #f4fbfe;
+    border-color: #9cc7d6;
+}
+
+.stakeholder-edit-button[disabled] {
+    border-color: #c7d2d9;
+    background: #edf1f4;
+    color: #7d8992;
+    box-shadow: none;
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* Overlay backdrop. */
+.stakeholder-edit-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    overflow: auto;
+    padding: 24px 18px;
+    background: rgba(0, 31, 59, 0.46);
+    backdrop-filter: blur(4px);
+}
+
+.submit-mpd-approval-overlay {
+    z-index: 260;
+}
+
+/* Modal card. */
+.stakeholder-edit-modal {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: min(720px, calc(100vw - 36px));
+    max-height: calc(100vh - 48px);
+    border: 1px solid #b9ddec;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 26px 70px rgba(0, 31, 59, 0.28);
+    overflow: hidden;
+}
+
+.stakeholder-edit-modal.submit-mpd-approval-modal {
+    width: min(560px, calc(100vw - 36px));
+}
+
+.stakeholder-edit-modal::before {
+    content: '';
+    display: block;
+    height: 5px;
+    background: var(--brand);
+}
+
+/* Header. */
+.stakeholder-edit-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 18px;
+    padding: 20px 24px 18px;
+    border-bottom: 1px solid #d9edf5;
+    background: #f7fcfe;
+}
+
+.stakeholder-edit-title {
+    display: grid;
+    gap: 5px;
+    min-width: 0;
+}
+
+.stakeholder-edit-title-row {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    min-width: 0;
+}
+
+.stakeholder-edit-subtitle-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+    max-width: 100%;
+}
+
+.stakeholder-edit-subtitle-row p {
+    min-width: 0;
+}
+
+.stakeholder-edit-subtitle-help .field-help-popover {
+    width: min(320px, calc(100vw - 48px));
+}
+
+.stakeholder-edit-eyebrow {
+    color: var(--brand-deep);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    line-height: 1;
+    text-transform: uppercase;
+}
+
+.stakeholder-edit-head h3 {
+    margin: 0;
+    color: var(--ink);
+    font-size: 20px;
+    line-height: 1.15;
+}
+
+.stakeholder-edit-head p {
+    margin: 0;
+    overflow: hidden;
+    color: var(--ink-soft);
+    font-size: 13px;
+    line-height: 1.35;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.stakeholder-edit-head-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+.stakeholder-edit-head-meta span {
+    display: inline-flex;
+    align-items: center;
+    min-height: 24px;
+    max-width: 280px;
+    padding: 0 9px;
+    overflow: hidden;
+    border: 1px solid #cfe6ef;
+    border-radius: 6px;
+    background: #fff;
+    color: #24495d;
+    font-size: 12px;
+    font-weight: 700;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Close (×) button — drawn with rotated pseudo-elements. */
+.stakeholder-edit-close {
+    position: relative;
+    flex: 0 0 auto;
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border: 1px solid #cddfe8;
+    border-radius: 6px;
+    background: #fff;
+    color: var(--ink-soft);
+    cursor: pointer;
+}
+
+.stakeholder-edit-close::before,
+.stakeholder-edit-close::after {
+    content: '';
+    position: absolute;
+    left: 9px;
+    top: 15px;
+    width: 13px;
+    height: 2px;
+    border-radius: 999px;
+    background: currentColor;
+}
+
+.stakeholder-edit-close::before { transform: rotate(45deg); }
+.stakeholder-edit-close::after  { transform: rotate(-45deg); }
+
+.stakeholder-edit-close:hover {
+    border-color: #accfdd;
+    background: #edf8fc;
+    color: var(--brand-deep);
+}
+
+/* Body — scrolls vertically only. */
+.stakeholder-edit-body {
+    flex: 1 1 auto;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 20px 24px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    scrollbar-gutter: stable;
+}
+
+/* Each section is its own bordered card. The `.is-grouped` modifier picks up
+   the brand accent so the DLBCL block in the stakeholder modal stands out. */
+.stakeholder-edit-section {
+    display: grid;
+    gap: 12px;
+    min-width: 0;
+    padding: 16px;
+    border: 1px solid #d9e7ee;
+    border-radius: 8px;
+    background: #fff;
+}
+
+.stakeholder-edit-section h4 {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin: 0;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+}
+
+.stakeholder-edit-section h4::after {
+    content: '';
+    flex: 1 1 auto;
+    height: 1px;
+    background: #e4eef4;
+}
+
+.stakeholder-edit-section.is-accordion {
+    gap: 0;
+}
+
+.stakeholder-edit-section.is-accordion h4::after {
+    content: none;
+    display: none;
+}
+
+.stakeholder-edit-section-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+}
+
+.stakeholder-edit-section-head::after {
+    content: '';
+    order: 1;
+    flex: 1 1 auto;
+    height: 1px;
+    background: #e4eef4;
+}
+
+.stakeholder-edit-section.is-grouped .stakeholder-edit-section-head::after {
+    background: #d7eaf1;
+}
+
+.stakeholder-edit-section.is-grouped.is-mm .stakeholder-edit-section-head::after {
+    background: #e3ddf2;
+}
+
+.stakeholder-edit-section-toggle {
+    order: 2;
+    flex: 0 0 28px;
+    width: 28px;
+    height: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #b9dceb;
+    border-radius: 50%;
+    background: #eff9fd;
+    color: var(--brand-deep);
+    font: inherit;
+    font-size: 18px;
+    font-weight: 800;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: 0 6px 14px rgba(0, 137, 177, 0.10);
+    transition: background 160ms ease, border-color 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+.stakeholder-edit-section-toggle:hover {
+    background: var(--brand);
+    border-color: var(--brand);
+    color: #fff;
+    transform: translateY(-1px);
+}
+
+.stakeholder-edit-section-toggle:focus-visible {
+    outline: 3px solid rgba(0, 137, 177, 0.22);
+    outline-offset: 2px;
+}
+
+.stakeholder-edit-section.is-mm .stakeholder-edit-section-toggle {
+    border-color: #d2ccec;
+    background: #f3efff;
+    color: #4b3a82;
+    box-shadow: 0 6px 14px rgba(106, 79, 176, 0.10);
+}
+
+.stakeholder-edit-section.is-mm .stakeholder-edit-section-toggle:hover {
+    background: #6a4fb0;
+    border-color: #6a4fb0;
+    color: #fff;
+}
+
+.stakeholder-edit-section-toggle-icon {
+    display: block;
+    min-width: 1ch;
+    text-align: center;
+    transform: translateY(-1px);
+}
+
+.stakeholder-edit-section-panel {
+    min-width: 0;
+    padding-top: 12px;
+}
+
+.stakeholder-edit-section-panel[hidden] {
+    display: none;
+}
+
+.stakeholder-edit-section.is-grouped {
+    border-color: #bddfeb;
+    border-left: 5px solid var(--brand);
+    border-radius: 8px;
+    background: #f5fbfd;
+}
+
+.stakeholder-edit-section.is-grouped h4 {
+    color: var(--brand-deep);
+}
+
+/* MM section uses the purple accent that marks MM across the app
+   (Kite Strategy MM panel, stakeholder bands, etc.). */
+.stakeholder-edit-section.is-grouped.is-mm {
+    border-color: #d2ccec;
+    border-left-color: #6a4fb0;
+    background: linear-gradient(180deg, #f9f8ff 0%, #ffffff 100%);
+}
+
+.stakeholder-edit-section.is-grouped.is-mm h4 {
+    color: #4b3a82;
+}
+
+.stakeholder-edit-section.is-grouped.is-mm h4::after {
+    background: #e3ddf2;
+}
+
+/* Two-column field grid. Textarea fields span both columns. */
+.stakeholder-edit-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px 16px;
+}
+
+.stakeholder-edit-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+}
+
+.stakeholder-edit-field.is-textarea {
+    grid-column: 1 / -1;
+}
+
+.stakeholder-edit-field.is-checkbox {
+    justify-content: end;
+}
+
+.stakeholder-edit-field.is-multiSelect {
+    position: relative;
+    grid-column: 1 / -1;
+}
+
+.stakeholder-multiselect {
+    min-width: 0;
+}
+
+.stakeholder-multiselect-trigger {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+    min-height: 38px;
+    padding: 7px 12px;
+    border: 1px solid #c8d9e1;
+    border-radius: 6px;
+    background: #fff;
+    color: var(--ink);
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+}
+
+.stakeholder-multiselect-trigger:hover:not(:disabled),
+.stakeholder-multiselect-trigger:focus-visible,
+.stakeholder-multiselect-trigger[aria-expanded='true'] {
+    border-color: #6a4fb0;
+    box-shadow: 0 0 0 3px rgba(106, 79, 176, 0.12);
+    outline: none;
+}
+
+.stakeholder-multiselect-trigger:disabled {
+    background: #f2f5f7;
+    color: var(--ink-soft);
+    cursor: not-allowed;
+}
+
+.stakeholder-multiselect-trigger .is-placeholder {
+    color: var(--ink-soft);
+}
+
+.stakeholder-multiselect-caret {
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: translateY(-2px) rotate(45deg);
+    transition: transform 160ms ease;
+}
+
+.stakeholder-multiselect-trigger[aria-expanded='true'] .stakeholder-multiselect-caret {
+    transform: translateY(2px) rotate(225deg);
+}
+
+.stakeholder-multiselect-menu {
+    position: absolute;
+    z-index: 20;
+    top: calc(100% + 5px);
+    left: 0;
+    right: 0;
+    padding: 8px;
+    border: 1px solid #c9bedf;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 12px 28px rgba(40, 31, 70, 0.18);
+}
+
+.stakeholder-multiselect-options {
+    display: grid;
+    gap: 4px;
+    max-height: 210px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.stakeholder-multiselect-option {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+    padding: 8px 9px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    background: #fff;
+    color: var(--ink);
+    cursor: pointer;
+}
+
+.stakeholder-multiselect-option:hover,
+.stakeholder-multiselect-option:focus-within,
+.stakeholder-multiselect-option.is-selected {
+    border-color: #6a4fb0;
+    background: #f7f4ff;
+}
+
+.stakeholder-edit-field .stakeholder-multiselect-option input[type='checkbox'] {
+    flex: 0 0 16px;
+    width: 16px;
+    max-width: 16px;
+    height: 16px;
+    min-height: 16px;
+    margin: 0;
+    padding: 0;
+    border-radius: 3px;
+    box-shadow: none;
+    accent-color: #6a4fb0;
+}
+
+.stakeholder-multiselect-option span {
+    flex: 1 1 auto;
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+.stakeholder-multiselect-done {
+    display: block;
+    min-height: 32px;
+    margin: 8px 0 0 auto;
+    padding: 0 14px;
+    border: 1px solid #6a4fb0;
+    border-radius: 6px;
+    background: #6a4fb0;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.stakeholder-champion-group {
+    display: grid;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.stakeholder-champion-group-label {
+    margin: 0;
+    color: var(--ink-soft);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.stakeholder-champion-checkbox-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.stakeholder-champion-checkbox {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 64px;
+    box-sizing: border-box;
+    padding: 11px 12px;
+    border: 1px solid #c9dfe8;
+    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.94);
+    color: var(--ink);
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0, 74, 102, 0.04);
+    transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease, transform 160ms ease;
+}
+
+.stakeholder-champion-checkbox:hover {
+    border-color: var(--brand);
+    background: #fff;
+    transform: translateY(-1px);
+}
+
+.stakeholder-champion-checkbox:focus-within {
+    border-color: var(--brand);
+    box-shadow: 0 0 0 3px rgba(0, 137, 177, 0.14);
+}
+
+.stakeholder-edit-section.is-mm .stakeholder-champion-checkbox:hover,
+.stakeholder-edit-section.is-mm .stakeholder-champion-checkbox:focus-within {
+    border-color: #6a4fb0;
+}
+
+.stakeholder-edit-section.is-mm .stakeholder-champion-checkbox:focus-within {
+    box-shadow: 0 0 0 3px rgba(106, 79, 176, 0.14);
+}
+
+.stakeholder-champion-checkbox input[type='checkbox'] {
+    position: absolute;
+    width: 1px;
+    min-height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+.stakeholder-champion-icon {
+    flex: 0 0 36px;
+    width: 36px;
+    height: 36px;
+    display: grid;
+    place-items: center;
+    border-radius: 9px;
+    background: #eaf7fb;
+    color: var(--brand-deep);
+}
+
+.stakeholder-champion-icon svg {
+    width: 19px;
+    height: 19px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+.stakeholder-champion-copy {
+    min-width: 0;
+    display: grid;
+    gap: 2px;
+    line-height: 1.25;
+}
+
+.stakeholder-champion-copy small {
+    color: var(--ink-soft);
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+.stakeholder-champion-copy > span {
+    color: var(--ink);
+    font-size: 12px;
+    font-weight: 750;
+}
+
+.stakeholder-champion-check {
+    flex: 0 0 22px;
+    width: 22px;
+    height: 22px;
+    display: grid;
+    place-items: center;
+    margin-left: auto;
+    border: 1.5px solid #b9d1dc;
+    border-radius: 50%;
+    background: #fff;
+    color: transparent;
+    font-size: 13px;
+    font-weight: 900;
+    transition: color 160ms ease, border-color 160ms ease, background 160ms ease, transform 160ms ease;
+}
+
+.stakeholder-champion-checkbox.is-selected {
+    border-color: #72bfd4;
+    background: linear-gradient(135deg, #f0fbfe 0%, #ffffff 100%);
+    box-shadow: 0 7px 18px rgba(0, 137, 177, 0.11);
+}
+
+.stakeholder-champion-checkbox.is-selected .stakeholder-champion-check {
+    border-color: var(--brand);
+    background: var(--brand);
+    color: #fff;
+    transform: scale(1.04);
+}
+
+.stakeholder-edit-section.is-mm .stakeholder-champion-icon {
+    background: #efebfb;
+    color: #5b438f;
+}
+
+.stakeholder-edit-section.is-mm .stakeholder-champion-checkbox.is-selected {
+    border-color: #aa99d7;
+    background: linear-gradient(135deg, #f7f4ff 0%, #ffffff 100%);
+    box-shadow: 0 7px 18px rgba(106, 79, 176, 0.11);
+}
+
+.stakeholder-edit-section.is-mm .stakeholder-champion-checkbox.is-selected .stakeholder-champion-check {
+    border-color: #6a4fb0;
+    background: #6a4fb0;
+}
+
+.stakeholder-edit-field-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+}
+
+.stakeholder-edit-field-label-row {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+}
+
+.field-help {
+    position: relative;
+    display: inline-flex;
+    flex: 0 0 auto;
+}
+
+.field-help-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 17px;
+    height: 17px;
+    padding: 0;
+    border: 1px solid #a9cedd;
+    border-radius: 50%;
+    background: #fff;
+    color: #00658c;
+    font-size: 11px;
+    font-weight: 900;
+    line-height: 1;
+    cursor: pointer;
+    box-shadow: 0 1px 2px rgba(0, 31, 59, 0.06);
+    transition: background 140ms ease, border-color 140ms ease, box-shadow 140ms ease, color 140ms ease;
+}
+
+.field-help-button:hover,
+.field-help-button:focus-visible,
+.field-help.is-open .field-help-button {
+    border-color: var(--brand);
+    background: #eef9fd;
+    color: var(--brand-deep);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 127, 169, 0.13);
+}
+
+.field-help-popover {
+    position: absolute;
+    top: calc(100% + 7px);
+    left: 0;
+    z-index: 320;
+    box-sizing: border-box;
+    width: min(300px, calc(100vw - 48px));
+    max-height: min(180px, calc(100vh - 132px));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 9px 11px;
+    border: 1px solid #b9ddec;
+    border-radius: 8px;
+    background: #fff;
+    color: #35576b;
+    font-size: 12px;
+    font-weight: 650;
+    line-height: 1.38;
+    letter-spacing: 0;
+    text-transform: none;
+    box-shadow: 0 14px 32px rgba(0, 31, 59, 0.18);
+}
+
+.field-help-description {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.stakeholder-edit-field input,
+.stakeholder-edit-field select,
+.stakeholder-edit-field textarea {
+    width: 100%;
+    min-height: 38px;
+    box-sizing: border-box;
+    padding: 9px 10px;
+    border: 1px solid #cbdce5;
+    border-radius: 6px;
+    background: #fff;
+    font: inherit;
+    font-size: 13px;
+    line-height: 1.35;
+    color: var(--ink);
+    transition: border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
+}
+
+/* iPad Safari can paint native date controls wider than their CSS box. The
+   field wrapper is the hard boundary; the input then inherits that boundary. */
+.stakeholder-edit-modal .stakeholder-edit-grid > .stakeholder-edit-field.critical-activity-due-date-field {
+    justify-self: stretch !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    inline-size: 100% !important;
+    max-inline-size: 100% !important;
+    min-inline-size: 0 !important;
+    overflow: hidden !important;
+}
+
+.stakeholder-edit-modal .stakeholder-edit-field.critical-activity-due-date-field > input.critical-activity-due-date-input[name='criticalActivityDueDate'][type='date'] {
+    display: block !important;
+    flex: 0 1 auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    inline-size: 100% !important;
+    max-inline-size: 100% !important;
+    min-inline-size: 0 !important;
+    height: 38px !important;
+    min-height: 38px !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+    -webkit-appearance: none !important;
+    appearance: none !important;
+    overflow: hidden !important;
+    background-clip: padding-box;
+    text-align: left;
+}
+
+.stakeholder-edit-modal .stakeholder-edit-field.critical-activity-due-date-field > input.critical-activity-due-date-input[name='criticalActivityDueDate'][type='date']::-webkit-date-and-time-value,
+.stakeholder-edit-modal .stakeholder-edit-field.critical-activity-due-date-field > input.critical-activity-due-date-input[name='criticalActivityDueDate'][type='date']::-webkit-datetime-edit {
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    text-align: left;
+}
+
+.stakeholder-edit-modal .stakeholder-edit-field.critical-activity-due-date-field > input.critical-activity-due-date-input[name='criticalActivityDueDate'][type='date']::-webkit-calendar-picker-indicator {
+    margin: 0;
+    padding: 0;
+}
+
+.stakeholder-edit-field textarea {
+    resize: vertical;
+    min-height: 78px;
+}
+
+.critical-activity-edit-modal.is-fields-locked input:read-only,
+.critical-activity-edit-modal.is-fields-locked input:disabled,
+.critical-activity-edit-modal.is-fields-locked select:disabled,
+.critical-activity-edit-modal.is-fields-locked textarea:read-only,
+.critical-activity-edit-modal.is-fields-locked textarea:disabled {
+    border-color: #cfd7dc;
+    background: #eef2f4;
+    color: #6b7b86;
+    cursor: not-allowed;
+    opacity: 1;
+    -webkit-text-fill-color: #6b7b86;
+}
+
+.submit-mpd-approval-body {
+    gap: 12px;
+    padding-top: 18px;
+}
+
+.submit-mpd-comment-field {
+    gap: 7px;
+}
+
+.submit-mpd-comment-field textarea {
+    min-height: 126px;
+    padding: 12px 13px;
+    border-color: #bfd5df;
+    background: #fbfdfe;
+    font-size: 13.5px;
+}
+
+.submit-mpd-comment-count {
+    align-self: flex-end;
+    min-width: 58px;
+    padding: 3px 8px;
+    border: 1px solid #d5e5ec;
+    border-radius: 999px;
+    background: #f5fafc;
+    color: #587486;
+    font-size: 11px;
+    font-variant-numeric: tabular-nums;
+    font-weight: 750;
+    line-height: 1.2;
+    text-align: center;
+}
+
+.recall-approval-overlay {
+    z-index: 265;
+}
+
+.stakeholder-edit-modal.recall-approval-modal {
+    width: min(540px, calc(100vw - 36px));
+}
+
+.stakeholder-edit-modal.recall-approval-modal::before {
+    background: linear-gradient(90deg, #007fa9 0%, #13a389 100%);
+}
+
+.recall-approval-head {
+    background: linear-gradient(135deg, #ffffff 0%, #f4fbfd 100%);
+}
+
+.recall-approval-eyebrow {
+    color: #007091;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 0.1em;
+    line-height: 1.2;
+    text-transform: uppercase;
+}
+
+.recall-approval-body {
+    gap: 14px;
+    padding-top: 18px;
+    background: #fbfdfe;
+}
+
+.recall-approval-context {
+    display: grid;
+    gap: 3px;
+    min-width: 0;
+    padding: 10px 12px;
+    border: 1px solid #d4e6ed;
+    border-radius: 7px;
+    background: #f6fafc;
+}
+
+.recall-approval-context span {
+    color: #6a8796;
+    font-size: 9.5px;
+    font-weight: 900;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.recall-approval-context strong {
+    overflow: hidden;
+    color: #18384c;
+    font-size: 12.5px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.recall-approval-comment-field {
+    gap: 7px;
+}
+
+.recall-approval-comment-field textarea {
+    min-height: 126px;
+    padding: 12px 13px;
+    border-color: #bfd5df;
+    background: #fff;
+    font-size: 13.5px;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    white-space: pre-wrap;
+}
+
+.recall-approval-comment-count {
+    align-self: flex-end;
+    min-width: 58px;
+    padding: 3px 8px;
+    border: 1px solid #d5e5ec;
+    border-radius: 999px;
+    background: #f6fafc;
+    color: #607d8d;
+    font-size: 10px;
+    font-weight: 800;
+    line-height: 1.2;
+    text-align: center;
+}
+
+.recall-approval-submit {
+    background: #007fa9;
+}
+
+.recall-approval-submit:hover,
+.recall-approval-submit:focus-visible {
+    background: #006b8f;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .recall-approval-modal,
+    .recall-approval-submit {
+        transition: none;
+    }
+}
+
+.critical-activity-status-confirm-overlay,
+.critical-activity-status-prompt-overlay {
+    z-index: 255;
+}
+
+.stakeholder-edit-modal.critical-activity-status-confirm-modal,
+.stakeholder-edit-modal.critical-activity-status-prompt-modal {
+    width: min(600px, calc(100vw - 36px));
+}
+
+.critical-activity-status-confirm-body,
+.critical-activity-status-prompt-body {
+    gap: 14px;
+    padding-top: 18px;
+}
+
+.critical-activity-status-prompt-summary {
+    display: grid;
+    gap: 4px;
+    min-width: 0;
+}
+
+.critical-activity-status-prompt-label {
+    color: var(--ink-soft);
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    line-height: 1.2;
+    text-transform: uppercase;
+}
+
+.critical-activity-status-prompt-summary strong {
+    min-width: 0;
+    color: var(--ink);
+    font-size: 14px;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+}
+
+.critical-activity-status-confirm-question {
+    margin: 0;
+    color: var(--ink);
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.45;
+}
+
+.critical-activity-status-prompt-field {
+    max-width: 360px;
+}
+
+.critical-activity-status-prompt-note {
+    margin: 0;
+    color: #557284;
+    font-size: 12.5px;
+    font-weight: 650;
+    line-height: 1.4;
+}
+
+.stakeholder-edit-field input:not([readonly]):focus,
+.stakeholder-edit-field select:focus,
+.stakeholder-edit-field textarea:focus {
+    outline: none;
+    border-color: var(--brand);
+    box-shadow: 0 0 0 3px rgba(0, 127, 169, 0.18);
+}
+
+.stakeholder-edit-field input[readonly] {
+    border-color: #d7dee4;
+    background: #eef1f4;
+    color: #6b7782;
+    cursor: default;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.stakeholder-edit-modal .account-profile-lookup-field {
+    position: relative;
+}
+
+.stakeholder-edit-modal .lookup-combobox {
+    position: relative;
+    min-width: 0;
+}
+
+.stakeholder-edit-modal .lookup-combobox input {
+    padding-right: 38px;
+}
+
+.stakeholder-edit-modal .lookup-combobox::after {
+    content: '';
+    position: absolute;
+    top: 15px;
+    right: 14px;
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid #6f8492;
+    border-bottom: 2px solid #6f8492;
+    transform: rotate(45deg);
+    pointer-events: none;
+}
+
+.stakeholder-edit-modal .lookup-results {
+    position: absolute;
+    top: calc(100% + 6px);
+    right: 0;
+    left: 0;
+    z-index: 80;
+    display: grid;
+    max-height: 220px;
+    overflow: auto;
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 16px 36px rgba(16, 44, 61, 0.16);
+}
+
+.stakeholder-edit-modal .lookup-result {
+    display: grid;
+    gap: 3px;
+    width: 100%;
+    min-height: 0;
+    padding: 9px 11px;
+    border: 0;
+    border-bottom: 1px solid #e8f0f5;
+    border-radius: 0;
+    background: #fff;
+    color: var(--ink);
+    text-align: left;
+    cursor: pointer;
+}
+
+.stakeholder-edit-modal .lookup-result:hover,
+.stakeholder-edit-modal .lookup-result:focus {
+    background: #eef8fd;
+    outline: none;
+}
+
+.stakeholder-edit-modal .lookup-result strong {
+    min-width: 0;
+    color: var(--ink);
+    font-size: 13px;
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+}
+
+.stakeholder-edit-modal .lookup-result small {
+    min-width: 0;
+    color: var(--ink-soft);
+    font-size: 11px;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+}
+
+.stakeholder-edit-modal .lookup-empty {
+    padding: 10px 11px;
+    color: var(--ink-soft);
+    font-size: 12px;
+    line-height: 1.3;
+}
+
+.stakeholder-edit-modal .lookup-empty.error {
+    color: var(--danger);
+}
+
+.stakeholder-edit-field.is-checkbox .critical-activity-checkbox-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: 38px;
+    box-sizing: border-box;
+    padding: 9px 10px;
+    border: 1px solid #cbdce5;
+    border-radius: 6px;
+    background: #fff;
+    color: var(--ink);
+    font-size: 13px;
+}
+
+.stakeholder-edit-field.is-checkbox input[type='checkbox'] {
+    width: 16px;
+    min-height: 16px;
+    padding: 0;
+    accent-color: var(--brand);
+}
+
+.critical-activity-confirm-scrim {
+    position: fixed;
+    inset: 0;
+    z-index: 101;
+    display: grid;
+    place-items: center;
+    padding: 18px;
+    background: rgba(0, 31, 59, 0.32);
+}
+
+.critical-activity-confirm-dialog {
+    width: min(380px, calc(100vw - 36px));
+    padding: 20px;
+    border: 1px solid #b9ddec;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 18px 52px rgba(0, 31, 59, 0.28);
+}
+
+.critical-activity-confirm-dialog h4 {
+    margin: 0;
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.35;
+}
+
+.critical-activity-confirm-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 18px;
+}
+
+.critical-activity-edit-error {
+    padding: 10px 12px;
+    border: 1px solid var(--danger);
+    border-radius: 6px;
+    background: var(--danger-soft);
+    color: var(--danger);
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.35;
+    max-height: 220px;
+    overflow: auto;
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+/* Footer — Cancel + Save buttons. */
+.stakeholder-delete-warning-banner {
+    margin-bottom: 14px;
+    padding: 10px 12px;
+    border: 1px solid rgba(192, 57, 43, 0.28);
+    border-radius: 6px;
+    background: #fff5f5;
+    color: #7f1d1d;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+.stakeholder-edit-foot {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 14px 24px;
+    border-top: 1px solid #d9edf5;
+    background: #f7fcfe;
+}
+
+.stakeholder-edit-button-secondary,
+.stakeholder-edit-button-primary {
+    min-height: 38px;
+    padding: 0 16px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.stakeholder-edit-button-secondary {
+    border-color: #cbdce5;
+    background: #fff;
+    color: var(--ink);
+}
+
+.stakeholder-edit-button-secondary:hover {
+    border-color: #accfdd;
+    background: #edf8fc;
+}
+
+.stakeholder-edit-button-primary {
+    border-color: var(--brand);
+    background: var(--brand);
+    color: #fff;
+}
+
+.stakeholder-edit-button-success {
+    border-color: #00b15a;
+    background: #00b15a;
+    color: #fff;
+    min-height: 38px;
+    padding: 0 16px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.stakeholder-edit-button-primary:hover {
+    background: var(--brand-deep);
+    border-color: var(--brand-deep);
+}
+
+.critical-activity-delete-button {
+    margin-right: auto;
+    min-height: 38px;
+    padding: 0 16px;
+    border: 1px solid var(--danger);
+    border-radius: 6px;
+    background: var(--danger);
+    color: #fff;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.critical-activity-delete-button:hover:not(:disabled) {
+    background: #8d362f;
+    border-color: #8d362f;
+}
+
+.critical-activity-delete-button:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
+.critical-activity-delete-button.confirm {
+    margin-right: 0;
+}
+
+@media (max-width: 600px) {
+    .stakeholder-edit-overlay {
+        align-items: start;
+        padding: 14px;
+    }
+
+    .stakeholder-edit-modal {
+        width: 100%;
+        max-height: calc(100vh - 28px);
+    }
+
+    .stakeholder-edit-head,
+    .stakeholder-edit-body,
+    .stakeholder-edit-foot {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .stakeholder-edit-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stakeholder-champion-checkbox-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .stakeholder-edit-foot {
+        flex-direction: column-reverse;
+    }
+
+    .stakeholder-edit-button-secondary,
+    .stakeholder-edit-button-primary,
+    .critical-activity-delete-button {
+        margin-right: 0;
+        width: 100%;
+    }
+}
+
+@media (max-width: 820px) {
+    .field-help-popover {
+        position: fixed;
+        top: 84px;
+        right: 16px;
+        left: 16px;
+        width: auto;
+        max-height: calc(100vh - 132px);
+    }
+}
