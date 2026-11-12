@@ -1,0 +1,5 @@
+
+> kite-myinsights-v2@0.1.0 build
+> vite build && node scripts/postbuild.mjs
+
+AssignProcessToJobObject: (6) The handle is invalid.

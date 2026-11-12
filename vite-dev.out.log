@@ -1,0 +1,151 @@
+
+> kite-myinsights-v2@0.1.0 dev
+> vite --host 127.0.0.1 --port 5173
+
+
+  [32m[1mVITE[22m v5.4.21[39m  [2mready in [0m[1m6262[22m[2m[0m ms[22m
+
+  [32m➜[39m  [1mLocal[22m:   [36mhttp://127.0.0.1:[1m5173[22m/[39m
+[2m12:05:51 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx, /src/pages/BarriersDrivers/index.jsx, /src/pages/Overview/index.jsx, /src/pages/CriticalActivities/index.jsx, /src/pages/AccountProfile/index.jsx, /src/pages/CrossFunctionalPlan/index.jsx, /src/pages/TeamMembers/index.jsx[22m
+[2m12:05:51 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx, /src/pages/BarriersDrivers/index.jsx, /src/pages/Overview/index.jsx, /src/pages/CriticalActivities/index.jsx, /src/pages/AccountProfile/index.jsx, /src/pages/CrossFunctionalPlan/index.jsx, /src/pages/TeamMembers/index.jsx[22m
+[2m12:05:51 PM[22m [36m[1m[vite][22m[39m [33mhmr invalidate [39m[2m/src/pages/CrossFunctionalPlan/index.jsx[22m Could not Fast Refresh ("canEditPoaBlock" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m12:05:51 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx[22m
+[2m12:06:07 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx, /src/pages/BarriersDrivers/index.jsx, /src/pages/Overview/index.jsx, /src/pages/CriticalActivities/index.jsx, /src/pages/AccountProfile/index.jsx, /src/pages/CrossFunctionalPlan/index.jsx, /src/pages/TeamMembers/index.jsx[22m
+[2m12:06:08 PM[22m [36m[1m[vite][22m[39m [33mhmr invalidate [39m[2m/src/pages/CrossFunctionalPlan/index.jsx[22m Could not Fast Refresh ("canEditPoaBlock" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m12:06:08 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx[22m
+[2m12:30:02 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/styles/main.css[22m
+[2m12:45:20 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/AccountProfile/ProfileTab.jsx[22m
+[2m12:45:56 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/AccountProfile/ProfileTab.jsx[22m
+[2m12:46:04 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/AccountProfile/ProfileTab.jsx[22m
+[2m12:48:09 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/AccountProfile/AccountProfile.css[22m
+[2m12:53:07 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/AccountProfile/ProfileTab.jsx[22m
+[2m12:53:13 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/AccountProfile/ProfileTab.jsx[22m
+[2m1:00:59 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/AccountProfile/ProfileTab.jsx[22m
+[2m1:01:49 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/AccountProfile/AccountProfile.css[22m
+[2m1:02:54 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/BarriersDrivers/BarriersDrivers.css[22m
+[2m1:17:42 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/AccountProfile/ProfileTab.jsx[22m
+[2m1:18:56 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/AccountProfile/ProfileTab.jsx[22m
+[2m1:38:01 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/AccountProfile/AccountProfile.css[22m
+[2m1:44:09 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/AccountProfile/ProfileTab.jsx[22m
+[2m1:44:37 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/AccountProfile/AccountProfile.css[22m
+[2m1:46:13 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/AccountProfile/AccountProfile.css[22m
+[2m1:48:44 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/AccountProfile/AccountProfile.css[22m
+[2m1:51:54 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/AccountProfile/AccountProfile.css[22m
+[2m1:56:20 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/AccountProfile/ProfileTab.jsx[22m
+[2m1:56:34 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/AccountProfile/AccountProfile.css[22m
+[2m2:12:54 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx, /src/pages/BarriersDrivers/index.jsx, /src/pages/Overview/index.jsx, /src/pages/CriticalActivities/index.jsx, /src/pages/AccountProfile/index.jsx, /src/pages/CrossFunctionalPlan/index.jsx, /src/pages/TeamMembers/index.jsx[22m
+[2m2:12:54 PM[22m [36m[1m[vite][22m[39m [33mhmr invalidate [39m[2m/src/pages/CrossFunctionalPlan/index.jsx[22m Could not Fast Refresh ("canEditPoaBlock" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m2:12:54 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx[22m
+[2m2:18:49 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx, /src/pages/BarriersDrivers/index.jsx, /src/pages/Overview/index.jsx, /src/pages/CriticalActivities/index.jsx, /src/pages/AccountProfile/index.jsx, /src/pages/CrossFunctionalPlan/index.jsx, /src/pages/TeamMembers/index.jsx[22m
+[2m2:18:49 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/AccountProfile/AccountProfile.css[22m
+[2m2:18:49 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx, /src/pages/BarriersDrivers/index.jsx, /src/pages/Overview/index.jsx, /src/pages/CriticalActivities/index.jsx, /src/pages/AccountProfile/index.jsx, /src/pages/CrossFunctionalPlan/index.jsx, /src/pages/TeamMembers/index.jsx[22m
+[2m2:18:49 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx, /src/pages/BarriersDrivers/index.jsx, /src/pages/Overview/index.jsx, /src/pages/CriticalActivities/index.jsx, /src/pages/AccountProfile/index.jsx, /src/pages/CrossFunctionalPlan/index.jsx, /src/pages/TeamMembers/index.jsx[22m
+[2m2:18:49 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/BarriersDrivers/BarriersDrivers.css[22m
+[2m2:18:49 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/AccountProfile/ProfileTab.jsx[22m
+[2m2:18:49 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/styles/main.css[22m
+[2m2:18:49 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/BarriersDrivers/BarriersDrivers.css[22m
+[2m2:18:51 PM[22m [36m[1m[vite][22m[39m [33mhmr invalidate [39m[2m/src/pages/CrossFunctionalPlan/index.jsx[22m Could not Fast Refresh ("canEditPoaBlock" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m2:18:51 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx[22m
+[2m2:19:33 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx[22m
+[2m2:19:33 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx, /src/pages/BarriersDrivers/index.jsx, /src/pages/Overview/index.jsx, /src/pages/CriticalActivities/index.jsx, /src/pages/AccountProfile/index.jsx, /src/pages/CrossFunctionalPlan/index.jsx, /src/pages/TeamMembers/index.jsx[22m
+[2m2:19:33 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx, /src/pages/TeamMembers/index.jsx[22m
+[2m2:19:33 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx[22m
+[2m2:19:33 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx[22m
+[2m2:19:33 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/AccountProfile/ReferralDynamicsTab.jsx[22m
+[2m2:19:33 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx, /src/pages/TeamMembers/index.jsx[22m
+[2m2:19:33 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/BarriersDrivers/BarriersDrivers.css[22m
+[2m2:19:33 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Overview/Overview.css[22m
+[2m2:19:33 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Stakeholders/StakeholderEditModal.jsx[22m
+[2m2:19:33 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/BarriersDrivers/BarriersDrivers.css[22m
+[2m2:19:33 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Overview/Overview.css[22m
+[2m2:19:33 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Stakeholders/StakeholderEditModal.jsx[22m
+[2m2:19:33 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Stakeholders/Stakeholders.css[22m
+[2m2:19:33 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/TeamMembers/TeamMemberEditModal.jsx[22m
+[2m2:19:34 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Stakeholders/Stakeholders.css[22m
+[2m2:19:34 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Stakeholders/index.jsx[22m
+[2m2:19:34 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/TeamMembers/TeamMemberEditModal.jsx[22m
+[2m2:19:34 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/TeamMembers/TeamMembers.css[22m
+[2m2:19:34 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/TeamMembers/index.jsx[22m
+[2m2:19:34 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/styles/main.css[22m
+[2m2:19:34 PM[22m [36m[1m[vite][22m[39m [33mhmr invalidate [39m[2m/src/pages/CrossFunctionalPlan/index.jsx[22m Could not Fast Refresh ("canEditPoaBlock" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m2:19:34 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx[22m
+[2m2:20:26 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx, /src/pages/BarriersDrivers/index.jsx, /src/pages/Overview/index.jsx, /src/pages/CriticalActivities/index.jsx, /src/pages/AccountProfile/index.jsx, /src/pages/CrossFunctionalPlan/index.jsx, /src/pages/TeamMembers/index.jsx, /src/pages/Stakeholders/index.jsx[22m
+[2m2:20:26 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/AccountProfile/AccountProfile.css[22m
+[2m2:20:26 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx, /src/pages/BarriersDrivers/index.jsx, /src/pages/Overview/index.jsx, /src/pages/CriticalActivities/index.jsx, /src/pages/AccountProfile/index.jsx, /src/pages/CrossFunctionalPlan/index.jsx, /src/pages/TeamMembers/index.jsx, /src/pages/Stakeholders/index.jsx[22m
+[2m2:20:26 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx, /src/pages/BarriersDrivers/index.jsx, /src/pages/Overview/index.jsx, /src/pages/CriticalActivities/index.jsx, /src/pages/AccountProfile/index.jsx, /src/pages/CrossFunctionalPlan/index.jsx, /src/pages/TeamMembers/index.jsx, /src/pages/Stakeholders/index.jsx[22m
+[2m2:20:26 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/AccountProfile/ProfileTab.jsx[22m
+[2m2:20:26 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/BarriersDrivers/BarriersDrivers.css[22m
+[2m2:20:26 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/styles/main.css[22m
+[2m2:20:28 PM[22m [36m[1m[vite][22m[39m [33mhmr invalidate [39m[2m/src/pages/CrossFunctionalPlan/index.jsx[22m Could not Fast Refresh ("canEditPoaBlock" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m2:20:28 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx[22m
+[2m2:21:28 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/styles/main.css[22m
+[2m4:21:04 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/styles/main.css[22m
+[2m4:21:22 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Stakeholders/Stakeholders.css[22m
+[2m4:21:47 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/TeamMembers/TeamMembers.css[22m
+[2m4:38:15 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx, /src/pages/BarriersDrivers/index.jsx, /src/pages/Overview/index.jsx, /src/pages/CriticalActivities/index.jsx, /src/pages/AccountProfile/index.jsx, /src/pages/CrossFunctionalPlan/index.jsx, /src/pages/TeamMembers/index.jsx, /src/pages/Stakeholders/index.jsx[22m
+[2m4:38:15 PM[22m [36m[1m[vite][22m[39m [33mhmr invalidate [39m[2m/src/pages/CrossFunctionalPlan/index.jsx[22m Could not Fast Refresh ("canEditPoaBlock" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m4:38:15 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx[22m
+[2m4:38:32 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx, /src/pages/BarriersDrivers/index.jsx, /src/pages/Overview/index.jsx, /src/pages/CriticalActivities/index.jsx, /src/pages/AccountProfile/index.jsx, /src/pages/CrossFunctionalPlan/index.jsx, /src/pages/TeamMembers/index.jsx, /src/pages/Stakeholders/index.jsx[22m
+[2m4:38:32 PM[22m [36m[1m[vite][22m[39m [33mhmr invalidate [39m[2m/src/pages/CrossFunctionalPlan/index.jsx[22m Could not Fast Refresh ("canEditPoaBlock" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m4:38:32 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx[22m
+[2m4:38:48 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx, /src/pages/Stakeholders/index.jsx[22m
+[2m4:38:59 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Stakeholders/index.jsx[22m
+[2m4:39:22 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/AccountProfile/AccountLookupField.jsx[22m
+[2m4:39:50 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Stakeholders/StakeholderEditModal.jsx[22m
+[2m4:40:01 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx, /src/pages/TeamMembers/index.jsx[22m
+[2m4:40:21 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx, /src/pages/BarriersDrivers/index.jsx, /src/pages/Overview/index.jsx, /src/pages/CriticalActivities/index.jsx, /src/pages/AccountProfile/index.jsx, /src/pages/CrossFunctionalPlan/index.jsx, /src/pages/TeamMembers/index.jsx, /src/pages/Stakeholders/index.jsx[22m
+[2m4:40:21 PM[22m [36m[1m[vite][22m[39m [33mhmr invalidate [39m[2m/src/pages/CrossFunctionalPlan/index.jsx[22m Could not Fast Refresh ("canEditPoaBlock" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m4:40:21 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx[22m
+[2m4:40:33 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx, /src/pages/BarriersDrivers/index.jsx, /src/pages/Overview/index.jsx, /src/pages/CriticalActivities/index.jsx, /src/pages/AccountProfile/index.jsx, /src/pages/CrossFunctionalPlan/index.jsx, /src/pages/TeamMembers/index.jsx, /src/pages/Stakeholders/index.jsx[22m
+[2m4:40:34 PM[22m [36m[1m[vite][22m[39m [33mhmr invalidate [39m[2m/src/pages/CrossFunctionalPlan/index.jsx[22m Could not Fast Refresh ("canEditPoaBlock" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m4:40:34 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx[22m
+[2m4:41:25 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/styles/edit-modal.css[22m
+[2m4:42:13 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx, /src/pages/BarriersDrivers/index.jsx, /src/pages/Overview/index.jsx, /src/pages/CriticalActivities/index.jsx, /src/pages/AccountProfile/index.jsx, /src/pages/CrossFunctionalPlan/index.jsx, /src/pages/TeamMembers/index.jsx, /src/pages/Stakeholders/index.jsx[22m
+[2m4:42:14 PM[22m [36m[1m[vite][22m[39m [33mhmr invalidate [39m[2m/src/pages/CrossFunctionalPlan/index.jsx[22m Could not Fast Refresh ("canEditPoaBlock" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m4:42:14 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx[22m
+[2m6:31:19 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/BarriersDrivers/BarrierDriverEditModal.jsx[22m
+[2m6:38:55 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/AccountProfile/ProfileTab.jsx[22m
+[2m6:39:17 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/AccountProfile/AccountProfile.css[22m
+[2m6:39:31 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/AccountProfile/AccountProfile.css[22m
+[2m6:50:27 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/AccountProfile/ProfileTab.jsx[22m
+[2m6:51:00 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/AccountProfile/AccountProfile.css[22m
+[2m6:51:15 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/AccountProfile/AccountProfile.css[22m
+[2m6:59:34 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx, /src/pages/BarriersDrivers/index.jsx, /src/pages/Overview/index.jsx, /src/pages/CriticalActivities/index.jsx, /src/pages/AccountProfile/index.jsx, /src/pages/CrossFunctionalPlan/index.jsx, /src/pages/TeamMembers/index.jsx, /src/pages/Stakeholders/index.jsx[22m
+[2m6:59:34 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx, /src/pages/BarriersDrivers/index.jsx, /src/pages/Overview/index.jsx, /src/pages/CriticalActivities/index.jsx, /src/pages/AccountProfile/index.jsx, /src/pages/CrossFunctionalPlan/index.jsx, /src/pages/TeamMembers/index.jsx, /src/pages/Stakeholders/index.jsx[22m
+[2m6:59:35 PM[22m [36m[1m[vite][22m[39m [33mhmr invalidate [39m[2m/src/pages/CrossFunctionalPlan/index.jsx[22m Could not Fast Refresh ("canEditPoaBlock" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m6:59:35 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx[22m
+[2m6:59:51 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Stakeholders/StakeholderEditModal.jsx[22m
+[2m7:08:11 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx, /src/pages/BarriersDrivers/index.jsx, /src/pages/Overview/index.jsx, /src/pages/CriticalActivities/index.jsx, /src/pages/AccountProfile/index.jsx, /src/pages/CrossFunctionalPlan/index.jsx, /src/pages/TeamMembers/index.jsx, /src/pages/Stakeholders/index.jsx[22m
+[2m7:08:11 PM[22m [36m[1m[vite][22m[39m [33mhmr invalidate [39m[2m/src/pages/CrossFunctionalPlan/index.jsx[22m Could not Fast Refresh ("canEditPoaBlock" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m7:08:11 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx[22m
+[2m7:08:24 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/TeamMembers/TeamMemberEditModal.jsx[22m
+[2m7:27:24 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/AccountProfile/AccountInsightsTab.jsx[22m
+[2m7:27:24 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/AccountProfile/AccountProfile.css[22m
+[2m7:31:00 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/AccountProfile/AccountProfile.css[22m
+[2m7:36:44 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/AccountProfile/ProfileTab.jsx[22m
+[2m7:36:44 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/AccountProfile/AccountProfile.css[22m
+[2m7:37:32 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/AccountProfile/AccountProfile.css[22m
+[2m7:44:09 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Sidebar.css[22m
+[2m7:47:07 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Sidebar.css[22m
+[2m7:53:41 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/AccountProfile/AccountInsightsTab.jsx[22m
+[2m7:53:42 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/AccountProfile/AccountProfile.css[22m
+[2m7:53:42 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Stakeholders/Stakeholders.css[22m
+[2m7:53:42 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/TeamMembers/TeamMembers.css[22m
+[2m7:57:47 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/TeamMembers/TeamMembers.css[22m
+[2m8:06:47 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/AccountProfile/ProfileTab.jsx[22m
+[2m8:07:43 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/AccountProfile/AccountProfile.css[22m
+[2m8:08:14 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/AccountProfile/AccountProfile.css[22m
+[2m8:11:12 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/AccountProfile/AccountProfile.css[22m
+[2m8:13:28 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/AccountProfile/AccountProfile.css[22m
+[2m8:20:31 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/AccountProfile/AccountProfile.css[22m
+[2m8:38:52 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/AccountProfile/AccountProfile.css[22m
+[2m8:39:10 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/AccountProfile/AccountProfile.css[22m
+[2m8:49:45 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/components/Sidebar.css[22m
+[2m9:03:42 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/AccountProfile/ProfileTab.jsx[22m
+[2m9:03:53 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx, /src/pages/BarriersDrivers/index.jsx, /src/pages/Overview/index.jsx, /src/pages/CriticalActivities/index.jsx, /src/pages/AccountProfile/index.jsx, /src/pages/CrossFunctionalPlan/index.jsx, /src/pages/TeamMembers/index.jsx, /src/pages/Stakeholders/index.jsx[22m
+[2m9:03:54 PM[22m [36m[1m[vite][22m[39m [33mhmr invalidate [39m[2m/src/pages/CrossFunctionalPlan/index.jsx[22m Could not Fast Refresh ("canEditPoaBlock" export is incompatible). Learn more at https://github.com/vitejs/vite-plugin-react/tree/main/packages/plugin-react#consistent-components-exports
+[2m9:03:54 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/App.jsx[22m
+[2m9:13:20 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/AccountProfile/AccountProfile.css[22m
+[2m9:13:45 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Stakeholders/StakeholdersTab.jsx[22m
+[2m9:14:10 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/Stakeholders/Stakeholders.css[22m
+[2m9:16:41 PM[22m [36m[1m[vite][22m[39m [32mhmr update [39m[2m/src/pages/AccountProfile/AccountProfile.css[22m

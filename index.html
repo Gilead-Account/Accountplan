@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="data:," />
+    <title>Kite Account Planning - MyInsights</title>
+
+    <!--
+      These two scripts are the Veeva MyInsights runtime. They expose
+      `window.Q` (promise lib) and `window.ds` (data service) which the React
+      app picks up in src/lib/dataservice/client.js.
+
+      In dev (vite dev server), client.js uses local preview data. Production
+      builds require window.ds and load actual Veeva CRM data.
+    -->
+    <script src="./static/q.js"></script>
+    <script src="./static/MyInsightsLibrary.js"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

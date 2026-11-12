@@ -1,0 +1,310 @@
+[2m12:45:56 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\src\pages\AccountProfile\ProfileTab.jsx: Unexpected token, expected "," (99:8)
+
+[0m [90m  97 |[31m           [33m<[31m[33mstrong[31m[33m>[31m{profileDisplay(item)}[33m<[31m[33m/[31m[33mstrong[31m[33m>[31m
+ [90m  98 |[31m         [33m<[31m[33m/[31m[33mdiv[31m[33m>[31m
+[31m[1m>[22m[31m[90m  99 |[31m       ))}
+ [90m     |[31m         [31m[1m^[22m[31m
+ [90m 100 |[31m     [33m<[31m[33m/[31m[33mdiv[31m[33m>[31m
+ [90m 101 |[31m   )[33m;[31m
+ [90m 102 |[31m }[0m[39m
+  Plugin: [35mvite:react-babel[39m
+  File: [36mC:/Users/sl46620/Desktop/New folder/Kite_Code/react_V1/src/pages/AccountProfile/ProfileTab.jsx[39m:99:8
+[33m  100|      </div>
+  101|    );
+  102|  }
+     |   ^
+  103|  
+  104|  function ProfileQuestionRow({ item, draftValue, yesNoOptions, isDirty, onDraftChange }) {[39m
+      at constructor (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:365:19)
+      at JSXParserMixin.raise (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:6616:19)
+      at JSXParserMixin.unexpected (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:6636:16)
+      at JSXParserMixin.expect (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:6916:12)
+      at JSXParserMixin.parseCallExpressionArguments (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11260:14)
+      at JSXParserMixin.parseCoverCallAndAsyncArrowHead (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11203:29)
+      at JSXParserMixin.parseSubscript (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11137:19)
+      at JSXParserMixin.parseSubscripts (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11111:19)
+      at JSXParserMixin.parseExprSubscripts (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11102:17)
+      at JSXParserMixin.parseUpdate (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11083:21)
+      at JSXParserMixin.parseMaybeUnary (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11063:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10916:61)
+      at JSXParserMixin.parseExprOps (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10921:23)
+      at JSXParserMixin.parseMaybeConditional (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10898:23)
+      at JSXParserMixin.parseMaybeAssign (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10848:21)
+      at JSXParserMixin.parseExpressionBase (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10801:23)
+      at C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10797:39
+      at JSXParserMixin.allowInAnd (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:12443:12)
+      at JSXParserMixin.parseExpression (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10797:17)
+      at JSXParserMixin.jsxParseExpressionContainer (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:4644:31)
+      at JSXParserMixin.jsxParseElementAt (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:4723:36)
+      at JSXParserMixin.jsxParseElement (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:4761:17)
+      at JSXParserMixin.parseExprAtom (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:4771:19)
+      at JSXParserMixin.parseExprSubscripts (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11098:23)
+      at JSXParserMixin.parseUpdate (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11083:21)
+      at JSXParserMixin.parseMaybeUnary (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11063:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10916:61)
+      at JSXParserMixin.parseExprOps (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10921:23)
+      at JSXParserMixin.parseMaybeConditional (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10898:23)
+      at JSXParserMixin.parseMaybeAssign (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10848:21)
+      at C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10817:39
+      at JSXParserMixin.allowInAnd (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:12443:12)
+      at JSXParserMixin.parseMaybeAssignAllowIn (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10817:17)
+      at JSXParserMixin.parseMaybeAssignAllowInOrVoidPattern (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:12510:17)
+      at JSXParserMixin.parseParenAndDistinguishExpression (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11692:28)
+      at JSXParserMixin.parseExprAtom (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11348:23)
+      at JSXParserMixin.parseExprAtom (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:4776:20)
+      at JSXParserMixin.parseExprSubscripts (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11098:23)
+      at JSXParserMixin.parseUpdate (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11083:21)
+      at JSXParserMixin.parseMaybeUnary (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11063:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10916:61)
+      at JSXParserMixin.parseExprOps (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10921:23)
+      at JSXParserMixin.parseMaybeConditional (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10898:23)
+      at JSXParserMixin.parseMaybeAssign (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10848:21)
+      at JSXParserMixin.parseExpressionBase (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10801:23)
+      at C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10797:39
+      at JSXParserMixin.allowInAnd (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:12438:16)
+      at JSXParserMixin.parseExpression (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10797:17)
+      at JSXParserMixin.parseReturnStatement (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:13159:28)
+      at JSXParserMixin.parseStatementContent (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:12815:21)
+[2m12:45:56 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\src\pages\AccountProfile\ProfileTab.jsx: Unexpected token, expected "," (99:8)
+
+[0m [90m  97 |[31m           [33m<[31m[33mstrong[31m[33m>[31m{profileDisplay(item)}[33m<[31m[33m/[31m[33mstrong[31m[33m>[31m
+ [90m  98 |[31m         [33m<[31m[33m/[31m[33mdiv[31m[33m>[31m
+[31m[1m>[22m[31m[90m  99 |[31m       ))}
+ [90m     |[31m         [31m[1m^[22m[31m
+ [90m 100 |[31m     [33m<[31m[33m/[31m[33mdiv[31m[33m>[31m
+ [90m 101 |[31m   )[33m;[31m
+ [90m 102 |[31m }[0m[39m
+  Plugin: [35mvite:react-babel[39m
+  File: [36mC:/Users/sl46620/Desktop/New folder/Kite_Code/react_V1/src/pages/AccountProfile/ProfileTab.jsx[39m:99:8
+[33m  100|      </div>
+  101|    );
+  102|  }
+     |   ^
+  103|  
+  104|  function ProfileQuestionRow({ item, draftValue, yesNoOptions, isDirty, onDraftChange }) {[39m
+      at constructor (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:365:19)
+      at JSXParserMixin.raise (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:6616:19)
+      at JSXParserMixin.unexpected (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:6636:16)
+      at JSXParserMixin.expect (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:6916:12)
+      at JSXParserMixin.parseCallExpressionArguments (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11260:14)
+      at JSXParserMixin.parseCoverCallAndAsyncArrowHead (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11203:29)
+      at JSXParserMixin.parseSubscript (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11137:19)
+      at JSXParserMixin.parseSubscripts (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11111:19)
+      at JSXParserMixin.parseExprSubscripts (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11102:17)
+      at JSXParserMixin.parseUpdate (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11083:21)
+      at JSXParserMixin.parseMaybeUnary (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11063:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10916:61)
+      at JSXParserMixin.parseExprOps (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10921:23)
+      at JSXParserMixin.parseMaybeConditional (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10898:23)
+      at JSXParserMixin.parseMaybeAssign (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10848:21)
+      at JSXParserMixin.parseExpressionBase (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10801:23)
+      at C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10797:39
+      at JSXParserMixin.allowInAnd (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:12443:12)
+      at JSXParserMixin.parseExpression (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10797:17)
+      at JSXParserMixin.jsxParseExpressionContainer (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:4644:31)
+      at JSXParserMixin.jsxParseElementAt (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:4723:36)
+      at JSXParserMixin.jsxParseElement (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:4761:17)
+      at JSXParserMixin.parseExprAtom (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:4771:19)
+      at JSXParserMixin.parseExprSubscripts (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11098:23)
+      at JSXParserMixin.parseUpdate (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11083:21)
+      at JSXParserMixin.parseMaybeUnary (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11063:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10916:61)
+      at JSXParserMixin.parseExprOps (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10921:23)
+      at JSXParserMixin.parseMaybeConditional (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10898:23)
+      at JSXParserMixin.parseMaybeAssign (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10848:21)
+      at C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10817:39
+      at JSXParserMixin.allowInAnd (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:12443:12)
+      at JSXParserMixin.parseMaybeAssignAllowIn (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10817:17)
+      at JSXParserMixin.parseMaybeAssignAllowInOrVoidPattern (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:12510:17)
+      at JSXParserMixin.parseParenAndDistinguishExpression (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11692:28)
+      at JSXParserMixin.parseExprAtom (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11348:23)
+      at JSXParserMixin.parseExprAtom (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:4776:20)
+      at JSXParserMixin.parseExprSubscripts (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11098:23)
+      at JSXParserMixin.parseUpdate (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11083:21)
+      at JSXParserMixin.parseMaybeUnary (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11063:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10916:61)
+      at JSXParserMixin.parseExprOps (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10921:23)
+      at JSXParserMixin.parseMaybeConditional (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10898:23)
+      at JSXParserMixin.parseMaybeAssign (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10848:21)
+      at JSXParserMixin.parseExpressionBase (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10801:23)
+      at C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10797:39
+      at JSXParserMixin.allowInAnd (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:12438:16)
+      at JSXParserMixin.parseExpression (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10797:17)
+      at JSXParserMixin.parseReturnStatement (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:13159:28)
+      at JSXParserMixin.parseStatementContent (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:12815:21)
+[2m12:53:07 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\src\pages\AccountProfile\ProfileTab.jsx: Unexpected token (102:6)
+
+[0m [90m 100 |[31m         [33m<[31m[33m/[31m[33mdiv[31m[33m>[31m
+ [90m 101 |[31m         )
+[31m[1m>[22m[31m[90m 102 |[31m       ))}
+ [90m     |[31m       [31m[1m^[22m[31m
+ [90m 103 |[31m     [33m<[31m[33m/[31m[33mdiv[31m[33m>[31m
+ [90m 104 |[31m   )[33m;[31m
+ [90m 105 |[31m }[0m[39m
+  Plugin: [35mvite:react-babel[39m
+  File: [36mC:/Users/sl46620/Desktop/New folder/Kite_Code/react_V1/src/pages/AccountProfile/ProfileTab.jsx[39m:102:6
+[33m  102|        ))}
+  103|      </div>
+  104|    );
+     |     ^
+  105|  }
+  106|  [39m
+      at constructor (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:365:19)
+      at JSXParserMixin.raise (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:6616:19)
+      at JSXParserMixin.unexpected (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:6636:16)
+      at JSXParserMixin.parseExprAtom (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11459:22)
+      at JSXParserMixin.parseExprAtom (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:4776:20)
+      at JSXParserMixin.parseExprSubscripts (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11098:23)
+      at JSXParserMixin.parseUpdate (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11083:21)
+      at JSXParserMixin.parseMaybeUnary (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11063:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10916:61)
+      at JSXParserMixin.parseExprOps (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10921:23)
+      at JSXParserMixin.parseMaybeConditional (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10898:23)
+      at JSXParserMixin.parseMaybeAssign (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10848:21)
+      at JSXParserMixin.parseExpressionBase (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10801:23)
+      at C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10797:39
+      at JSXParserMixin.allowInAnd (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:12438:16)
+      at JSXParserMixin.parseExpression (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10797:17)
+      at JSXParserMixin.parseStatementContent (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:12912:23)
+      at JSXParserMixin.parseStatementLike (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:12784:17)
+      at JSXParserMixin.parseStatementListItem (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:12764:17)
+      at JSXParserMixin.parseBlockOrModuleBlockBody (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:13333:61)
+      at JSXParserMixin.parseBlockBody (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:13326:10)
+      at JSXParserMixin.parseBlock (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:13314:10)
+      at JSXParserMixin.parseFunctionBody (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:12117:24)
+      at JSXParserMixin.parseArrowExpression (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:12092:10)
+      at JSXParserMixin.parseParenAndDistinguishExpression (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11704:12)
+      at JSXParserMixin.parseExprAtom (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11348:23)
+      at JSXParserMixin.parseExprAtom (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:4776:20)
+      at JSXParserMixin.parseExprSubscripts (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11098:23)
+      at JSXParserMixin.parseUpdate (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11083:21)
+      at JSXParserMixin.parseMaybeUnary (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11063:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10916:61)
+      at JSXParserMixin.parseExprOps (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10921:23)
+      at JSXParserMixin.parseMaybeConditional (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10898:23)
+      at JSXParserMixin.parseMaybeAssign (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10848:21)
+      at C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10817:39
+      at JSXParserMixin.allowInAnd (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:12443:12)
+      at JSXParserMixin.parseMaybeAssignAllowIn (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10817:17)
+      at JSXParserMixin.parseMaybeAssignAllowInOrVoidPattern (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:12510:17)
+      at JSXParserMixin.parseExprListItem (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:12192:18)
+      at JSXParserMixin.parseCallExpressionArguments (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11269:22)
+      at JSXParserMixin.parseCoverCallAndAsyncArrowHead (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11203:29)
+      at JSXParserMixin.parseSubscript (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11137:19)
+      at JSXParserMixin.parseSubscripts (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11111:19)
+      at JSXParserMixin.parseExprSubscripts (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11102:17)
+      at JSXParserMixin.parseUpdate (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11083:21)
+      at JSXParserMixin.parseMaybeUnary (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11063:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10916:61)
+      at JSXParserMixin.parseExprOps (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10921:23)
+      at JSXParserMixin.parseMaybeConditional (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10898:23)
+      at JSXParserMixin.parseMaybeAssign (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10848:21)
+[2m12:53:07 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\src\pages\AccountProfile\ProfileTab.jsx: Unexpected token (102:6)
+
+[0m [90m 100 |[31m         [33m<[31m[33m/[31m[33mdiv[31m[33m>[31m
+ [90m 101 |[31m         )
+[31m[1m>[22m[31m[90m 102 |[31m       ))}
+ [90m     |[31m       [31m[1m^[22m[31m
+ [90m 103 |[31m     [33m<[31m[33m/[31m[33mdiv[31m[33m>[31m
+ [90m 104 |[31m   )[33m;[31m
+ [90m 105 |[31m }[0m[39m
+  Plugin: [35mvite:react-babel[39m
+  File: [36mC:/Users/sl46620/Desktop/New folder/Kite_Code/react_V1/src/pages/AccountProfile/ProfileTab.jsx[39m:102:6
+[33m  102|        ))}
+  103|      </div>
+  104|    );
+     |     ^
+  105|  }
+  106|  [39m
+      at constructor (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:365:19)
+      at JSXParserMixin.raise (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:6616:19)
+      at JSXParserMixin.unexpected (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:6636:16)
+      at JSXParserMixin.parseExprAtom (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11459:22)
+      at JSXParserMixin.parseExprAtom (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:4776:20)
+      at JSXParserMixin.parseExprSubscripts (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11098:23)
+      at JSXParserMixin.parseUpdate (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11083:21)
+      at JSXParserMixin.parseMaybeUnary (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11063:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10916:61)
+      at JSXParserMixin.parseExprOps (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10921:23)
+      at JSXParserMixin.parseMaybeConditional (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10898:23)
+      at JSXParserMixin.parseMaybeAssign (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10848:21)
+      at JSXParserMixin.parseExpressionBase (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10801:23)
+      at C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10797:39
+      at JSXParserMixin.allowInAnd (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:12438:16)
+      at JSXParserMixin.parseExpression (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10797:17)
+      at JSXParserMixin.parseStatementContent (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:12912:23)
+      at JSXParserMixin.parseStatementLike (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:12784:17)
+      at JSXParserMixin.parseStatementListItem (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:12764:17)
+      at JSXParserMixin.parseBlockOrModuleBlockBody (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:13333:61)
+      at JSXParserMixin.parseBlockBody (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:13326:10)
+      at JSXParserMixin.parseBlock (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:13314:10)
+      at JSXParserMixin.parseFunctionBody (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:12117:24)
+      at JSXParserMixin.parseArrowExpression (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:12092:10)
+      at JSXParserMixin.parseParenAndDistinguishExpression (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11704:12)
+      at JSXParserMixin.parseExprAtom (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11348:23)
+      at JSXParserMixin.parseExprAtom (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:4776:20)
+      at JSXParserMixin.parseExprSubscripts (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11098:23)
+      at JSXParserMixin.parseUpdate (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11083:21)
+      at JSXParserMixin.parseMaybeUnary (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11063:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10916:61)
+      at JSXParserMixin.parseExprOps (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10921:23)
+      at JSXParserMixin.parseMaybeConditional (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10898:23)
+      at JSXParserMixin.parseMaybeAssign (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10848:21)
+      at C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10817:39
+      at JSXParserMixin.allowInAnd (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:12443:12)
+      at JSXParserMixin.parseMaybeAssignAllowIn (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10817:17)
+      at JSXParserMixin.parseMaybeAssignAllowInOrVoidPattern (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:12510:17)
+      at JSXParserMixin.parseExprListItem (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:12192:18)
+      at JSXParserMixin.parseCallExpressionArguments (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11269:22)
+      at JSXParserMixin.parseCoverCallAndAsyncArrowHead (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11203:29)
+      at JSXParserMixin.parseSubscript (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11137:19)
+      at JSXParserMixin.parseSubscripts (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11111:19)
+      at JSXParserMixin.parseExprSubscripts (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11102:17)
+      at JSXParserMixin.parseUpdate (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11083:21)
+      at JSXParserMixin.parseMaybeUnary (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:11063:23)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10916:61)
+      at JSXParserMixin.parseExprOps (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10921:23)
+      at JSXParserMixin.parseMaybeConditional (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10898:23)
+      at JSXParserMixin.parseMaybeAssign (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\@babel\parser\lib\index.js:10848:21)
+[2m2:20:27 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: [postcss] C:/Users/sl46620/Desktop/New folder/Kite_Code/react_V1/src/styles/main.css:9392:1: Unknown word >>>>>>>[39m
+  Plugin: [35mvite:css[39m
+  File: [36mC:/Users/sl46620/Desktop/New folder/Kite_Code/react_V1/src/styles/main.css[39m:9392:0
+[33m  9390|          grid-template-columns: 1fr !important;
+  9391|          max-width: none !important;
+  9392|  >>>>>>> Stashed changes
+     |  ^
+  9393|      }
+  9394|  }[39m
+      at Input.error (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\postcss\lib\input.js:135:16)
+      at Parser.unknownWord (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\postcss\lib\parser.js:602:22)
+      at Parser.other (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\postcss\lib\parser.js:444:12)
+      at Parser.parse (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\postcss\lib\parser.js:479:16)
+      at parse (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\postcss\lib\parse.js:11:12)
+      at new LazyResult (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\postcss\lib\lazy-result.js:165:16)
+      at Processor.process (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\postcss\lib\processor.js:53:14)
+      at compileCSS (file:///C:/Users/sl46620/Desktop/New%20folder/Kite_Code/react_V1/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:36898:59)
+      at async TransformPluginContext.transform (file:///C:/Users/sl46620/Desktop/New%20folder/Kite_Code/react_V1/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:36171:11)
+      at async PluginContainer.transform (file:///C:/Users/sl46620/Desktop/New%20folder/Kite_Code/react_V1/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49099:18)
+      at async loadAndTransform (file:///C:/Users/sl46620/Desktop/New%20folder/Kite_Code/react_V1/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:51978:27)
+      at async viteTransformMiddleware (file:///C:/Users/sl46620/Desktop/New%20folder/Kite_Code/react_V1/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:62106:24)
+[2m2:20:31 PM[22m [31m[1m[vite][22m[39m [31mInternal server error: [postcss] C:/Users/sl46620/Desktop/New folder/Kite_Code/react_V1/src/styles/main.css:9392:1: Unknown word >>>>>>>[39m
+  Plugin: [35mvite:css[39m
+  File: [36mC:/Users/sl46620/Desktop/New folder/Kite_Code/react_V1/src/styles/main.css[39m:9392:0
+[33m  9390|          grid-template-columns: 1fr !important;
+  9391|          max-width: none !important;
+  9392|  >>>>>>> Stashed changes
+     |  ^
+  9393|      }
+  9394|  }[39m
+      at Input.error (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\postcss\lib\input.js:135:16)
+      at Parser.unknownWord (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\postcss\lib\parser.js:602:22)
+      at Parser.other (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\postcss\lib\parser.js:444:12)
+      at Parser.parse (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\postcss\lib\parser.js:479:16)
+      at parse (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\postcss\lib\parse.js:11:12)
+      at new LazyResult (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\postcss\lib\lazy-result.js:165:16)
+      at Processor.process (C:\Users\sl46620\Desktop\New folder\Kite_Code\react_V1\node_modules\postcss\lib\processor.js:53:14)
+      at compileCSS (file:///C:/Users/sl46620/Desktop/New%20folder/Kite_Code/react_V1/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:36898:59)
+      at async TransformPluginContext.transform (file:///C:/Users/sl46620/Desktop/New%20folder/Kite_Code/react_V1/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:36171:11)
+      at async PluginContainer.transform (file:///C:/Users/sl46620/Desktop/New%20folder/Kite_Code/react_V1/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:49099:18)
+      at async loadAndTransform (file:///C:/Users/sl46620/Desktop/New%20folder/Kite_Code/react_V1/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:51978:27)
+      at async viteTransformMiddleware (file:///C:/Users/sl46620/Desktop/New%20folder/Kite_Code/react_V1/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:62106:24)
