@@ -1,0 +1,431 @@
+.modal-scrim.executive-summary-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 240;
+    display: grid;
+    place-items: center;
+    align-items: center;
+    justify-items: center;
+    overflow: hidden;
+    padding: 22px;
+    background: rgba(8, 24, 36, 0.66);
+    backdrop-filter: blur(2px);
+}
+
+.executive-summary-modal {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    width: min(1120px, calc(100vw - 44px));
+    max-height: min(92vh, 980px);
+    overflow: hidden;
+    border: 1px solid rgba(126, 182, 205, 0.8);
+    border-radius: 10px;
+    background: #f8fbfd;
+    box-shadow: 0 24px 62px rgba(0, 38, 58, 0.28);
+}
+
+.executive-summary-modal-head {
+    position: sticky;
+    top: 0;
+    z-index: 4;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 16px 18px;
+    border-bottom: 1px solid #c7dfeb;
+    background: #ffffff;
+}
+
+.executive-summary-modal-head > div:first-child {
+    min-width: 0;
+}
+
+.executive-summary-modal-head span {
+    color: #537082;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.executive-summary-modal-head h2 {
+    margin: 2px 0 0;
+    color: #073047;
+    font-size: 22px;
+    line-height: 1.12;
+    overflow-wrap: anywhere;
+}
+
+.executive-summary-modal-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 0 0 auto;
+}
+
+.executive-summary-pdf-button {
+    position: sticky;
+    top: 14px;
+    z-index: 5;
+    min-height: 36px;
+    padding: 0 16px;
+    border-radius: 999px;
+    font-weight: 850;
+}
+
+.executive-summary-close-button {
+    display: inline-grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border: 1px solid #c7dce8;
+    border-radius: 999px;
+    background: #ffffff;
+    color: #355467;
+    font-size: 16px;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+.executive-summary-modal-body {
+    min-height: 0;
+    overflow-y: auto;
+    padding: 18px;
+}
+
+.executive-summary-page {
+    display: grid;
+    gap: 16px;
+}
+
+.executive-summary-hero,
+.executive-summary-section,
+.executive-summary-table-section {
+    border: 1px solid #d8e7ef;
+    border-radius: 8px;
+    background: #ffffff;
+    box-shadow: 0 8px 22px rgba(31, 84, 105, 0.06);
+}
+
+.executive-summary-hero {
+    padding: 20px 22px;
+    border-top: 5px solid #005f9e;
+}
+
+.executive-summary-hero h1 {
+    margin: 0 0 8px;
+    color: #061d33;
+    font-size: 28px;
+    line-height: 1.08;
+}
+
+.executive-summary-hero p {
+    margin: 0;
+    color: #435f72;
+    font-size: 14px;
+    line-height: 1.35;
+}
+
+.executive-summary-section,
+.executive-summary-table-section {
+    display: grid;
+    gap: 12px;
+    padding: 16px;
+}
+
+.executive-summary-section h2,
+.executive-summary-table-section h3 {
+    margin: 0;
+    color: #073047;
+    font-size: 16px;
+    line-height: 1.2;
+}
+
+.executive-summary-key-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+}
+
+.executive-summary-key-item {
+    display: grid;
+    gap: 5px;
+    min-height: 64px;
+    padding: 10px 12px;
+    border: 1px solid #d9e8ef;
+    border-radius: 8px;
+    background: #f7fbfd;
+}
+
+.executive-summary-key-item span {
+    color: #587284;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.executive-summary-key-item strong {
+    color: #082338;
+    font-size: 13px;
+    line-height: 1.2;
+}
+
+.executive-summary-card-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.executive-summary-card {
+    display: grid;
+    gap: 8px;
+    min-width: 0;
+    padding: 14px;
+    border: 1px solid #d9e8ef;
+    border-radius: 8px;
+    background: #f8fbfd;
+}
+
+.executive-summary-card h3 {
+    margin: 0;
+    color: #005f86;
+    font-size: 14px;
+    line-height: 1.2;
+}
+
+.executive-summary-card p {
+    margin: 0;
+    color: #213847;
+    font-size: 13px;
+    line-height: 1.45;
+    white-space: pre-line;
+}
+
+.executive-summary-poa-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.executive-summary-count-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+}
+
+.executive-summary-count-column {
+    display: grid;
+    gap: 10px;
+    min-width: 0;
+    padding: 12px;
+    border: 1px solid #d9e8ef;
+    border-radius: 8px;
+    background: #f8fbfd;
+}
+
+.executive-summary-count-column h3 {
+    margin: 0;
+    color: #005f86;
+    font-size: 14px;
+}
+
+.executive-summary-count-list {
+    display: grid;
+    gap: 8px;
+}
+
+/* Executive summary count columns stay top-aligned on iPad.
+   MyInsights/iPad shells can stretch grid children; keep both columns and
+   their row lists pinned to the top so shorter Driver lists do not float. */
+.modal-scrim.executive-summary-overlay .executive-summary-count-grid {
+    align-items: start !important;
+}
+
+.modal-scrim.executive-summary-overlay .executive-summary-count-column {
+    align-content: start !important;
+    align-self: start !important;
+    grid-template-rows: auto auto;
+}
+
+.modal-scrim.executive-summary-overlay .executive-summary-count-list {
+    align-content: start !important;
+}
+
+.executive-summary-count-row {
+    display: grid;
+    gap: 3px;
+    padding: 10px;
+    border: 1px solid #e0ecf2;
+    border-radius: 7px;
+    background: #ffffff;
+}
+
+.executive-summary-count-row strong {
+    color: #082338;
+    font-size: 13px;
+    line-height: 1.25;
+}
+
+.executive-summary-count-row span,
+.executive-summary-count-row em {
+    color: #536d7d;
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+.executive-summary-table {
+    display: grid;
+    min-width: 0;
+    overflow-x: auto;
+    border: 1px solid #cfe0e9;
+    border-radius: 8px;
+}
+
+.executive-summary-table-head,
+.executive-summary-table-row {
+    display: grid;
+    min-width: 100%;
+}
+
+.executive-summary-stakeholder-table .executive-summary-table-head,
+.executive-summary-stakeholder-table .executive-summary-table-row {
+    grid-template-columns: minmax(124px, 1fr) 116px 116px minmax(280px, 2.8fr);
+}
+
+.executive-summary-activity-table .executive-summary-table-head,
+.executive-summary-activity-table .executive-summary-table-row {
+    grid-template-columns: minmax(150px, 1.4fr) minmax(130px, 1.1fr) 78px 88px minmax(104px, 1fr) 88px 102px;
+}
+
+.executive-summary-team-table .executive-summary-table-head,
+.executive-summary-team-table .executive-summary-table-row {
+    grid-template-columns: minmax(160px, 1.1fr) minmax(190px, 1.25fr) 86px 110px;
+}
+
+/* Executive summary barrier-driver comment width pass.
+   Short fields stay compact while Comments gets most of the table width. */
+.summary-open-bd-table .executive-summary-table-head,
+.summary-open-bd-table .executive-summary-table-row {
+    grid-template-columns: minmax(56px, 0.52fr) minmax(110px, 1fr) minmax(64px, 0.58fr) minmax(90px, 0.82fr) minmax(76px, 0.7fr) minmax(62px, 0.56fr) minmax(250px, 2.7fr);
+}
+
+.executive-summary-table-head {
+    background: #005f86;
+}
+
+.executive-summary-table-head span {
+    display: flex;
+    align-items: center;
+    min-height: 34px;
+    padding: 8px 9px;
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 900;
+    line-height: 1.1;
+    text-transform: uppercase;
+}
+
+.executive-summary-table-row {
+    background: #ffffff;
+    border-top: 1px solid #dce8ef;
+}
+
+.executive-summary-table-row:nth-child(odd) {
+    background: #f7fbfd;
+}
+
+.executive-summary-table-row span {
+    min-width: 0;
+    padding: 9px;
+    color: #243c4d;
+    font-size: 12px;
+    line-height: 1.32;
+    overflow-wrap: anywhere;
+}
+
+.executive-summary-empty,
+.executive-summary-empty-row {
+    margin: 0;
+    padding: 14px;
+    color: #667b89;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+.executive-summary-state {
+    display: grid;
+    justify-items: center;
+    gap: 12px;
+    min-height: 320px;
+    align-content: center;
+    color: #435f72;
+}
+
+.executive-summary-state.error {
+    justify-items: start;
+    min-height: 160px;
+    padding: 18px;
+    border: 1px solid #f0b4ac;
+    border-radius: 8px;
+    background: #fff7f5;
+    color: #842f22;
+}
+
+@media (max-width: 900px) {
+    .executive-summary-overlay {
+        padding: 12px;
+    }
+
+    .executive-summary-modal {
+        width: calc(100vw - 24px);
+        max-height: 94vh;
+    }
+
+    .executive-summary-modal-head {
+        align-items: flex-start;
+        padding: 14px;
+    }
+
+    .executive-summary-modal-head h2 {
+        font-size: 18px;
+    }
+
+    .executive-summary-modal-actions {
+        gap: 8px;
+    }
+
+    .executive-summary-pdf-button {
+        min-height: 34px;
+        padding: 0 12px;
+        font-size: 12px;
+        white-space: nowrap;
+    }
+
+    .executive-summary-modal-body {
+        padding: 12px;
+    }
+
+    .executive-summary-card-grid,
+    .executive-summary-count-grid,
+    .executive-summary-poa-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .executive-summary-key-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .executive-summary-hero h1 {
+        font-size: 22px;
+    }
+}
+
+@media (max-width: 640px) {
+    .executive-summary-key-grid {
+        grid-template-columns: 1fr;
+    }
+}
