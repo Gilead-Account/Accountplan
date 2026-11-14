@@ -71,8 +71,6 @@ const PLAN_FIELDS_BASE = [
   'KPH_Approval_Status__c',
   'KPH_Is_Submitted__c',
   'KPH_Dry_Run_Date__c',
-  'KPH_Potential_ATC__c',
-  'KPH_Account_Phase__c',
 ];
 
 export const PLAN_FIELDS = isOnline()
@@ -312,8 +310,6 @@ export const toPlanShape = (r) => {
     ownerName: null,
     accountId: r.Account_vod__c,
     dryRunDate: r.KPH_Dry_Run_Date__c || null,
-    potentialAtc: toBooleanFlag(r.KPH_Potential_ATC__c),
-    accountPhase: r.KPH_Account_Phase__c || null,
     // Filled in by fetchAccount() after the Account row loads.
     accountName: null,
     lastPodMeetingDate: r.KPH_Last_POD_Meeting__c || r.LastActivityDate || null,
@@ -584,6 +580,37 @@ const shellContextKey = (planId, planFields = PLAN_FIELDS) => {
   return `${normalizedPlanId}|${(planFields || PLAN_FIELDS).join(',')}`;
 };
 
+// Potential ATC (pre-auth) flag + account phase for the iPad shell.
+// KPH_Potential_ATC__c lives on ACCOUNT (not Account_Plan_vod__c); querying it on
+// the plan fails the whole page ("getFieldLabel called with field that cannot be
+// accessed", code 21). Each field is queried on its own and fails soft, so a
+// missing FLS can never break the page load.
+const fetchPotentialAtcContext = async (planId, accountId) => {
+  const debug = {};
+  const safe = async (key, object, field, idValue) => {
+    const where = buildIdMatchWhere('Id', idValue);
+    debug[key] = { object, field, where };
+    if (!where) return null;
+    try {
+      const rows = await runQuery({ object, fields: ['Id', field], where, limit: 1 });
+      debug[key].response = rows;
+      return unwrap(rows[0])?.[field] ?? null;
+    } catch (e) {
+      debug[key].error = e?.message || String(e);
+      return null;
+    }
+  };
+  const [atc, phase] = await Promise.all([
+    safe('potentialAtc', 'Account', 'KPH_Potential_ATC__c', accountId),
+    safe('accountPhase', 'Account_Plan_vod__c', 'KPH_Account_Phase__c', planId),
+  ]);
+  return {
+    potentialAtc: toBooleanFlag(atc),
+    accountPhase: phase || null,
+    debug,
+  };
+};
+
 /**
  * Plan + parent Account resolution shared across page loaders. Every page
  * needs the sidebar/header values, so this avoids duplicating the
@@ -595,6 +622,10 @@ const buildShellContextForPlanId = async (planId, planFields = PLAN_FIELDS) => {
   if (!planRow) throw new Error(`Account Plan ${planId} not found.`);
   const plan = toPlanShape(planRow);
   const account = await fetchAccount(plan.accountId);
+  const atcContext = await fetchPotentialAtcContext(planRow.Id || planId, plan.accountId);
+  plan.potentialAtc = atcContext.potentialAtc;
+  plan.accountPhase = atcContext.accountPhase;
+  plan.potentialAtcDebug = atcContext.debug;
   // Canonical-form plan ID — every plan-scoped child query downstream should
   // use this, then wrap it in `buildIdMatchWhere` to still hit 15-char fields.
   const canonicalPlanId = toCanonicalSalesforceId(planRow.Id) || planRow.Id || planId;
