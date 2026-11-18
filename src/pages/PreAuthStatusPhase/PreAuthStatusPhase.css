@@ -24,7 +24,7 @@
   background: #dedede;
   color: #000;
   text-align: center;
-  padding: 16px 10px;
+  padding: 13px 10px;
   font-size: 14px;
   font-weight: 500;
   margin-right: 25px;
@@ -34,7 +34,7 @@
   content: '';
   position: absolute;
   top: 0;
-  right: -20px;
+  right: -19px;
   width: 0;
   height: 0;
   border-top: 25px solid transparent;
@@ -107,18 +107,6 @@ span.dryrun-date {
 }
 
 
-.preauth-step {
-  flex: 1;
-  position: relative;
-  background: #dedede;
-  color: #2e4a62;
-  text-align: center;
-  padding: 16px 10px;
-  font-size: 14px;
-  font-weight: 500;
-  margin-right: 25px;
-  transition: all 0.3s ease;
-}
 
 .preauth-step.active {
   background: #005fb2;

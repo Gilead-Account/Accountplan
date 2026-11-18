@@ -5,10 +5,12 @@ import { nextTableSort, stableSortRows, toDateSortValue } from '@/lib/helper/tab
 import { usePageFilterState } from '@/lib/ui/pageFilterState';
 import { PotentialAtcContext } from '../../lib/dataservice/accountPlan/PotentialAtcContext';
 
-const INSIGHT_TABLE_COLUMNS = [
+const getInsightTableColumns = (isPotentialAtc) => [
   { key: 'insightText', label: 'Insight' },
-  { key: 'indication', label: 'Indication'},
-  { key: 'insightCategory', label: 'Insight Category' },
+  { key: 'indication', label: 'Indication' },
+  ...(isPotentialAtc
+    ? [{ key: 'insightCategory', label: 'Insight Category' }]
+    : []),
   { key: 'createdDate', label: 'Created Date' },
   { key: 'createdBy', label: 'Created By' },
 ];
@@ -102,6 +104,11 @@ export default function AccountInsightsTab({ insights, onAdd, onEdit, isReadOnly
   );
   const handleSort = (key) => setSort((current) => nextTableSort(current, key));
   const isPotentialAtc = useContext(PotentialAtcContext);
+const insightTableColumns = useMemo(
+  () => getInsightTableColumns(isPotentialAtc),
+  [isPotentialAtc]
+);
+
   return (
     <div className="account-profile-workbook">
       {/* Filter toolbar — same Critical-Activities / Stakeholders shape:
@@ -155,7 +162,7 @@ export default function AccountInsightsTab({ insights, onAdd, onEdit, isReadOnly
           blue left-stripe accent. */}
       <article className="mock-card stakeholder-table-card account-insight-table-card">
         <div className="account-insight-table-head">
-          {INSIGHT_TABLE_COLUMNS.map((column) => (
+          {insightTableColumns.map((column) => (
             <span key={column.key}>
               <TableSortButton column={column} sort={sort} onSort={handleSort} />
             </span>
@@ -166,7 +173,7 @@ export default function AccountInsightsTab({ insights, onAdd, onEdit, isReadOnly
           <div className="account-insight-table-row" key={insight.id}>
             <span><strong>{insight.insightText || insight.name || 'Insight'}</strong></span>
             <span>{insight.indication || '-'}</span>
-             <span>{insight.insightCategory || '-'}</span>
+            {isPotentialAtc &&( <span>{insight.insightCategory || '-'}</span>)}
             <span>{formatDateLabel(insight.insightDate, '-')}</span>
             <span>{insight.createdBy || '-'}</span>
             <span className="stakeholder-row-actions">

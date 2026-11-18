@@ -6,8 +6,6 @@ import { isAccountPlanPendingManagerApproval } from '@/lib/accountPlanApprovalAs
 import { nextTableSort, stableSortRows, toDateSortValue } from '@/lib/helper/tableSort';
 import { formatDate, mergeWithDataValues  } from '@/lib/helper/utils';
 import { fetchDynamicPicklists, fetchPotentialAtc } from '../lib/dataservice/accountPlan/potentialAtc';
-import { toBoolean } from '../lib/dataservice/query';
-import { debugLog } from '../lib/dataservice/debugLog';
 
 const EMPTY_ROWS = [];
 const LOADER_MIN_DURATION_MS = 2500;                                                                                                                                             
@@ -38,12 +36,12 @@ const PENDING_APPROVAL_COLUMNS = [
   { key: 'lastAccountInsightUpdate', label: 'Last Account Insight Update', type: 'date' },
   {
     key: 'lastAdditionalCriticalActivityUpdate',
-    label: 'Last Additional Critical Activity Update',
+    label: 'Last Critical Activity Update',
     type: 'date',
   },
   {
     key: 'lastBarrierTacticalActionUpdate',
-    label: 'Last Barrier & Tactical Action Update',
+    label: 'Last Barrier & Driver Update',
     type: 'date',
   },
 ];
@@ -52,23 +50,23 @@ const PRE_AUTHORIZATION_COLUMNS = [
   { key: 'name', label: 'Account Plan Name' },
   //{ key: 'potentialAtc', label: 'Potential ATC'},
   { key: 'ownerName', label: 'Owner Name' },
-  { key: 'dryRunDate', label: 'Dry Run DATE' },
   //{ key: 'comments', label: 'Comments' },
-  { key: 'territory', label: 'Territory' },
-  //{ key: 'planStatus', label: 'Plan Status' },
-  //{ key: 'centerClassification ', label: 'Center Classification'},
+  // { key: 'kadTerritoryDescription', label: 'KAD Territory Description' },
+  // { key: 'ctamTerritoryDescription', label: 'CTAM Territory Description' },
+  { key: 'territoryDescription', label: 'Territory Description' },
   { key: 'accountPhase', label: 'Account Phase'},
   { key: 'lastAccountInsightUpdate', label: 'Last Account Insight Update', type: 'date' },
   {
     key: 'lastAdditionalCriticalActivityUpdate',
-    label: 'Last Additional Critical Activity Update',
+    label: 'Last Critical Activity Update',
     type: 'date',
   },
   {
     key: 'lastBarrierTacticalActionUpdate',
-    label: 'Last Barrier & Tactical Action Update',
+    label: 'Last Barrier & Driver Update',
     type: 'date',
-  }
+  },
+   { key: 'dryRunDate', label: 'Dry Run DATE' },
 ];
 
 const LAUNCHER_COLUMN_BY_KEY = new Map(
@@ -214,7 +212,7 @@ export default function AccountPlanLauncher({ onSelectPlan, isCtamManager = fals
     .then((data) => {
       if (alive) {
         setPreAuthorizationRows(data || []);
-        //const potentialdata = data.potentialAtc;
+        const potentialdata = data.potentialAtc;
       }
     })
     .catch((err) => {
@@ -291,10 +289,6 @@ const userPickedTab =useRef(false);
   const isAccountPlanlisTab = currentTab=== ACCOUNT_PLAN_LIST_TAB;
   const tabRows = useMemo(()=>( isApprovalTab ? approvalRows : isPreAuthorizationTab ? preAuthorizationRows : rows).map(normalizaRow),
   [isAccountPlanlisTab, isPreAuthorizationTab,approvalRows,preAuthorizationRows,rows]);
-  const potentailAtcPlanIds =useMemo(
-    ()=> new Set(preAuthorizationRows.map((r)=>String(r?.id ??''))),
-    [preAuthorizationRows]
-  )
   const visibleColumns = isApprovalTab ? PENDING_APPROVAL_COLUMNS: isPreAuthorizationTab ? PRE_AUTHORIZATION_COLUMNS : ACCOUNT_PLAN_LAUNCHER_COLUMNS;
   
 const handleFilterChange = (fieldApiName,value) => {
@@ -353,7 +347,6 @@ const filteredRows = useMemo(() => {
         row.potentialAtc,
         row.centerClassification,
         row.accountPhase,
-        row.dryRunDate,
       ]
         .filter(Boolean)
         .some((value) => String(value).toLowerCase().includes(term))
@@ -504,9 +497,9 @@ const filteredRows = useMemo(() => {
 
         {status === 'ready' && visibleRows.length > 0 && (!isApprovalTab || approvalEmailStatus === 'ready') && (
           <div
-            className={`account-plan-launcher-table${isApprovalTab ? ' is-approval' : ''}`}
+            className={`account-plan-launcher-table${isApprovalTab ? ' is-approval' : ''} ${isPreAuthorizationTab ?'is-preauth':''}`}
             role="table"
-            aria-label={isApprovalTab ? 'Account Plans pending my approval' : 'Account Plans'}
+            aria-label={isApprovalTab ? 'Account Plans pending my approval' : isPreAuthorizationTab ? 'Accounts for PreAuth' : 'Account Plans'}
           >
             <div className="account-plan-launcher-row is-head" role="row">
               {visibleColumns.map((column) => (
@@ -540,17 +533,12 @@ const filteredRows = useMemo(() => {
                     type="button"
                     className="account-plan-launcher-open"
                     aria-label={`Open ${plan.name}`}
-                    onClick={() => {
-                      const payload={
-                        ...plan,
-                          constisPotentialAtc: toBoolean(plan.potentialAtc) || potentailAtcPlanIds.has(String(plan.id)),
+                    onClick={() => onSelectPlan?.({
+                          ...plan,
+                          isPotentialAtc: plan.potentialAtc === true,
                           currentPhase: plan.accountPhase,
-                      }
-                          debugLog('[PotentialAtc] Open clicked Payoad:', JSON.stringify(payload, null,2))
-                      onSelectPlan?.(payload);
+                        })
                         }
-                    
-                  }
                   >
                     Open
                   </button>

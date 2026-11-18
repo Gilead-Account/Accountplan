@@ -53,8 +53,9 @@ import {
 } from '@/pages/CriticalActivities/LinkedBarrierDriverStatusPrompt';
 import TeamMemberEditModal from '@/pages/TeamMembers/TeamMemberEditModal';
 import PreAuthStatusPhase from '../PreAuthStatusPhase';
-import { AccountPhaseContext, DryRunDateContext, PotentialAtcContext } from '../../lib/dataservice/accountPlan/PotentialAtcContext';
-
+import { AccountPhaseContext, DryRunDateContext, IpadViewContext, PotentialAtcContext } from '../../lib/dataservice/accountPlan/PotentialAtcContext';
+const VIEW_COMPONENTS ={preauth:PreAuthStatusPhase}
+const normalizeKey = (v) => String(v??'').toLowerCase().replace(/[^a-z0-9]/g , '')
 const recordValue = (value) =>
   value && typeof value === 'object' && 'value' in value ? value.value : value;
 
@@ -201,8 +202,15 @@ export default function Overview({
   const [isGoalsModalOpen, setIsGoalsModalOpen] = useState(false);
   const [isSavingGoals, setIsSavingGoals] = useState(false);
   const [goalsError, setGoalsError] = useState('');
-  const isPotentialAtc = useContext(PotentialAtcContext);
-  const accountPhase = useContext(AccountPhaseContext);
+  const contextPotentialAtc = useContext(PotentialAtcContext);
+  const contextAccountPhase = useContext(AccountPhaseContext)
+  const contextDryRunDate = useContext(DryRunDateContext)
+  const isPotentialAtc = contextPotentialAtc === true || data?.plan?.potentialAtc === true;
+  const accountPhase = contextAccountPhase || data?.plan?.accountPhase || null;
+  const dryRunDate = contextDryRunDate || data?.plan?.dryRunDate || null;
+
+  const ipadView = useContext(IpadViewContext);
+  const ViewComponent = VIEW_COMPONENTS[normalizeKey(ipadView)]
   // Three inline edit modals (the user can click any record on Home without
   // navigating to its dedicated page).
   const [bdEditState, setBdEditState] = useState(null); // { record }
@@ -220,7 +228,7 @@ export default function Overview({
   const [selectedPlan, setSelectedPlan] = useState();
   const [memberEditState, setMemberEditState] = useState(null); // { member }
   const editingMemberId = memberEditState?.member?.id || null;
-  const dryRundate = useContext(DryRunDateContext);
+ const dryRundate = useContext(DryRunDateContext);
 
   useEffect(() => {
     setCustomerGoals(data.customerGoals || '');
@@ -705,18 +713,46 @@ export default function Overview({
 
   return (
     <section className="page page-home mock-home-page">
-      <AccountStrip plan={data.plan} account={data.account} header={data.header} />
-     
-      {isPotentialAtc && (
+      {!isPotentialAtc  && (<AccountStrip plan={data.plan} account={data.account} header={data.header} />)}
+      {isPotentialAtc && ViewComponent && (
+        <ViewComponent
+         currentPhase={accountPhase}
+         dryRunDate={dryRundate || data?.plan?.dryRunDate || null}
+        />
+      )}
+      {isPotentialAtc  && (
         <PreAuthStatusPhase
-         currentPhase={accountPhase || data?.account?.PreAuthStatusPhases}
-         dryRunDate={dryRundate}
+         currentPhase={accountPhase}
+         dryRunDate={dryRundate || data?.plan?.dryRunDate || null}
         />
       )}
       <div className="mock-home-top-grid">
         <ServiceLineGoals customerGoals={customerGoals} onEdit={isReadOnly ? null : handleEditGoals} />
         <KiteStrategy dlbcl={data.strategies.dlbcl} mm={data.strategies.mm} />
       </div>
+      {/* <pre
+          style={{
+            marginTop: 8,
+            maxHeight: 220,
+            overflow: 'auto',
+            fontSize: 11,
+            whiteSpace: 'pre-wrap',
+            wordBreak: 'break-all',
+            background: '#f4f6f8',
+            padding: 8,
+            borderRadius: 4,
+          }}
+        >
+          {JSON.stringify({contextIsPotentialAtc : isPotentialAtc,
+        contextAccountPhase: accountPhase,
+        contextDryRunDate: dryRunDate,
+        planPotentialAtc : data?.plan?.potentialAtc,
+        planAccounPhase: data?.plan?.accountPhase,
+        planId:data?.planId,
+        acccountId: data?.plan?.acccountId,
+        query: data?.plan?.potentialAtcDebug,}, 
+        (k,v)=>(v===undefined?null:v),2)}
+        </pre> */}
 
       <div className="mock-home-main-grid">
         <BarriersDriversSummary

@@ -34,7 +34,11 @@ const STAKEHOLDER_FIELD_HELP = {
     'Capture key factors that support adoption, referrals, or positive account outcomes (e.g., clinical preferences, operational efficiencies, leadership support).',
   mmBarriers:
     'Capture key challenges limiting adoption, referrals, or account performance (e.g., access restrictions, competing trials, operational constraints).',
-};
+  clinicalChampion :
+    'The key clinical advocate within an ATC who helps build clinical conviction and supports the need for access to Kite therapies during the authorization process.',
+  adminiStrativeChampion:
+    'The primary ATC contact for account management and administrative coordination. This individual also manages and authorizes Kite Konnect portal users within the ATC.',
+  };
 
 const IDENTITY_FIELDS = [
   { label: 'Stakeholder Name', key: 'name', readOnly: false, type: 'stakeholderLookup', help: STAKEHOLDER_FIELD_HELP.name },
@@ -58,8 +62,8 @@ const DLBCL_FIELDS = [
 // Temporarily disabled: keep the Stakeholder Champion field definitions here
 // so the DLBCL controls can be restored without recreating their CRM/UI mapping.
 const DLBCL_CHAMPION_FIELDS = [
-  { label: 'DLBCL Administrative Champion', key: 'dlbclAdministrativeChampion', readOnly: false, type: 'checkbox', championType: 'administrative' },
-  { label: 'DLBCL Clinical Champion', key: 'dlbclClinicalChampion', readOnly: false, type: 'checkbox', championType: 'clinical' },
+  { label: 'DLBCL Administrative Champion', key: 'dlbclAdministrativeChampion', readOnly: false, type: 'checkbox', championType: 'administrative', help: STAKEHOLDER_FIELD_HELP.adminiStrativeChampion },
+  { label: 'DLBCL Clinical Champion', key: 'dlbclClinicalChampion', readOnly: false, type: 'checkbox', championType: 'clinical', help: STAKEHOLDER_FIELD_HELP.clinicalChampion },
 ];
 
 // MM section mirrors DLBCL exactly, mapped to the MM CRM columns.
@@ -79,8 +83,8 @@ const MM_FIELDS = [
 // Temporarily disabled: keep the Stakeholder Champion field definitions here
 // so the MM controls can be restored without recreating their CRM/UI mapping.
 const MM_CHAMPION_FIELDS = [
-  { label: 'MM Administrative Champion', key: 'mmAdministrativeChampion', readOnly: false, type: 'checkbox', championType: 'administrative' },
-  { label: 'MM Clinical Champion', key: 'mmClinicalChampion', readOnly: false, type: 'checkbox', championType: 'clinical' },
+  { label: 'MM Administrative Champion', key: 'mmAdministrativeChampion', readOnly: false, type: 'checkbox', championType: 'administrative',help: STAKEHOLDER_FIELD_HELP.adminiStrativeChampion },
+  { label: 'MM Clinical Champion', key: 'mmClinicalChampion', readOnly: false, type: 'checkbox', championType: 'clinical', help: STAKEHOLDER_FIELD_HELP.clinicalChampion },
 ];
 
 const OTHER_ROLE_VALUE = 'Other';
@@ -270,8 +274,18 @@ function Field({ field, value, onChange, isNew, options = [] }) {
             )}
           </span>
           <span className="stakeholder-champion-copy">
-            <small>{isClinicalChampion ? 'Clinical' : 'Administrative'}</small>
-            <span>{field.label}</span>
+          
+            <small className='stakeholder-edit-field-label-row'>
+              {isClinicalChampion ? 'Clinical' : 'Administrative'}
+              <span>{field.help && (
+          <FieldHelpButton
+            className="stakeholder-edit-field-help"
+            label={`${field.label} guidance`}
+            text={field.help}
+          />
+        )}</span>
+            </small>
+            <span>{field.label} </span>
           </span>
           <span className="stakeholder-champion-check" aria-hidden="true">✓</span>
         </label>
@@ -686,6 +700,7 @@ export default function StakeholderEditModal({
               label="DLBCL champion designations"
               fields={DLBCL_CHAMPION_FIELDS}
               form={form}
+               
               onChange={updateField}
             /> 
             <div className="stakeholder-edit-grid">
@@ -767,7 +782,9 @@ export default function StakeholderEditModal({
             <>
             {!isEdit && onCreateStakeholder && (
               <button type="button" className="stakeholder-edit-button-success" 
-                onClick={onCreateStakeholder} disabled={isSaving}>
+                onClick={onCreateStakeholder} disabled={isSaving || !!stakeholder.fromCreatedAccount}
+                title={stakeholder?.fromCreatedAccount?'Stakeholder account already created' : undefined}
+                >
                 Create Stakeholder
               </button>
             )}

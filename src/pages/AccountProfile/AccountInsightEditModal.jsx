@@ -169,7 +169,7 @@ export default function AccountInsightEditModal({
                   ))}
                 </select>
               </Field>
-              
+              {isPotentialAtc &&(
                <Field label="Insights Category" help={ACCOUNT_INSIGHT_HELP.insightCategory}>
                 <select
                   name="accountInsightCategory"
@@ -183,6 +183,7 @@ export default function AccountInsightEditModal({
                   ))}
                 </select>
               </Field>
+              )}
               
               <Field label="Insights" help={ACCOUNT_INSIGHT_HELP.insight} className="is-textarea">
                 <textarea

@@ -97,12 +97,14 @@ export default function Stakeholders({ data, onNotify, isReadOnly = false }) {
     if (isReadOnly) return;
     const account = await createStakeholderAccount(payload);
     setIsCreatingStakeholder(false);
+    setEditingStakeholder(null);
     setEditingStakeholder({
       name: account.name,
       profileRecordId: account.id,
       stakeholderId: account.eid || account.accountIdentifier || '',
       primaryParent: payload.primaryParent || '',
       primaryParentId: payload.primaryParentId || '',
+      fromCreatedAccount:true,
     });
     onNotify?.({
       title: 'Account created.',
@@ -211,11 +213,13 @@ export default function Stakeholders({ data, onNotify, isReadOnly = false }) {
         <StakeholderCreateModal
           salutationOptions={picklists.salutationOptions || []}
           credentialOptions={picklists.credentialOptions || []}
+          addressStateOptions={picklists.addressStateOptions || []}
+          addressCountryOptions={picklists.addressCountryOptions || []}
           countryOptions={picklists.countryOptions || []}
           recordTypeOptions={picklists.accountRecordTypeOptions || []}
           searchSites={searchSiteAccounts}
           loadAddresses={fetchParentAddresses}
-          onClose={() => setIsCreatingStakeholder(false)}
+          onClose={() => setIsCreatingStakeholder(null)}
           onCreate={createStakeholderAccountRow}
         />
       )}

@@ -1386,3 +1386,36 @@
   font-size: 14px;
   line-height: 1.6;
 }
+
+
+/* Error message */
+.stakeholder-field-error {
+  display: block;
+  margin-top: 6px;
+  font-size: 14px;
+  line-height: 20px;
+  color: #BA0517; /* Salesforce error red */
+  font-weight: 400;
+}
+
+/* Highlight field container */
+.stakeholder-edit-field.has-error input,
+.stakeholder-edit-field.has-error select,
+.stakeholder-edit-field.has-error textarea {
+  border: 1px solid #BA0517;
+  background-color: #FFF8F8;
+}
+
+/* Focus on error field */
+.stakeholder-edit-field.has-error input:focus,
+.stakeholder-edit-field.has-error select:focus,
+.stakeholder-edit-field.has-error textarea:focus {
+  border-color: #BA0517;
+  box-shadow: 0 0 0 1px #BA0517;
+  outline: none;
+}
+
+.stakeholder-edit-button-success:disabled{
+    opacity:0.5;
+    cursor: not-allowed;
+}

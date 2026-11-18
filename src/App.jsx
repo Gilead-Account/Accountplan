@@ -14,6 +14,8 @@ import Stakeholders from '@/pages/Stakeholders';
 import TeamMembers from '@/pages/TeamMembers';
 import CriticalActivities from '@/pages/CriticalActivities';
 import CrossFunctionalPlan from '@/pages/CrossFunctionalPlan';
+import PostCallExecution from '@/pages/PostCallExecution';
+import { loadPostCallExecution } from '@/lib/dataservice/accountPlan/postCallExecution';
 import BarriersDrivers from '@/pages/BarriersDrivers';
 import AccountProfile from '@/pages/AccountProfile';
 import { isMockRuntime } from '@/lib/dataservice/client';
@@ -64,7 +66,7 @@ import {
   PageFilterStateProvider,
   useResetPageFilterState,
 } from '@/lib/ui/pageFilterState';
-import { AccountPhaseContext, DryRunDateContext, PotentialAtcContext } from './lib/dataservice/accountPlan/PotentialAtcContext';
+import {  AccountPhaseContext, DryRunDateContext, IpadViewContext, PotentialAtcContext} from './lib/dataservice/accountPlan/PotentialAtcContext';
 
 // Each page declares its own loader. App.jsx caches the last loaded payload so
 // switching back to a page is instant, then refreshes that page in the
@@ -81,6 +83,7 @@ const PAGES = [
   { key: 'account-insights', label: 'Account Insights', shortLabel: 'IN', implemented: true, loader: loadAccountProfile, dataKey: 'kpi' },
   { key: 'stakeholders', label: 'Stakeholders', shortLabel: 'SH', implemented: true, loader: loadStakeholders },
   { key: 'team-members', label: 'Team Members', shortLabel: 'TM', implemented: true, loader: loadTeamMembers },
+  { key: 'post-call-execution', label: 'Post Launch Checklist', shortLabel: 'PL', implemented: true, loader: loadPostCallExecution },
 ];
 
 const PAGE_BY_KEY = Object.fromEntries(PAGES.map((p) => [p.key, p]));
@@ -262,6 +265,8 @@ function AppContent() {
             isSubmitted: approvalStatusSnapshot.isSubmitted,
           }
         : null);
+  const isPotentialAtc = selectedLauncherPlan?.isPotentialAtc ??
+          effectiveShellPlan?.potentialAtc === true;
   const managerApprovalReviewPlan = effectiveShellPlan && managerApprovalReview
     ? { ...effectiveShellPlan, ...managerApprovalReview }
     : effectiveShellPlan;
@@ -275,6 +280,9 @@ function AppContent() {
     && !isCtamManager
     && isSubmittedOrReassignedApprovalStatus(effectiveShellPlan?.approvalStatus);
   const isReadOnly = isAccountPlanReadOnlyForProfile(effectiveShellPlan, currentUserProfileName);
+  const resolvedIsPotentialAtc = typeof selectedLauncherPlan?.isPotentialAtc === 'boolean' &&selectedLauncherPlan.isPotentialAtc
+          ?true
+          :shellSource?.account?.potentialAtc === true;
   const shellPlanId =
     rawShellPlanId ||
     (approvalStatusSnapshot && approvalStatusSnapshot.planId) ||
@@ -293,6 +301,21 @@ function AppContent() {
       return {
         ...current,
         [key]: { ...existing, ...nextValue },
+      };
+    });
+  };
+
+  const syncPostLaunchChecklistItem = (accountId, id, patch) => {
+    setPageData((current) => {
+      const cached = current['post-call-execution'];
+      // A save may finish after navigation or selection of another Account.
+      if (!cached || cached.accountId !== accountId) return current;
+      return {
+        ...current,
+        'post-call-execution': {
+          ...cached,
+          checklistItems: cached.checklistItems.map((item) => item.id === id ? { ...item, ...patch } : item),
+        },
       };
     });
   };
@@ -1324,9 +1347,10 @@ const handleOpenApprovalHistoryForCtam = () => {
   }
 
   return (
-    <PotentialAtcContext.Provider value={selectedLauncherPlan?.isPotentialAtc}>
+    <PotentialAtcContext.Provider value={resolvedIsPotentialAtc}>
       <AccountPhaseContext.Provider value={selectedLauncherPlan?.currentPhase ?? null}>
-          <DryRunDateContext.Provider value={selectedLauncherPlan?.dryRunDate ?? null}>
+        <DryRunDateContext.Provider value={selectedLauncherPlan?.dryRunDate ?? effectiveShellPlan?.dryRunDate ?? null}>
+            <IpadViewContext.Provider value={selectedLauncherPlan?.ipadView ?? null}>
         <div className={`shell shell-frame${hasModalOpen ? ' modal-open' : ''}`}>
           <Sidebar
             pages={PAGES}
@@ -1397,9 +1421,14 @@ const handleOpenApprovalHistoryForCtam = () => {
             )}
 
             {activeStatus === 'error' && !isMissingAccountPlanContextError(activeError) && (
-              <div className="status-banner danger">
+              <div className="status-banner danger" role="alert">
                 <strong>Failed to load page.</strong>{' '}
                 {activeError && activeError.message}
+                {activeKey === 'post-call-execution' && (
+                  <button type="button" onClick={() => loadPage(activeKey, { force: true }).catch(() => {})}>
+                    Retry checklist
+                  </button>
+                )}
               </div>
             )}
 
@@ -1470,6 +1499,15 @@ const handleOpenApprovalHistoryForCtam = () => {
 
               {activeStatus === 'ready' && activeKey === 'linked-opportunities' && (
                 <CrossFunctionalPlan data={activeData} onNotify={showAppNotice} isReadOnly={isReadOnly} />
+              )}
+
+              {activeStatus === 'ready' && activeKey === 'post-call-execution' && (
+                <PostCallExecution
+                  key={`${activeData.planId}:${activeData.accountId}`}
+                  data={activeData}
+                  isReadOnly={isReadOnly}
+                  onItemChange={(id, patch) => syncPostLaunchChecklistItem(activeData.accountId, id, patch)}
+                />
               )}
 
               {activeStatus === 'ready' && activePage?.loader && !activePage?.implemented && (
@@ -1546,6 +1584,7 @@ const handleOpenApprovalHistoryForCtam = () => {
           )}
 
         </div>
+        </IpadViewContext.Provider>
         </DryRunDateContext.Provider>
       </AccountPhaseContext.Provider>
     </PotentialAtcContext.Provider>

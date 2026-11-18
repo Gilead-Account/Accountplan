@@ -392,6 +392,7 @@ const fallbackStrategiesForIndication = (picklists, indication) => {
   return picklists?.dlbclStrategies || [];
 };
 
+
 const strategyOptionsForFilter = (picklists, tab, indicationFilter) => {
   const type = tab === 'drivers' ? 'Driver' : 'Barrier';
   const allowedIndications = filterBarrierDriverIndicationsForType(picklists?.barrierDriverIndications, type);
@@ -410,6 +411,7 @@ const strategyOptionsForFilter = (picklists, tab, indicationFilter) => {
   if (out.length === 1 && tab === 'drivers' && indicationFilter === 'All') {
     appendUniqueOptions(out, picklists?.barrierStrategies || []);
   }
+  
   return out;
 };
 
@@ -2095,6 +2097,7 @@ export default function BarriersDrivers({ data, initialTab = 'barriers', onActiv
                 onAddActivity={openNewActivity}
                 onEditActivity={openEditActivity}
                 isReadOnly={isReadOnly}
+                
               />
             ))}
           </div>

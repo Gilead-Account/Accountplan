@@ -129,7 +129,7 @@ export default function PreAuthStatusPhase({ currentPhase, dryRunDate }){
       </div>
 
       <div className="preauth-footer">
-        Current Phase  {currentLabel ? `:${currentLabel}`:''}
+        Current Phase: {currentLabel ? `${currentLabel}`:''}
       </div>
     </div>
   );

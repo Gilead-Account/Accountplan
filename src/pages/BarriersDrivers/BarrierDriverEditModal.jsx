@@ -242,6 +242,19 @@ const categoryItems = useMemo(() => {
     });
   }
 
+  const isOther =(item)=> String(item.label || '').trim().toLowerCase ==='Other';
+  items = [...items].sort((a,b)=>{
+     const aOther = isOther(a);
+     const bOther = isOther(b);
+     if(aOther && !bOther) return 1;
+     if(!aOther && bOther) return -1;
+     return String(a.label || '').localeCompare(
+      String(b.label || ''),
+      undefined,
+      {sensitivity: 'base'}
+     );
+  })
+
   return items;
 }, [
   picklists,
@@ -455,6 +468,8 @@ const categoryItems = useMemo(() => {
                   <input
                     type="text"
                      value={form.strategy}
+                     readOnly
+                    aria-readonly="true"
                     disabled={nonStatusFieldsDisabled}
                     onChange={(e) =>
                       updateField('strategy', e.target.value)

@@ -87,14 +87,6 @@ export default function AccountProfile({ data, initialTab, onNotify, isReadOnly 
   const regionalFieldMap = data.regionalDynamicsFieldMap || {};
   const accountName = data.account?.name;
   const showAccountProfileTabs = tab !== ACCOUNT_INSIGHTS_TAB;
-  const isPotentialAtcFromContext = useContext(PotentialAtcContext);
-
-  useEffect(()=>{
-    console.log('[PotentialAtc updateCustomerGoals] Open clicked Payoad:', JSON.stringify(
-          {planId:data?.planId,
-          contextValue:data?.isPotentialAtcFromContext,}, null, 2));
-  }, [isPotentialAtc])
-    
 
   useEffect(() => {
     setAttributeRows(data.accountAttributeRows || []);
@@ -113,7 +105,6 @@ export default function AccountProfile({ data, initialTab, onNotify, isReadOnly 
     setInsightModal(null);
     setRegionalModal(null);
   }, [isReadOnly]);
-
 
   // DLBCL profile inline editor: each question is a single Veeva field, so
   // the save handler just patches that one column on the profile record.

@@ -7,6 +7,7 @@ const FIRST_NAME_MAX = 40;
 const LAST_NAME_MAX = 80;
 const NPI_MAX =25;
 const NPI_RECCORD_TYPE_NAME = 'Prescriber New';
+const ALLOWED_COUNTRIES=['US'];
 
 const normalizeName = (v) => String(v || '').toLowerCase().replace(/[^a-z0-9]/g, '');
 const ALLOWED_RECORD_TYPE_NAMES = [ 'Prescriber New', 'Non Prescriber'];
@@ -65,6 +66,12 @@ const buildEmptyForm = (defaultCountry = '', defaultRecordTypeId = '') => ({
   primaryParent: '',
   primaryParentId: '',
   addressId: '',
+  addrCountry :'USA',
+  addrLine1 :'',
+  addrLine2 :'',
+  addrCity:'',
+  addrState:'',
+  addrZip:'',
 });
 
 // Pure validation so it is easy to unit test. Returns { field: message }.
@@ -74,7 +81,8 @@ export const validateCreateForm = (form, addresses = []) => {
   if (!text(form.recordTypeId)) errors.recordTypeId = 'Account Record Type is required.';
   if (!text(form.lastName)) errors.lastName = 'Last Name is required.';
   else if (text(form.lastName).length > LAST_NAME_MAX) errors.lastName = `Max ${LAST_NAME_MAX} characters.`;
-  if (text(form.firstName).length > FIRST_NAME_MAX) errors.firstName = `Max ${FIRST_NAME_MAX} characters.`;
+  if (!text(form.firstName)) errors.firstName = 'First Name is required.';
+  else if (text(form.firstName).length > FIRST_NAME_MAX) errors.firstName = `Max ${FIRST_NAME_MAX} characters.`;
   if (form.npiRequired && !text(form.npi)) errors.npi = 'NPI # is required';
   else if (text(form.npi).length > NPI_MAX) errors.npi = `Max ${NPI_MAX} characters.`;
   if (!text(form.credential)) errors.credential = 'Credential is required.';
@@ -83,6 +91,13 @@ export const validateCreateForm = (form, addresses = []) => {
     if (!form.primaryParentId) errors.primaryParent = 'Select a Primary Parent from the search results.';
     else if (addresses.length > 0 && !form.addressId) errors.address = 'At least one address must be selected.';
     else if (addresses.length === 0) errors.address = 'The selected parent has no address to copy.';
+  }
+  if(!form.useParent){
+     if (!text(form.addrCountry)) errors.addrCountry = 'Country is required.';
+     if (!text(form.addrLine1)) errors.addrLine1 = 'Address line 1 is required.';
+     if (!text(form.addrCity)) errors.addrCity = 'City is required.';
+     if (!text(form.addrState)) errors.addrState = 'State is required.';
+     if (!text(form.addrZip)) errors.addrZip = 'Zipcode full is required.';
   }
   return errors;
 };
@@ -124,7 +139,10 @@ export default function StakeholderCreateModal({
   salutationOptions = [],
   credentialOptions = [],
   countryOptions = [],
-  recordTypeOptions = [], // [{ id, name, developerName }] from the backend
+  recordTypeOptions = [], 
+  addressStateOptions =[],
+  addressCountryOptions = [],
+ // [{ id, name, developerName }] from the backend
   defaultRecordTypeName = 'Non Prescriber',
   alloedRecordTypeNames= 'ALLOWED_RECORD_TYPE_NAMES',
   defaultCountry = 'US',
@@ -137,10 +155,13 @@ export default function StakeholderCreateModal({
   const visibleRecordType = useMemo(()=>filterAllowedRecordTypes(recordTypeOptions,alloedRecordTypeNames),
   [recordTypeOptions,alloedRecordTypeNames]
 )
-
+const visibleCountryOptions = useMemo(
+  ()=>countryOptions.filter((c)=>ALLOWED_COUNTRIES.includes(c)),
+  [countryOptions]
+);
   const [form, setForm] = useState(() =>
     buildEmptyForm(
-      countryOptions.includes(defaultCountry) ? defaultCountry : '',
+      visibleCountryOptions.includes(defaultCountry) ? defaultCountry : '',
       findDefaultRecordTypeId(visibleRecordType, defaultRecordTypeName)
     )
   );
@@ -209,6 +230,8 @@ export default function StakeholderCreateModal({
     setIsSaving(true);
     try {
       const address = addresses.find((a) => a.id === form.addressId) || null;
+      const isChildAccount = !!(form.useParent && form.primaryParentId);
+      console.log('continue button isChildAccount:', isChildAccount,typeof isChildAccount)
       await onCreate({
         recordTypeId: form.recordTypeId,
         salutation: form.salutation,
@@ -220,6 +243,11 @@ export default function StakeholderCreateModal({
         primaryParent: form.useParent ? form.primaryParent : '',
         address: form.useParent ? address : null,
         npi: showNpi ? form.npi : '',
+        isChildAccount,
+        manualAddress: form?.useParent ? null :{
+          line1:form.addrLine1, line2: form.addrLine2, city:form.addrCity, state:form.addrState,
+          country:form.addrCountry, zip: form.addrZip,
+        }
       });
     } catch (error) {
       setSaveError(error?.message || 'Unable to create stakeholder.');
@@ -253,16 +281,16 @@ export default function StakeholderCreateModal({
                 options={visibleRecordType.map((o) => ({ value: o.id, label: recordTypeLabel(o) }))}
                 onChange={set('recordTypeId')}
               />
-              <SelectField id="stk-new-salutation" label="Salutation" value={form.salutation} options={salutationOptions} onChange={set('salutation')} />
-              <Field id="stk-new-first" label="First Name" error={show('firstName')}>
+              <SelectField id="stk-new-salutation" label="Salutation" required error={show('salutation')} value={form.salutation} options={salutationOptions} onChange={set('salutation')} />
+              <Field id="stk-new-first" label="First Name" required error={show('firstName')}>
                 <input id="stk-new-first" type="text" maxLength={FIRST_NAME_MAX} value={form.firstName} onChange={(e) => set('firstName')(e.target.value)} />
               </Field>
               <Field id="stk-new-last" label="Last Name" required error={show('lastName')}>
                 <input id="stk-new-last" type="text" maxLength={LAST_NAME_MAX} value={form.lastName} onChange={(e) => set('lastName')(e.target.value)} />
               </Field>
               <SelectField id="stk-new-credential" label="Credential" required error={show('credential')} value={form.credential} options={credentialOptions} onChange={set('credential')} />
-              <SelectField id="stk-new-country" label="Country" required error={show('country')} value={form.country} options={countryOptions} onChange={set('country')} />
-              {showNpi && (<Field id="stk-new-npi" label="NPI #" error={show('npi')}>
+              <SelectField id="stk-new-country" label="Country" required error={show('country')} value={form.country} options={visibleCountryOptions} onChange={set('country')} />
+              {showNpi && (<Field id="stk-new-npi" label="NPI #" required error={show('npi')}>
                 <input id="stk-new-npi" type="text" maxLength={25} value={form.npi} onChange={(e) => set('npi')(e.target.value)}/>
               </Field>)}
             </div>
@@ -278,7 +306,9 @@ export default function StakeholderCreateModal({
                   setForm((f) => ({
                     ...f,
                     useParent: e.target.checked,
-                    ...(e.target.checked ? {} : { primaryParent: '', primaryParentId: '', addressId: '' }),
+                    ...(e.target.checked
+                      ? {addrCountry:'', addrLine1:'', addrLine2:'',addrCity:'',addrState:'', addrZip:''} 
+                      : { primaryParent: '', primaryParentId: '', addressId: '' }),
                   }))
                 }
               />
@@ -329,6 +359,35 @@ export default function StakeholderCreateModal({
                   </table>
                   {show('address') && <small className="stakeholder-field-error">{errors.address}</small>}
                 </div>
+              </>
+            )}
+
+             {!form.useParent && (
+              <>
+                <div className="stakeholder-edit-grid">
+              <SelectField
+                id="stk-addr-country"
+                label="Country"
+                required
+                error={show('addrCountry')}
+                value={form.addrCountry}
+                options={addressCountryOptions}
+                onChange={set('addrCountry')}
+              />
+              <Field id="stk-addr-1" label="Address Line 1" required error={show('addrLine1')}>
+                <input id="stk-addr-1" type="text" value={form.addrLine1} onChange={(e) => set('addrLine1')(e.target.value)} />
+              </Field>
+              <Field id="stk-addr-2" label="Address Line 2">
+                <input id="stk-addr-2" type="text" value={form.addrLine2} onChange={(e) => set('addrLine2')(e.target.value)} />
+              </Field>
+              <Field id="stk-addr-city" label="City" required error={show('addrCity')}>
+                <input id="stk-addr-city" type="text" value={form.addrCity} onChange={(e) => set('addrCity')(e.target.value)} />
+              </Field>
+              <SelectField id="stk-addr-state" label="State" required error={show('addrState')} value={form.addrState} options={addressStateOptions} onChange={set('addrState')} />
+              <Field id="stk-addr-zip" label="Zip Code Full" required error={show('addrZip')}>
+                <input id="stk-addr-zip" type="text" value={form.addrZip} onChange={(e) => set('addrZip')(e.target.value)}/>
+              </Field>
+            </div>
               </>
             )}
           </section>

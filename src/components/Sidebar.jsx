@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { FieldHelpButton } from '@/components/EditModalField';
 import HomeFieldHelp from '@/components/HomeFieldHelp';
 import { formatDate } from '@/lib/helper/utils';
@@ -20,6 +20,7 @@ import accountPlanningPlaybookPpt from '@/assets/account-planning-playbook.pdf?u
 import accountPlanningmdppdf from '@/assets/account-plan-approvel-Mdp.pdf?url';
 import '@/styles/edit-modal.css';
 import '@/components/Sidebar.css';
+import { PotentialAtcContext } from '../lib/dataservice/accountPlan/PotentialAtcContext';
 
 const EXPORT_MENU_OPTIONS = [
   { key: 'submit-mpd-approval', label: 'Submit for MPD Approval' },
@@ -107,6 +108,13 @@ function NavIcon({ pageKey }) {
           <path d="M5 9l3-3 3 3" />
           <path d="M16 4v14" />
           <path d="M13 15l3 3 3-3" />
+        </svg>
+      );
+    case 'post-call-execution':
+      return (
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <rect x="5" y="4" width="14" height="17" rx="2" />
+          <path d="M9 3h6v3H9zM8 11l1.5 1.5L12 10M14 11h2M8 16l1.5 1.5L12 15M14 16h2" />
         </svg>
       );
     case 'critical-activities':
@@ -640,6 +648,7 @@ export default function Sidebar({
   const accountName = (account && account.name) || (plan && plan.accountName) || 'Not entered';
   const eid = account && account.eid;
   const lastMpd = plan && plan.lastMpdApprovalDate;
+  const isPotentialAtc = useContext(PotentialAtcContext);
   // Submitted for Approval / Revise and Resubmit surface the status text;
   // every other status (Approved, Recalled, Submitted But Not Approved by MPD,
   // unset) shows the actual Last MPD Review date.
@@ -650,7 +659,7 @@ export default function Sidebar({
       : formatDate(lastMpd, 'Not entered');
   const territory = (plan && plan.territoryDescription) || (account && account.territory);
   const legacyAccountPlanUrl = legacyAccountPlanRecordUrl(legacyAccountPlanId, currentUserUsername);
-
+  const lastDateLabel = isPotentialAtc ? 'Last Refresh Date' : 'Last MPD Review Date';
   // Close the export dropdown when the user taps outside of it.
   useEffect(() => {
     if (!isExportMenuOpen) return;
@@ -791,7 +800,7 @@ export default function Sidebar({
       navPressRef.current = null;
     }
   };
-
+ 
   return (
     <aside className="shell-sidebar">
       <section className="sidebar-account-card">
@@ -810,23 +819,24 @@ export default function Sidebar({
         </div>
 
         {/* Last MPD Review Date + Territory stacked vertically (Last POD removed). */}
-        <div className="sidebar-stat-card">
+        
+          <div className="sidebar-stat-card">
           <span className="sidebar-stat-icon" aria-hidden="true">
             <CalendarIcon />
           </span>
           <div className="sidebar-stat-copy">
             <span className="sidebar-stat-label">
-              <span>Last MPD Review Date</span>
+              <span>{lastDateLabel}</span>
               <HomeFieldHelp
-                helpKey="lastMpdApprovalDate"
-                label="Last MPD Review Date"
+                helpKey={isPotentialAtc ? 'lastRefreshDate' : 'lastMpdApprovalDate'}
+                label={lastDateLabel}
                 className="sidebar-stat-help"
               />
             </span>
             <strong>{lastMpdReviewValue}</strong>
           </div>
         </div>
-
+       
         <div className="sidebar-stat-card">
           <span className="sidebar-stat-icon" aria-hidden="true">
             <GlobeIcon />
@@ -871,7 +881,7 @@ export default function Sidebar({
         })}
       </div>
 
-      {legacyAccountPlanUrl && (
+      {/* {legacyAccountPlanUrl && !isPotentialAtc &&(
         <a
           className="sidebar-legacy-account-plan"
           href={legacyAccountPlanUrl}
@@ -884,7 +894,7 @@ export default function Sidebar({
         >
           Legacy Account Plan
         </a>
-      )}
+      )} */}
 
       <div className="sidebar-policy-help" ref={policyHelpRef}>
         <div className={`sidebar-policy-help-button${isPolicyHelpOpen ? ' is-open' : ''}`}>

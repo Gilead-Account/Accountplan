@@ -3042,6 +3042,33 @@ button {
     overflow-wrap: anywhere;
 }
 
+.account-plan-launcher-table.is-preauth .account-plan-launcher-row {
+    grid-template-columns:
+        minmax(0, 1.25fr)
+        minmax(0, 0.82fr)
+        minmax(0, 1.2fr)
+        minmax(0, 0.78fr)
+        minmax(0, 0.82fr)
+        minmax(0, 0.9fr)
+        minmax(0, 1.06fr)
+        minmax(0, 1.06fr)
+        minmax(0, 0.70fr)
+        69px;
+}
+
+.account-plan-launcher-table.is-preauth .account-plan-launcher-row > span:last-child {
+    padding-left: 6px;
+    padding-right: 6px;
+    text-align: center;
+}
+
+.account-plan-launcher-table.is-preauth .account-plan-launcher-row:not(.is-head) > span:nth-child(2),
+.account-plan-launcher-table.is-preauth .account-plan-launcher-row:not(.is-head) > span:nth-child(3) {
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+
+
 .account-plan-launcher-row:nth-child(even):not(.is-head) {
     background: #fafdfe;
 }
