@@ -3,7 +3,7 @@ import {
   runQuery,
   unwrap,
 } from '@/lib/dataservice/query';
-import { getPicklistValueLabels, toBoolean } from '../query';
+import { getPicklistValueLabels } from '../query';
 import { valuesFromPicklistLabels } from '../../helper/utils';
 
 const ACCOUNT_PLAN_OBJECT = 'Account_Plan_vod__c';
@@ -67,7 +67,6 @@ const ACCOUNT_PRIORITY_FIELDS = [
   'Id',
   ACCOUNT_MM_ATC_PRIORITY_FIELD,
   ACCOUNT_MARKET_ACCESS_PRIORITIZED_FIELD,
-  'KPH_Potential_ATC__c',
 ];
 const ACCOUNT_PROFILE_COHORT_FIELDS = [
   'Id',
@@ -140,7 +139,7 @@ const fetchAccountPriorityById = async (accountIds) => {
       {
         mmAtcPriorityAccount: displayString(row[ACCOUNT_MM_ATC_PRIORITY_FIELD]),
         marketAccessPrioritizedAccount: displayString(row[ACCOUNT_MARKET_ACCESS_PRIORITIZED_FIELD]),
-        potentialAtc: row.KPH_Potential_ATC__c === true ||String(row.KPH_Potential_ATC__c).toLowerCase() === 'true',
+        potentialAtc:row.KPH_Potential_ATC__c=== true || row.KPH_Potential_ATC__c=== 'true',
       },
     ]));
   } catch (error) {
@@ -202,9 +201,7 @@ const toAccountPlanLauncherRow = (
       EMPTY_DISPLAY_VALUE,
     marketAccessPrioritizedAccount: accountPriority.marketAccessPrioritizedAccount || EMPTY_DISPLAY_VALUE,
     mmAtcPriorityAccount: accountPriority.mmAtcPriorityAccount || EMPTY_DISPLAY_VALUE,
-    potentialAtc:toBoolean(row.KPH_Potential_ATC__c),
     atcCohortDlbcl: atcCohortByPlanId.get(String(r.Id)) || EMPTY_DISPLAY_VALUE,
-    potentialAtc:toBoolean(accountPriority.potentialAtc),
     atcCertifiedDate: r.KPH_ATC_Certified_Date__c || null,
     planStatus: displayString(r.KPH_Plan_status__c) || EMPTY_DISPLAY_VALUE,
     territory: displayString(r.KPH_Territory__c) || EMPTY_DISPLAY_VALUE,

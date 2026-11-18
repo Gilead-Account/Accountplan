@@ -153,7 +153,7 @@ const picklistLabels = {
       'Lead/Grow Brand Share': 'Lead/Grow Brand Share',
       'Expand Class Share': 'Expand Class Share',
       'MM Pre-Launch Readiness': 'MM Pre-Launch Readiness',
-      'Pre-Activation-Build Account Readiness':'Pre-Activations–Build Account Readiness',
+      'Pre Activation Build Account Readiness':'Pre Activations Build Account Readiness',
     },
     KPH_Barrier_Type__c: {
       Capacity: 'Capacity',
@@ -282,6 +282,10 @@ const picklistLabels = {
       FR: 'FR',
       IN: 'IN',
     },
+  },
+  Address_vod__c:{
+    Country_vod__c:{USA : 'USA', CAN:'CAN', GBR:'GBR', DEU:'DEU'},
+    State_vod__c:{AL:'AL', MA:'MA', CA:'CA', CO:'CO', FL:'FL', GA:'GA', IL:'IL', MA:'MA'}
   },
   KPH_Ecosystem_Map_Dynamics__c: {
     Indication__c: {

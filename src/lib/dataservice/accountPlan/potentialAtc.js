@@ -3,7 +3,7 @@ import {
   runQuery,
   unwrap,
 } from '@/lib/dataservice/query';
-import { getPicklistValueLabels, toBoolean } from '../query';
+import { getPicklistValueLabels } from '../query';
 import { formatDateLabel, valuesFromPicklistLabels } from '../../helper/utils';
 
 const ACCOUNT_PLAN_OBJECT = 'Account_Plan_vod__c';
@@ -14,10 +14,6 @@ const VALID_STATUS_CLAUSE ="Account_vod__r.Customer_Master_Status_vod__c ='Valid
 export const WHERE_ATC_HOSPITAL=`Account_vod__r.Hospital_Type__c = 'Authorized Treatment Center' AND ${VALID_STATUS_CLAUSE}`;
 export const WHERE_POTENTAIL_ATC=`Account_vod__r.KPH_Potential_ATC__c = true AND ${VALID_STATUS_CLAUSE}`;
 
-const POTENTIAL_ATC_WHERE_VARIANTS =[
-  WHERE_POTENTAIL_ATC,
-  `Account_vod__r.KPH_Potential_ATC__c = true AND ${VALID_STATUS_CLAUSE}`,
-]
 const CENTER_CLASSIFICATION_FIELD = 'KPH_Center_Classification__c';
 const ACCOUNT_PHASE_FIELD ='KPH_Account_Phase__c';
 const PLAN_STATUS_FIELD ='KPH_Plan_status__c';
@@ -205,10 +201,14 @@ const toAccountPlanRow = (row, {userNamesById = new Map()} = {}) => {
     planStatus: displayString(r.KPH_Plan_status__c),
     accountPhase: displayString(r.KPH_Account_Phase__c),
     dryRunDate: formatDate(r.KPH_Dry_Run_Date__c),
-    potentialAtc:toBoolean(r['Account_vod__r.KPH_Potential_ATC__c'] ?? r.Account_vod__r?.KPH_Potential_ATC__c??true), 
+    potentialAtc:r['Account_vod__r.KPH_Potential_ATC__c'] ?? r.Account_vod__r?.KPH_Potential_ATC__c??true, 
     atcCertifiedDate: r.KPH_ATC_Certified_Date__c || null,
     territory: displayString(r.KPH_Territory__c) || EMPTY_DISPLAY_VALUE,
     territoryDescription: displayString(r.KPH_Territory_Description__c) || EMPTY_DISPLAY_VALUE,
+    lastAdditionalCriticalActivityUpdate:formatDate(r.KPH_Last_Critical_Acitivity_Update__c),
+    lastBarrierTacticalActionUpdate:formatDate(r.KPH_LAST_BARRIER_TACTICAL_ACTION_UPDATE__c),
+    lastAccountInsightUpdate:formatDate(r.KPH_Last_Account_Insight_Update__c),
+    lastRefreshDate:formatDate(r.KPH_Last_Refresh_Date__c),
     raw:r,
   };
 };
@@ -227,15 +227,6 @@ const fetchPlans = async ({ allowRelationshipFields = true, where = WHERE_ATC_HO
     ...(allowRelationshipFields ? { allowDottedFields: true } : {}),
   });
 
-  const fetchPotentialAtcPlans = async(where)=>{
-    try{
-      return{ rows: await fetchPlans({allowRelationshipFields:true, where}), usedFallbackQuery:false};
-    }
-    catch(error){
-      return{ rows: await fetchPlans({allowRelationshipFields:false, where}), usedFallbackQuery:true};
-    }
-  }
-  
 export const fetchPotentialAtc = async () => {
   let rows;
   let usedFallbackQuery = false;

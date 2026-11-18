@@ -107,6 +107,8 @@ const fetchStakeholderPicklists = async () => {
     credentialOptions,
     countryOptions,
     accountRecordTypeOptions,
+    addressCountryOptions,
+    addressStateOptions,
   ] = await Promise.all([
     fetchPicklistOptions('KPH_DLBCL_Clinical_Influence__c'),
     fetchPicklistOptions('KPH_DLBCL_Financial_Influence__c'),
@@ -122,6 +124,8 @@ const fetchStakeholderPicklists = async () => {
     fetchObjectPicklistOptions('Account', 'Credentials_vod__c'),
     fetchObjectPicklistOptions('Account', 'KPH_Country__c'),
     fetchAccountRecordTypes(),
+    fetchObjectPicklistOptions('Address_vod__c', 'Country_vod__c'),
+    fetchObjectPicklistOptions('Address_vod__c', 'State_vod__c'),
   ]);
 
   return {
@@ -141,6 +145,8 @@ const fetchStakeholderPicklists = async () => {
     credentialOptions,
     countryOptions,
     accountRecordTypeOptions,
+    addressCountryOptions,
+    addressStateOptions,
   };
 };
 
@@ -185,6 +191,8 @@ export const loadStakeholders = async () => {
     credentialOptions: dynamicPicklists.credentialOptions || [],
     countryOptions: dynamicPicklists.countryOptions || [],
     accountRecordTypeOptions: dynamicPicklists.accountRecordTypeOptions || [],
+    addressCountryOptions: dynamicPicklists.addressCountryOptions || [],
+    addressStateOptions: dynamicPicklists.addressStateOptions || [],
   };
 
   return { planId, plan, account, stakeholders, picklists };

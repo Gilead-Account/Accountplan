@@ -19,7 +19,36 @@ const wrap = (obj) => {
   return out;
 };
 
+// Local preview examples only; CRM owns the production catalog and due dates.
+const previewChecklist = [
+  ['Send national broadcast invitation to P1 / P2 (Gold / Silver)', 'CTAM', '2027-01-04'],
+  ['Deliver “Now Approved” Email (Billing code, P&T Monograph, etc.)', 'Community Clinics: MAx RAD; Hospital: MAx KAD', '2027-01-06'],
+  ['Confirm Exception Availability (add exception process in MM profile section)', 'Community Clinics: MAx RAD; Hospital: MAx KAD', '2027-01-08'],
+  ['Deliver Value Proposition (Verbal Presentation)', 'Community Clinics: MAx RAD; Hospital: MAx KAD', '2027-01-11'],
+  ['Validate Formulary Inclusion', 'Community Clinics: MAx RAD; Hospital: MAx KAD', '2027-01-13'],
+  ['Validate Confirmed EMR Order Set Inclusion', 'MAx KAD/RAD', '2027-01-15'],
+  ['Identify 1st Patient', 'CTAM', '2027-01-18'],
+  ['Post Launch 1st POD call', 'CTAM', '2027-01-20'],
+  ['Account Awareness of Kite Konnect Offerings', 'Case Manager', null],
+  ['Determine expected timeframe for first Anito-cel administration in the first 30, 60, 90 days after approval', 'MSL', '2027-01-08'],
+  ['Assess site confidence in clinical and AE management after activation', 'MSL', '2027-01-12'],
+  ['Additional education provided post-activation', 'MSL', '2027-01-15'],
+  ['Confirm site review of PI and address additional questions', 'MSL', '2027-01-19'],
+  ['Offer First Patient Experience', 'MSL', null],
+].map(([description, accountable, dueDate], index) => wrap({
+  Id: `aPL00000000${String(index + 1).padStart(4, '0')}`,
+  KPH_Account__c: ACCOUNT_ID,
+  KPH_Checklist_Function__c: index < 9 ? 'Commercial/Market Access' : 'Medical',
+  KPH_Checklist_Item__c: description,
+  KPH_Accountable__c: accountable,
+  KPH_Due_Date__c: dueDate,
+  KPH_Status__c: index === 0 || index === 3 ? 'Completed' : 'Not Started',
+  KPH_Comments__c: index === 0 ? 'Invitation shared with the account team.' : '',
+}));
+
 export const fixtures = {
+  KPH_Post_Launch_Checklist_Item__c: previewChecklist,
+  Call2_vod__c: [],
   Account_Plan_vod__c: [
     wrap({
       Id: PLAN_ID,
@@ -143,11 +172,13 @@ wrap({
   KPH_ATC_EID__c: '40267120',
   KPH_Plan_status__c: 'Active',
   KPH_Account_Phase__c: 'Onboarding',
+  KPH_Territory_Description__c: 'US - North Region 4',
   KPH_Dry_Run_Date__c: '2026-11-16',
   KPH_Comments__c: null,
-  KPH_Last_Account_Insight_Update__c: null,
-  KPH_Last_Critical_Acitivity_Update__c: null,
-  KPH_LAST_BARRIER_TACTICAL_ACTION_UPDATE__c: null,
+  KPH_Last_Account_Insight_Update__c: '2026-04-20',
+  KPH_Last_Critical_Acitivity_Update__c: '2026-04-20',
+  KPH_LAST_BARRIER_TACTICAL_ACTION_UPDATE__c: '2026-04-21',
+  KPH_Last_Refresh_Date__c:'2026-04-21',
 }),
 wrap({
   Id: 'a0X8C00000PotATC002',
@@ -158,11 +189,13 @@ wrap({
   KPH_ATC_EID__c: '40267121',
   KPH_Plan_status__c: 'Inactive',
   KPH_Account_Phase__c: 'Target / Interest',
+  KPH_Territory_Description__c: 'US - North Region 4',
   KPH_Dry_Run_Date__c: '2026-12-01',
   KPH_Comments__c: null,
-  KPH_Last_Account_Insight_Update__c: null,
-  KPH_Last_Critical_Acitivity_Update__c: null,
-  KPH_LAST_BARRIER_TACTICAL_ACTION_UPDATE__c: null,
+  KPH_Last_Account_Insight_Update__c: '2026-04-26',
+  KPH_Last_Critical_Acitivity_Update__c: '2026-04-26',
+  KPH_LAST_BARRIER_TACTICAL_ACTION_UPDATE__c: '2026-04-26',
+  KPH_Last_Refresh_Date__c:'2026-04-26',
 }),
 
 wrap({
@@ -174,11 +207,13 @@ wrap({
   KPH_ATC_EID__c: '40246898',
   KPH_Plan_status__c: 'Active',
   KPH_Account_Phase__c: 'Evaluating',
+  KPH_Territory_Description__c: 'US - North Region 4',
   KPH_Dry_Run_Date__c: '2026-11-16',
   KPH_Comments__c: null,
-  KPH_Last_Account_Insight_Update__c: null,
-  KPH_Last_Critical_Acitivity_Update__c: null,
-  KPH_LAST_BARRIER_TACTICAL_ACTION_UPDATE__c: null,
+  KPH_Last_Account_Insight_Update__c: '2026-05-12',
+  KPH_Last_Critical_Acitivity_Update__c: '2026-05-12',
+  KPH_LAST_BARRIER_TACTICAL_ACTION_UPDATE__c: '2026-05-12',
+  KPH_Last_Refresh_Date__c:'2026-05-12',
 }),
 
   ],

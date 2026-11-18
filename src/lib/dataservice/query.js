@@ -399,11 +399,3 @@ export const buildIdMatchWhere = (fieldApi, value) => {
     ')'
   );
 };
-
-
-export const toBoolean=(value) =>{
-  if(value && typeof value === 'object' && 'value' in value) return toBoolean(value.value);
-  if(typeof value === 'boolean') return value;
-  if(typeof value === 'number') return value===1;
-  return ['true', '1', 'yes', 'y'].includes(String(value ??'').trim().toLowerCase());
-}
