@@ -71,6 +71,9 @@ const PLAN_FIELDS_BASE = [
   'KPH_Approval_Status__c',
   'KPH_Is_Submitted__c',
   'KPH_Dry_Run_Date__c',
+  'KPH_Last_Refresh_Date__c',
+  // 'KPH_Potential_ATC__c',
+  // 'KPH_Account_Phase__c',
 ];
 
 export const PLAN_FIELDS = isOnline()
@@ -310,10 +313,13 @@ export const toPlanShape = (r) => {
     ownerName: null,
     accountId: r.Account_vod__c,
     dryRunDate: r.KPH_Dry_Run_Date__c || null,
+    //potentialAtc: toBooleanFlag(r.KPH_Potential_ATC__c),
+    //accountPhase: r.KPH_Account_Phase__c || null,
     // Filled in by fetchAccount() after the Account row loads.
     accountName: null,
     lastPodMeetingDate: r.KPH_Last_POD_Meeting__c || r.LastActivityDate || null,
     lastMpdApprovalDate: r.KPH_Last_MPD_Review_Date__c,
+    lastRefreshDate:r.KPH_Last_Refresh_Date__c || null,
     territoryDescription: r.KPH_Territory_Description__c || r.KPH_Territory__c,
     planStatus: r.KPH_Plan_status__c,
     approvalStatus: r.KPH_Approval_Status__c,
@@ -353,10 +359,31 @@ const fetchAccountHeaderFields = (accountId) => {
     }));
 };
 
+const fetchAccountPotentialAtc =(accountId)=>{
+  const where = buildIdMatchWhere('Id', accountId);
+  if(!where) return Promise.resolve(false);
+  return runQuery({
+    object : 'Account',
+    fields : ['Id', 'KPH_Potential_ATC__c'],
+    where,
+    limit : 1,
+  })
+  .then((rows)=>{
+    const r = unwrap(rows[0]);
+    const v = r?.KPH_Potential_ATC__c;
+    const raw = v && typeof v==='object' && 'value' in v ? v.value : v;
+    return raw === true || raw === 1 || ['true', '1', 'yes', 'y'].includes(String(raw ?? '').trim().toLowerCase());
+  })
+  .catch((error) =>{
+    console.log('[potentialAtc] Account.KPH_Potential_ATC__c lookup failed', error);
+    return false;
+  })
+}
+
 export const fetchAccount = async (accountId) => {
   const where = buildIdMatchWhere('Id', accountId);
   if (!where) return null;
-  const [rows, accountHeaderFields] = await Promise.all([
+  const [rows, accountHeaderFields, potentialAtc] = await Promise.all([
     runQuery({
       object: 'Account',
       fields: ACCOUNT_FIELDS,
@@ -364,6 +391,7 @@ export const fetchAccount = async (accountId) => {
       limit: 1,
     }),
     fetchAccountHeaderFields(accountId),
+    fetchAccountPotentialAtc(accountId),
   ]);
   const r = unwrap(rows[0]);
   if (!r) return null;
@@ -374,6 +402,7 @@ export const fetchAccount = async (accountId) => {
     territory: r.Territory_vod__c,
     mmAtcPriority: accountHeaderFields.mmAtcPriority,
     marketAccessPrioritizedAccount: accountHeaderFields.marketAccessPrioritizedAccount,
+    potentialAtc,
   };
 };
 
@@ -412,6 +441,7 @@ const ACCOUNT_LOOKUP_FIELDS = [
   'NET_External_Id__c',
   'AccountNumber',
   'Territory_vod__c',
+ ' KPH_Is_Child_Account__c',
 ];
 
 const accountMatchesLookupTerm = (row, searchTerm) => {
@@ -431,6 +461,10 @@ const toAccountLookupOption = (row) => {
     accountIdentifier,
     eid: r.EID_GILD__c || accountIdentifier,
     territory: r.Territory_vod__c || null,
+    isChildAccount:isTruthy(unwrap(row)?.KPH_Is_Child_Account__c),
+    // Only populated for stakeholder (person account) searches.
+    phone: r.Phone ?? null,
+    email: r.KPH_Primary_Email__c ?? null,
   };
 };
 
@@ -463,15 +497,32 @@ const accountNameWhere = (searchTerm) => {
   return `${personAccountWhere} AND (${variants.map((term) => `Name LIKE ${quoteSoqlValue(`%${term}%`)}`).join(' OR ')})`;
 };
 
+// Contact details of the stakeholder's person Account. These are what the
+// Stakeholder modal shows in its Phone / Email inputs.
+export const STAKEHOLDER_ACCOUNT_CONTACT_FIELDS = ['Phone', 'KPH_Primary_Email__c'];
+
+const STAKEHOLDER_ACCOUNT_LOOKUP_FIELDS = [
+  ...ACCOUNT_LOOKUP_FIELDS,
+  ...STAKEHOLDER_ACCOUNT_CONTACT_FIELDS,
+];
+
 export const searchStakeholderAccounts = (searchTerm = '', limit = 60) => {
   const rowLimit = Math.max(1, Math.min(Number.parseInt(limit, 10) || 60, 60));
-  return runQuery({
-    object: 'Account',
-    fields: ACCOUNT_LOOKUP_FIELDS,
-    where: accountNameWhere(searchTerm),
-    sort: ['Name ASC'],
-    limit: rowLimit,
-  })
+  const runSearch = (fields) =>
+    runQuery({
+      object: 'Account',
+      fields,
+      where: accountNameWhere(searchTerm),
+      sort: ['Name ASC'],
+      limit: rowLimit,
+    });
+  // If the user's profile cannot read Phone / KPH_Primary_Email__c the query
+  // fails as a whole; retry without them so the name lookup keeps working.
+  return runSearch(STAKEHOLDER_ACCOUNT_LOOKUP_FIELDS)
+    .catch((error) => {
+      console.warn('[stakeholderAccountLookup] contact fields unavailable, retrying without', error);
+      return runSearch(ACCOUNT_LOOKUP_FIELDS);
+    })
     .then((rows) =>
       rows
         .map(toAccountLookupOption)
@@ -580,37 +631,23 @@ const shellContextKey = (planId, planFields = PLAN_FIELDS) => {
   return `${normalizedPlanId}|${(planFields || PLAN_FIELDS).join(',')}`;
 };
 
-// Potential ATC (pre-auth) flag + account phase for the iPad shell.
-// KPH_Potential_ATC__c lives on ACCOUNT (not Account_Plan_vod__c); querying it on
-// the plan fails the whole page ("getFieldLabel called with field that cannot be
-// accessed", code 21). Each field is queried on its own and fails soft, so a
-// missing FLS can never break the page load.
-const fetchPotentialAtcContext = async (planId, accountId) => {
-  const debug = {};
-  const safe = async (key, object, field, idValue) => {
+const fetchPotentialAtcContext =async(planId,accountId)=>{
+  const safe = async(object, field,idValue)=>{
     const where = buildIdMatchWhere('Id', idValue);
-    debug[key] = { object, field, where };
-    if (!where) return null;
-    try {
-      const rows = await runQuery({ object, fields: ['Id', field], where, limit: 1 });
-      debug[key].response = rows;
+    if(!where) return null;
+    try{
+      const rows = await runQuery({ object, fields:['Id', field], where, limit:1});
       return unwrap(rows[0])?.[field] ?? null;
-    } catch (e) {
-      debug[key].error = e?.message || String(e);
+    }catch(e){
       return null;
     }
-  };
+  }
   const [atc, phase] = await Promise.all([
-    safe('potentialAtc', 'Account', 'KPH_Potential_ATC__c', accountId),
-    safe('accountPhase', 'Account_Plan_vod__c', 'KPH_Account_Phase__c', planId),
+    safe('Account', 'KPH_Potential_ATC__c', accountId),
+    safe('Account_Plan_vod__c', 'KPH_Account_Phase__c', planId),
   ]);
-  return {
-    potentialAtc: toBooleanFlag(atc),
-    accountPhase: phase || null,
-    debug,
-  };
-};
-
+  return {potentialtc : toBooleanFlag(atc), accountPhase:phase || null};
+}
 /**
  * Plan + parent Account resolution shared across page loaders. Every page
  * needs the sidebar/header values, so this avoids duplicating the
@@ -623,9 +660,8 @@ const buildShellContextForPlanId = async (planId, planFields = PLAN_FIELDS) => {
   const plan = toPlanShape(planRow);
   const account = await fetchAccount(plan.accountId);
   const atcContext = await fetchPotentialAtcContext(planRow.Id || planId, plan.accountId);
-  plan.potentialAtc = atcContext.potentialAtc;
+  plan.potentialtc = atcContext.potentialtc;
   plan.accountPhase = atcContext.accountPhase;
-  plan.potentialAtcDebug = atcContext.debug;
   // Canonical-form plan ID — every plan-scoped child query downstream should
   // use this, then wrap it in `buildIdMatchWhere` to still hit 15-char fields.
   const canonicalPlanId = toCanonicalSalesforceId(planRow.Id) || planRow.Id || planId;
@@ -2230,15 +2266,50 @@ const buildStakeholderWriteFields = (form) => {
   return fields;
 };
 
+// Load Phone / KPH_Primary_Email__c for one stakeholder person Account.
+// Resolves to { phone, email } (either may be null) or null when unavailable.
+export const fetchStakeholderAccountContact = (accountId) => {
+  const where = buildIdMatchWhere('Id', accountId);
+  if (!where) return Promise.resolve(null);
+  return runQuery({
+    object: 'Account',
+    fields: ['Id', ...STAKEHOLDER_ACCOUNT_CONTACT_FIELDS],
+    where,
+    limit: 1,
+  })
+    .then((rows) => {
+      const r = unwrap(rows?.[0]);
+      if (!r) return null;
+      return { phone: r.Phone ?? null, email: r.KPH_Primary_Email__c ?? null };
+    })
+    .catch((error) => {
+      console.warn('[stakeholderAccountContact] lookup failed', error);
+      return null;
+    });
+};
+
+// Phone / email edits are stored on the stakeholder's Account, the same place
+// they are read from. Only written when the modal reports the user changed
+// them, so an untouched save never writes to the Account record.
+const buildStakeholderAccountContactFields = (form) => ({
+  Phone: cleanedTextOrNull(form.phone),
+  KPH_Primary_Email__c: cleanedTextOrNull(form.email),
+});
+
+const saveStakeholderAccountContact = (form) => {
+  if (!form?.accountContactChanged || !form.profileRecordId) return Promise.resolve();
+  return updateRecord('Account', form.profileRecordId, buildStakeholderAccountContactFields(form));
+};
+
 export const updateStakeholder = (id, form) => {
   if (!id) return Promise.reject(new Error('Missing stakeholder id.'));
   const fields = buildStakeholderWriteFields(form || {});
   if (!cleanedTextOrNull(form?.name) && !fields.KPH_Account__c) {
     return Promise.reject(new Error('Stakeholder name is required.'));
   }
-  return updateRecord(STAKEHOLDER_OBJECT, id, fields).then(() =>
-    toStakeholder({ Id: id, ...stakeholderDisplayFields(form || {}), ...fields })
-  );
+  return updateRecord(STAKEHOLDER_OBJECT, id, fields)
+    .then(() => saveStakeholderAccountContact(form))
+    .then(() => toStakeholder({ Id: id, ...stakeholderDisplayFields(form || {}), ...fields }));
 };
 
 export const deleteStakeholder = (id) => {
@@ -2258,7 +2329,9 @@ export const createStakeholder = (planId, form) => {
   return createRecord(STAKEHOLDER_OBJECT, fields).then((result) => {
     const id = createdRecordId(result);
     if (!id) throw new Error('Unable to create stakeholder record.');
-    return toStakeholder({ Id: id, ...stakeholderDisplayFields(form || {}), ...fields });
+    return saveStakeholderAccountContact(form).then(() =>
+      toStakeholder({ Id: id, ...stakeholderDisplayFields(form || {}), ...fields })
+    );
   });
 };
 
@@ -2981,13 +3054,18 @@ export const createStakeholderAccount = async (form = {}) => {
     Credentials_vod__c: credential,
     KPH_Country__c: country,
     NPI_vod__c: cleanedTextOrNull(form.npi),
+    KPH_Is_Child_Account__c:toCheckboxBoolean(form.isChildAccount),
   };
   // const recordTypeId = await resolveHcpRecordTypeId();
   // if (recordTypeId) fields.RecordTypeId = recordTypeId;
   fields.RecordTypeId = selectedRecordTypeId;
-  if (form.primaryParentId) fields.Primary_Parent_vod__c = form.primaryParentId;
-
+  if (form.primaryParentId) {
+    fields.Primary_Parent_vod__c = form.primaryParentId;
+    fields.KPH_Is_Child_Account__c = true;
+  }
+  console.log('[ChildAccount] payload fields:', JSON.stringify(fields, null, 2));
   const result = await createRecord(ACCOUNT_OBJECT, fields);
+  console.log('[ChildAccount] create result:', JSON.stringify(result));
   const id = createdRecordId(result);
   if (!id) throw new Error('Unable to create account record.');
 
@@ -3010,7 +3088,23 @@ export const createStakeholderAccount = async (form = {}) => {
       throw new Error(`Account was created, but its address could not be saved: ${error?.message || 'unknown error'}`);
     }
   }
-
+  const manual = form.manualAddress;
+  if(!src && manual){
+    try{
+      await createRecord(ADDRESS_OBJECT,{
+        Account_vod__c:id,
+        Name: cleanedTextOrNull(manual.line1),
+        Address_line_2_vod__c: cleanedTextOrNull(manual.line2),
+        City_vod__c:cleanedTextOrNull(manual.city),
+        State_vod__c:cleanedTextOrNull(manual.state),
+        Country_vod__c:cleanedTextOrNull(manual.country),
+        Zip_vod__c:cleanedTextOrNull(manual.zip),
+        Primary_vod__c:true,
+      });
+    }catch(error){
+      throw new Error(`Account was Created, but its address could not be saved:${error?.message || 'unknown'}`);
+    }
+  }
   // Re-read to pick up EID / identifier generated by the backend.
   const fallback = {
     id,
