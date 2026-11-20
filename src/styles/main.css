@@ -3046,14 +3046,15 @@ button {
     grid-template-columns:
         minmax(0, 1.25fr)
         minmax(0, 0.82fr)
-        minmax(0, 1.2fr)
+        minmax(0, 0.60fr)
         minmax(0, 0.78fr)
         minmax(0, 0.82fr)
         minmax(0, 0.9fr)
-        minmax(0, 1.06fr)
-        minmax(0, 1.06fr)
+        minmax(0, 0.82fr)
+        minmax(0, 0.82fr)
         minmax(0, 0.70fr)
-        69px;
+        minmax(0, 0.70fr)
+        66px;
 }
 
 .account-plan-launcher-table.is-preauth .account-plan-launcher-row > span:last-child {
@@ -9212,7 +9213,7 @@ body {
     }
 
     .home-summary-table {
-        flex: 1 1 0;
+        flex: none;
         min-height: 0;
         margin-top: 8px;
         overflow-y: auto;
@@ -11507,4 +11508,13 @@ body {
         max-width: 124px !important;
         margin-left: 0 !important;
     }
+}
+
+
+.page-account-profile .account-field-note{
+    grid-column: 1 / -1;
+    margin: 0 0 4px;
+    padding: 6px 10px;
+    color: #35566a;
+    font-family: 15px;
 }

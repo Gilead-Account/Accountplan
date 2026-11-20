@@ -28,6 +28,14 @@ const STAKEHOLDER_TABLE_COLUMNS = [
   { key: 'primaryParent', label: 'Primary Parent' },
 ];
 
+const CHAMPION_CARDS = [
+  { key: 'mmAdministrative', title: 'MM Administrative Champion(s)', field:'mmAdministrativeChampion' },
+  { key: 'mmClinical', title: 'MM Clinical Champion(s)', field:'mmClinicalChampion' },
+  { key: 'dlbclAdministrative', title: 'DLBCL Administrative Champion(s)', field:'dlbclAdministrativeChampion' },
+  { key: 'dlbclClinical', title: 'DLBCL Clinical Champion(s)', field:'dlbclClinicalChampion' },
+
+];
+
 const stakeholderSortValue = (stakeholder, key) => {
   switch (key) {
     case 'name':
@@ -103,9 +111,9 @@ function DetailPanel({ stakeholder }) {
           )}
         </p>
       </article>
-       <article className="stakeholder-bd-card is-driver is-dlbcl">
+       {/* <article className="stakeholder-bd-card is-driver is-dlbcl">
         <div className="stakeholder-bd-head">
-          {/* <span className="stakeholder-bd-icon"><DriverIcon /></span> */}
+         
           <h5 className="stakeholder-bd-label">DLBCL Administrative Champion</h5>
         </div>
         <p className="stakeholder-bd-body">
@@ -114,13 +122,13 @@ function DetailPanel({ stakeholder }) {
       </article>
        <article className="stakeholder-bd-card is-driver is-dlbcl">
         <div className="stakeholder-bd-head">
-          {/* <span className="stakeholder-bd-icon"><DriverIcon /></span> */}
+          
           <h5 className="stakeholder-bd-label">DLBCL Clinical Champion</h5>
         </div>
         <p className="stakeholder-bd-body">
           {championValue(stakeholder.dlbclClinicalChampion)}
         </p>
-      </article>
+      </article> */}
       <article className="stakeholder-bd-card is-barrier is-mm">
         <div className="stakeholder-bd-head">
           <span className="stakeholder-bd-icon"><BarrierIcon /></span>
@@ -143,9 +151,8 @@ function DetailPanel({ stakeholder }) {
           )}
         </p>
       </article>
-      <article className="stakeholder-bd-card is-driver is-mm">
+      {/* <article className="stakeholder-bd-card is-driver is-mm">
         <div className="stakeholder-bd-head">
-          {/* <span className="stakeholder-bd-icon"><DriverIcon /></span> */}
           <h5 className="stakeholder-bd-label">MM Administrative Champion</h5>
         </div>
         <p className="stakeholder-bd-body">
@@ -154,13 +161,12 @@ function DetailPanel({ stakeholder }) {
       </article>
       <article className="stakeholder-bd-card is-driver is-mm">
         <div className="stakeholder-bd-head">
-          {/* <span className="stakeholder-bd-icon"><DriverIcon /></span> */}
           <h5 className="stakeholder-bd-label">MM Clinical Champion</h5>
         </div>
         <p className="stakeholder-bd-body">
            {championValue(stakeholder.mmClinicalChampion)}
         </p>
-      </article>
+      </article> */}
     </div>
   );
 }
@@ -196,79 +202,40 @@ export default function StakeholdersTab({
     NON_TARGET_PRIORITY_OPTION,
   ];
   const handleSort = (key) => setSort((current) => nextTableSort(current, key));
+  const openStakeHolderDetails = (id) =>{
+    if(!(expanded && expanded[id])) onToggleExpand(id);
+    setTimeout(()=>{
+      document.getElementById(`stakeholder-row-${id}`)?.scrollIntoView({behavior:'smooth', block:'center'});
+    },50);
+  }
 
-  const championCards = useMemo(() => ({
-  mmAdministrative: filtered.filter(
-    (s) => s.mmAdministrativeChampion
-  ),
-
-  mmClinical: filtered.filter(
-    (s) => s.mmClinicalChampion
-  ),
-
-  dlbclAdministrative: filtered.filter(
-    (s) => s.dlbclAdministrativeChampion
-  ),
-
-  dlbclClinical: filtered.filter(
-    (s) => s.dlbclClinicalChampion
-  ),
-}), [filtered]);
+  const championCards = useMemo(() => 
+    CHAMPION_CARDS.map((card)=>({
+      ...card,
+      names:filtered.filter((s)=>s[card.field]),
+    })), [filtered]);
 
   return (
     <>
-    <article>
-        <div className="champion-summary-row">
+      <article>
+          <div className="champion-summary-row">
+            {championCards.map((card)=> (
+              <div className="champion-summary-card">
+              <h4>{card.title}:</h4>
 
-          <div className="champion-summary-card">
-            <h4>MM Administrative Champion(s):</h4>
-
-            {championCards.mmAdministrative.length ? (
-              championCards.mmAdministrative.map((s) => (
-                <div key={s.id}>- {s.name}</div>
-              ))
-            ) : (
-              <div>- None</div>
-            )}
-          </div>
-
-          <div className="champion-summary-card">
-            <h4>MM Clinical Champion(s):</h4>
-
-            {championCards.mmClinical.length ? (
-              championCards.mmClinical.map((s) => (
-                <div key={s.id}>- {s.name}</div>
-              ))
-            ) : (
-              <div>- None</div>
-            )}
-          </div>
-
-          <div className="champion-summary-card">
-            <h4>DLBCL Administrative Champion(s):</h4>
-
-            {championCards.dlbclAdministrative.length ? (
-              championCards.dlbclAdministrative.map((s) => (
-                <div key={s.id}>- {s.name}</div>
-              ))
-            ) : (
-              <div>- None</div>
-            )}
-          </div>
-
-          <div className="champion-summary-card">
-            <h4>DLBCL Clinical Champion(s):</h4>
-
-            {championCards.dlbclClinical.length ? (
-              championCards.dlbclClinical.map((s) => (
-                <div key={s.id}>- {s.name}</div>
-              ))
-            ) : (
-              <div>- None</div>
-            )}
-          </div>
-
-       </div>
+              {card.names.length ? (
+                card.names.map((s) => (
+                  <div key={s.id}>- {''}
+                  <button type='button' className='champion-name-link'
+                  onClick={()=>openStakeHolderDetails(s.id)}>{s.name}</button>
+                  </div>
+                ))
+              ) : (
+                <div>- None</div>
+              )}
+            </div>
+            ))}
+        </div>
       </article>
 
       <article className="mock-card critical-activity-toolbar-card stakeholder-toolbar-card">
@@ -345,7 +312,7 @@ export default function StakeholdersTab({
         const dlbclTriplet = dlbclInfluenceTriplet(s);
         const mmTriplet = mmInfluenceTriplet(s);
         return (
-          <div key={s.id} className="stakeholder-table-item">
+          <div key={s.id} className="stakeholder-table-item" id={`stakeholder-row-${s.id}`}>
             <div
               className={`stakeholder-table-row${isExpanded ? ' is-expanded' : ''}`}
               onClick={() => onToggleExpand(s.id)}

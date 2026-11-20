@@ -15,6 +15,7 @@ import {
   createStakeholderAccount,
   deleteStakeholder,
   fetchParentAddresses,
+  fetchStakeholderAccountContact,
   searchSiteAccounts,
   searchStakeholderAccounts,
   updateStakeholder,
@@ -112,10 +113,12 @@ export default function Stakeholders({ data, onNotify, isReadOnly = false }) {
     });
   };
 
-  const saveStakeholder = async (id, form) => {
+  const saveStakeholder = async (id, formWithFlags) => {
     if (isReadOnly) return;
+    // accountContactChanged is a save-time flag for the data layer, not row data.
+    const { accountContactChanged, ...form } = formWithFlags || {};
     if (id) {
-      await updateStakeholder(id, form);
+      await updateStakeholder(id, formWithFlags);
       setStakeholders((current) =>
         current.map((stakeholder) =>
           stakeholder.id === id ? { ...stakeholder, ...form } : stakeholder
@@ -129,7 +132,7 @@ export default function Stakeholders({ data, onNotify, isReadOnly = false }) {
       return;
     }
 
-    const saved = await createStakeholder(data.planId, form);
+    const saved = await createStakeholder(data.planId, formWithFlags);
     const created = { ...saved, ...form, id: saved.id };
     setStakeholders((current) => [created, ...current]);
     onNotify?.({
@@ -201,6 +204,7 @@ export default function Stakeholders({ data, onNotify, isReadOnly = false }) {
           }
           searchSites={searchSiteAccounts}
           searchStakeholders={searchStakeholderAccounts}
+          loadStakeholderContact={fetchStakeholderAccountContact}
           excludedStakeholderAccountIds={excludedStakeholderAccountIds}
           onClose={() => setEditingStakeholder(null)}
           onSave={saveStakeholder}

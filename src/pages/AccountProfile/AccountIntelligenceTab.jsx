@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { Fragment, useCallback, useEffect, useMemo, useState } from 'react';
 import { MM_PROFILE_FIELD_API_NAMES } from '@/lib/dataservice/accountPlan/shared';
 
 const MM_PROFILE_TEXT_MAX_LENGTH = 250;
@@ -92,7 +92,7 @@ const accountIntelligenceSections = (mmProfilePicklists = {}) => [
     placement: 'side',
     fields: [
       { key: 'cartTreatersAtAtc', label: '# CART Treaters at ATC', crmField: MM_PROFILE_FIELD_API_NAMES.cartTreatersAtAtc, source: 'Claims / CRM', inlineValue: true, valuePlacement: 'below' },
-      { key: 'mmAnitoCelClinicalChampion', label: 'MM Anito-Cel Clinical Champion', crmField: MM_PROFILE_FIELD_API_NAMES.mmAnitoCelClinicalChampion, source: 'MSL / TLL Input', editable: true, inputType: 'text', maxLength: MM_PROFILE_LONG_TEXT_MAX_LENGTH },
+      { key: 'mmAnitoCelClinicalChampion', label: 'MM Anito-Cel Clinical Champion', crmField: MM_PROFILE_FIELD_API_NAMES.mmAnitoCelClinicalChampion, source: 'MSL / TLL Input', editable: true, noteAbove: 'Please refer to the Stakeholder Page to view the Clinical and Administrative Champions.', inputType: 'text', maxLength: MM_PROFILE_LONG_TEXT_MAX_LENGTH },
       { key: 'adminChampionRole', label: 'Admin Champion & Role', crmField: MM_PROFILE_FIELD_API_NAMES.adminChampionRole, source: 'KAD / CTAM Input', editable: true, inputType: 'text', maxLength: MM_PROFILE_LONG_TEXT_MAX_LENGTH },
       { key: 'mmOpinionLeaders', label: 'MM Opinion Leaders', crmField: MM_PROFILE_FIELD_API_NAMES.mmOpinionLeaders, source: 'TLL Input (SteepRock)', editable: true, inputType: 'text', maxLength: MM_PROFILE_LONG_TEXT_MAX_LENGTH },
     ],
@@ -100,6 +100,10 @@ const accountIntelligenceSections = (mmProfilePicklists = {}) => [
 ];
 
 const ACCOUNT_INTELLIGENCE_SECTIONS = accountIntelligenceSections();
+const FIELD_NON_EDITABLE= new Set(['mmAnitoCelClinicalChampion', 'adminChampionRole']);
+const isNonEditable = (item) => FIELD_NON_EDITABLE.has(item.key);
+const FIELD_NOTE_KEY='mmAnitoCelClinicalChampion';
+const FIELD_NOTE ='Please refer to the Stakeholder Page to view the Clinical and Administrative Champions.'
 
 const editValue = (value) => (value === null || value === undefined ? '' : String(value));
 const displayValue = (value) => {
@@ -206,13 +210,14 @@ function AccountIntelligenceControl({ item, value, onChange, disabled = false })
 }
 
 function AccountIntelligenceField({ item, value, onChange, isReadOnly = false }) {
-  const isEditable = item.editable && !isReadOnly;
+  const isNoEditable =isReadOnly || isNonEditable(item)
+  const isEditable = item.editable && !isNoEditable;
   const displayUnit = item.displayUnit;
   const renderedLabel = labelWithUnit(item);
   const className = [
     'account-intelligence-field',
     isEditable ? 'is-editable' : '',
-    item.editable && isReadOnly ? 'is-readonly' : '',
+    item.editable && isNoEditable ? 'is-readonly' : '',
     item.inlineValue ? 'has-inline-value' : '',
     item.valuePlacement === 'below' ? 'has-stacked-value' : '',
     item.tabletLayout ? `is-${item.tabletLayout}` : '',
@@ -244,6 +249,20 @@ function AccountIntelligenceField({ item, value, onChange, isReadOnly = false })
   );
 
   return (
+    <>
+      {item.key === FIELD_NOTE_KEY ? (
+      <p role='note' style={{
+        gridColumn:'1 / -1',
+        margin: '5px 0 5px 6px',
+        fontSize:12,
+        color:'#f00',
+        lineHeight:1.4,
+        fontWeight:500,
+        }}>
+        {FIELD_NOTE}
+      </p>
+    ):null}
+    
     <div className={className}>
       <div className="account-intelligence-field-copy">
         {item.inlineValue ? (
@@ -259,6 +278,7 @@ function AccountIntelligenceField({ item, value, onChange, isReadOnly = false })
         )}
       </div>
     </div>
+    </>
   );
 }
 
@@ -274,6 +294,7 @@ function AccountInformationSection({ fields, profileValues, editableValues, onCh
         {fields.map((item) => {
           const crmValue = valueFromProfile(profileValues, item);
           return (
+            
             <AccountIntelligenceField
               item={item}
               key={item.key}
@@ -281,6 +302,7 @@ function AccountInformationSection({ fields, profileValues, editableValues, onCh
               onChange={onChange}
               isReadOnly={isReadOnly}
             />
+
           );
         })}
       </div>
@@ -350,7 +372,7 @@ export default function AccountIntelligenceTab({
   };
 
   const isFieldDirty = (item) =>
-    item.editable && item.crmField && editValue(editableValues[item.key] ?? '') !== editValue(savedEditableValues[item.key] ?? '');
+    item.editable && isNonEditable(item) && item.crmField && editValue(editableValues[item.key] ?? '') !== editValue(savedEditableValues[item.key] ?? '');
 
   const dirtyItems = useMemo(
     () => editableItems.filter((item) => item.editable && item.crmField && isFieldDirty(item)),

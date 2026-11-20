@@ -80,6 +80,7 @@ const PAGES = [
   { key: 'critical-activities', label: 'Critical Activities', shortLabel: 'CA', implemented: true, loader: loadCriticalActivities },
   { key: 'linked-opportunities', label: 'Cross functional Plan of Action', shortLabel: 'PO', implemented: true, loader: loadCrossFunctionalPlan },
   { key: 'kpi', label: 'Account Profile', shortLabel: 'AP', implemented: true, loader: loadAccountProfile },
+  //{ key: 'refferal-dynamics', label: 'Referral & Dynamics', shortLabel: 'RD', implemented: true, loader: loadAccountProfile, dataKey: 'kpi' },
   { key: 'account-insights', label: 'Account Insights', shortLabel: 'IN', implemented: true, loader: loadAccountProfile, dataKey: 'kpi' },
   { key: 'stakeholders', label: 'Stakeholders', shortLabel: 'SH', implemented: true, loader: loadStakeholders },
   { key: 'team-members', label: 'Team Members', shortLabel: 'TM', implemented: true, loader: loadTeamMembers },
@@ -246,7 +247,9 @@ function AppContent() {
     ? selectedLauncherPlan
     : null;
   const baseShellPlan = shellPlan
-    ? { ...selectedLauncherPlanForShell, ...shellPlan }
+    ? { ...selectedLauncherPlanForShell, ...shellPlan, 
+      lastRefreshDate:shellPlan.lastRefreshDate ?? selectedLauncherPlanForShell?.raw?.KPH_Last_Refresh_Date__c ?? null,
+    }
     : selectedLauncherPlanForShell;
   const effectiveShellPlan = baseShellPlan
     ? {
@@ -1462,6 +1465,10 @@ const handleOpenApprovalHistoryForCtam = () => {
                 />
               )}
 
+              {/* {activeStatus === 'ready' && activeKey === 'refferal-dynamics' && (
+                <AccountProfile data={activeData} initialTab="refferal-dynamics" onNotify={showAppNotice} isReadOnly={isReadOnly}/>
+              )} */}
+
               {activeStatus === 'ready' && activeKey === 'kpi' && (
                 <AccountProfile data={activeData} initialTab="account-intelligence" onNotify={showAppNotice} isReadOnly={isReadOnly} />
               )}
@@ -1471,7 +1478,7 @@ const handleOpenApprovalHistoryForCtam = () => {
               )}
 
               {activeStatus === 'ready' && activeKey === 'stakeholders' && (
-                <Stakeholders data={activeData} onNotify={showAppNotice} isReadOnly={isReadOnly} />
+                <Stakeholders data={activeData} onNotify={showAppNotice} isReadOnly={isReadOnly}  />
               )}
 
               {activeStatus === 'ready' && activeKey === 'team-members' && (

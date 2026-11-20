@@ -1419,3 +1419,10 @@
     opacity:0.5;
     cursor: not-allowed;
 }
+.champion-name-link{
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    color: #003f65;
+}

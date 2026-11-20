@@ -34,6 +34,10 @@ const STAKEHOLDER_FIELD_HELP = {
     'Capture key factors that support adoption, referrals, or positive account outcomes (e.g., clinical preferences, operational efficiencies, leadership support).',
   mmBarriers:
     'Capture key challenges limiting adoption, referrals, or account performance (e.g., access restrictions, competing trials, operational constraints).',
+  phone:
+    'Phone number from the stakeholder\u2019s account. Selecting a stakeholder fills it in; edit it here and the change is saved to the account.',
+  email:
+    'Primary email from the stakeholder\u2019s account. Selecting a stakeholder fills it in; edit it here and the change is saved to the account.',
   clinicalChampion :
     'The key clinical advocate within an ATC who helps build clinical conviction and supports the need for access to Kite therapies during the authorization process.',
   adminiStrativeChampion:
@@ -46,6 +50,8 @@ const IDENTITY_FIELDS = [
   { label: 'Other Role', key: 'otherRole', readOnly: false, help: STAKEHOLDER_FIELD_HELP.otherRole },
   { label: 'Stakeholder EID', key: 'stakeholderId', readOnly: true, alwaysReadOnly: true },
   { label: 'Name Of Site', key: 'primaryParent', readOnly: true, alwaysReadOnly: true, help: STAKEHOLDER_FIELD_HELP.primaryParent },
+  { label: 'Phone', key: 'phone', readOnly: false, type: 'tel', maxLength: 40, help: STAKEHOLDER_FIELD_HELP.phone },
+  { label: 'Email', key: 'email', readOnly: false, type: 'email', help: STAKEHOLDER_FIELD_HELP.email },
 ];
 
 const DLBCL_FIELDS = [
@@ -137,6 +143,9 @@ const normalizeAccountId = (value) => {
   const text = String(value || '').trim();
   return text ? text.slice(0, 15).toLowerCase() : '';
 };
+
+// Simple sanity check; the CRM remains the final validator.
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 const defaultOpenSections = () => ({
   details: true,
@@ -351,11 +360,13 @@ function Field({ field, value, onChange, isNew, options = [] }) {
           onChange={(e) => onChange(field.key, e.target.value)}
         />
       )}
-      {type === 'text' && !readOnly && (
+      {(type === 'text' || type === 'tel' || type === 'email') && !readOnly && (
         <input
           id={id}
-          type="text"
+          type={type}
           value={value || ''}
+          maxLength={field.maxLength}
+          autoComplete="off"
           onChange={(e) => onChange(field.key, e.target.value)}
         />
       )}
@@ -425,6 +436,7 @@ export default function StakeholderEditModal({
   physicianIdentifiedHighestUnmetNeedsOptions = [],
   searchSites,
   searchStakeholders,
+  loadStakeholderContact,
   excludedStakeholderAccountIds = [],
   onClose,
   onSave,
@@ -436,6 +448,9 @@ export default function StakeholderEditModal({
   const [isSaving, setIsSaving] = useState(false);
   const [deleteConfirm, setDeleteConfirm] = useState(false);
   const [openSections, setOpenSections] = useState(defaultOpenSections);
+  // Phone / email as last loaded from (or picked up with) the Account. Used to
+  // tell whether the user edited them, so we only write when something changed.
+  const contactBaselineRef = useRef({ phone: '', email: '' });
   const isEdit = !!stakeholder?.id;
   const isNew = !isEdit;
   const excludedStakeholderAccountIdSet = useMemo(
@@ -463,7 +478,36 @@ export default function StakeholderEditModal({
     setIsSaving(false);
     setDeleteConfirm(false);
     setOpenSections(defaultOpenSections());
+    contactBaselineRef.current = {
+      phone: stakeholder?.phone ?? '',
+      email: stakeholder?.email ?? '',
+    };
   }, [stakeholder?.id]);
+
+  // Editing an existing stakeholder (or one just created from a new account):
+  // pull the current Phone / Email from the Account so they display immediately.
+  useEffect(() => {
+    const accountId = stakeholder?.profileRecordId;
+    if (!accountId || !loadStakeholderContact) return undefined;
+    let cancelled = false;
+    Promise.resolve(loadStakeholderContact(accountId)).then((contact) => {
+      if (cancelled || !contact) return;
+      const phone = contact.phone ?? '';
+      const email = contact.email ?? '';
+      const previous = contactBaselineRef.current;
+      contactBaselineRef.current = { phone, email };
+      // Don't clobber anything the user already typed while this was loading.
+      setForm((current) => ({
+        ...current,
+        phone: current.phone === previous.phone ? phone : current.phone,
+        email: current.email === previous.email ? email : current.email,
+      }));
+    });
+    return () => {
+      cancelled = true;
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [stakeholder?.id, stakeholder?.profileRecordId, loadStakeholderContact]);
 
   // ESC closes the modal.
   useEffect(() => {
@@ -494,16 +538,25 @@ export default function StakeholderEditModal({
       name: value,
       profileRecordId: '',
       stakeholderId: '',
+      // Contact details belong to the previously selected account.
+      phone: '',
+      email: '',
     }));
+    contactBaselineRef.current = { phone: '', email: '' };
   };
 
   const selectStakeholderAccount = (account) => {
     setSaveError('');
+    const phone = account?.phone ?? '';
+    const email = account?.email ?? '';
+    contactBaselineRef.current = { phone, email };
     setForm((current) => ({
       ...current,
       name: account?.name || '',
       profileRecordId: account?.id || '',
       stakeholderId: account?.eid || account?.accountIdentifier || '',
+      phone,
+      email,
     }));
   };
 
@@ -558,9 +611,19 @@ export default function StakeholderEditModal({
       setSaveError('Select a Name Of Site from the site search results.');
       return;
     }
+    const email = String(form.email || '').trim();
+    if (email && !EMAIL_PATTERN.test(email)) {
+      setSaveError('Enter a valid email address.');
+      return;
+    }
+    const baseline = contactBaselineRef.current;
+    const accountContactChanged =
+      !!form.profileRecordId &&
+      (String(form.phone || '').trim() !== String(baseline.phone || '').trim() ||
+        email !== String(baseline.email || '').trim());
     setIsSaving(true);
     try {
-      if (onSave) await onSave(stakeholder.id, form);
+      if (onSave) await onSave(stakeholder.id, { ...form, accountContactChanged });
       onClose();
     } catch (error) {
       setSaveError(error && error.message ? error.message : 'Unable to save stakeholder.');
@@ -623,9 +686,12 @@ export default function StakeholderEditModal({
           >
             <div className="stakeholder-edit-grid">
               {IDENTITY_FIELDS.map((f) => {
-                const field = f.key === 'otherRole' && !isOtherRoleEditable
-                  ? { ...f, readOnly: true }
-                  : f;
+                const lockedUntilAccountSelected =
+                  (f.key === 'phone' || f.key === 'email') && !form.profileRecordId;
+                const field =
+                  (f.key === 'otherRole' && !isOtherRoleEditable) || lockedUntilAccountSelected
+                    ? { ...f, readOnly: true }
+                    : f;
                 if (field.readOnly || field.alwaysReadOnly) {
                   return (
                     <Field

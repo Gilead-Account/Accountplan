@@ -149,6 +149,15 @@ function NavIcon({ pageKey }) {
           <path d="M10.5 21.5h3" />
         </svg>
       );
+    // case 'refferal-dynamics':
+    //   return (
+    //     <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    //       <circle cx="6" cy="12" r="2.4" />
+    //       <circle cx="18" cy="12" r="2.4" />
+    //       <path d="M8.8 12h6.4" />
+    //       <path d="M13.5 9.9 2.5 2.5-2.5 2.5" />
+    //     </svg>
+    //   );
     case 'stakeholders':
       return (
         <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -648,6 +657,7 @@ export default function Sidebar({
   const accountName = (account && account.name) || (plan && plan.accountName) || 'Not entered';
   const eid = account && account.eid;
   const lastMpd = plan && plan.lastMpdApprovalDate;
+  const lastRefreshDate= plan && plan.lastRefreshDate;
   const isPotentialAtc = useContext(PotentialAtcContext);
   // Submitted for Approval / Revise and Resubmit surface the status text;
   // every other status (Approved, Recalled, Submitted But Not Approved by MPD,
@@ -659,6 +669,7 @@ export default function Sidebar({
       : formatDate(lastMpd, 'Not entered');
   const territory = (plan && plan.territoryDescription) || (account && account.territory);
   const legacyAccountPlanUrl = legacyAccountPlanRecordUrl(legacyAccountPlanId, currentUserUsername);
+  const lastDateValue = isPotentialAtc ? formatDate (lastRefreshDate,  'Not entered'):lastMpdReviewValue
   const lastDateLabel = isPotentialAtc ? 'Last Refresh Date' : 'Last MPD Review Date';
   // Close the export dropdown when the user taps outside of it.
   useEffect(() => {
@@ -833,7 +844,7 @@ export default function Sidebar({
                 className="sidebar-stat-help"
               />
             </span>
-            <strong>{lastMpdReviewValue}</strong>
+            <strong>{lastDateValue}</strong>
           </div>
         </div>
        

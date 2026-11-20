@@ -131,7 +131,7 @@ function DashboardIcon({ type }) {
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
         {type === 'reach' && <><circle cx="8" cy="7" r="3" /><circle cx="17" cy="8" r="2.6" /><path d="M2.5 20c.4-4.3 2.3-6.5 5.5-6.5s5.1 2.2 5.5 6.5M14 14c3.9-1.4 6.8.8 7.5 6" /></>}
         {type === 'message' && <><path d="M3 4h18v13H11l-5 4v-4H3z" /><path d="M7 10h.01M12 10h.01M17 10h.01" /></>}
-        {type === 'activation' && <><rect x="2" y="5" width="20" height="15" rx="1.5" /><path d="m3 6 9 8 9-8" /></>}
+        {type === 'certification' && <><rect x="2" y="5" width="20" height="15" rx="1.5" /><path d="m3 6 9 8 9-8" /></>}
         {type === 'apheresis' && <><path d="m3 21 7-15 5 9 2-5 4 11zM15 13V2m0 0h6l-3 3 3 3h-6" /><path d="m8 10 2 4 2-3" /></>}
       </svg>
     </span>
@@ -163,8 +163,9 @@ function Dashboard({ items, planId, milestones = {} }) {
   }, [planId]);
   const currentReach = reach.planId === planId ? reach : { status: 'loading' };
   const trifecta = calculateTrifecta(items);
-  const activationDate = calendarDay(milestones.mmActivationDate) !== null
-    ? formatChecklistDate(milestones.mmActivationDate).replaceAll('/', '-') : null;
+  const certificationDate = calendarDay(milestones.mmCertificationDate) !== null
+    ? formatChecklistDate(milestones.mmCertificationDate).replaceAll('/', '-') : null;
+  const certificationUnavailable = milestones.mmCertificationDateStatus === 'unavailable';
   const firstApheresis = milestones.firstApheresis === true ? 'Yes'
     : milestones.firstApheresis === false ? 'No' : String(milestones.firstApheresis || '').trim();
   return (
@@ -182,8 +183,9 @@ function Dashboard({ items, planId, milestones = {} }) {
         <p className="plc-sr-only">Configured checklist activities completed</p>
       </article>
       <article className="plc-metric">
-        <div className="plc-metric-heading"><h3>MM Activation date</h3><DashboardIcon type="activation" /></div>
-        <div className="plc-metric-value is-milestone" aria-label={activationDate ? undefined : 'MM activation date unavailable'}>{activationDate || '—'}</div>
+        <div className="plc-metric-heading"><h3>MM Certification Date</h3><DashboardIcon type="certification" /></div>
+        <div className="plc-metric-value is-milestone" aria-label={certificationDate ? undefined : certificationUnavailable ? 'MM certification date unavailable' : 'MM certification date not provided'}>{certificationDate || '—'}</div>
+        {certificationUnavailable && <p className="plc-kpi-error" role="status">Certification date unavailable</p>}
       </article>
       <article className="plc-metric">
         <div className="plc-metric-heading"><h3>1st Aph</h3><DashboardIcon type="apheresis" /></div>

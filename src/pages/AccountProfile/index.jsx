@@ -36,7 +36,8 @@ const ACCOUNT_INSIGHTS_TAB = 'account-insights';
 
 const resolveInitialTab = (initialTab) => {
   if (initialTab === ACCOUNT_INSIGHTS_TAB) return ACCOUNT_INSIGHTS_TAB;
-  return TABS.some((t) => t.key === initialTab) ? initialTab : 'account-intelligence';
+  return TABS.some((t) => t.key === initialTab) ? initialTab : 'account-intelligence'
+  //return TABS.some((t) => t.key === initialTab) ? initialTab : 'referral-dynamics';//For Referraland dynamics
 };
 
 const recordValue = (value) =>
@@ -87,6 +88,7 @@ export default function AccountProfile({ data, initialTab, onNotify, isReadOnly 
   const regionalFieldMap = data.regionalDynamicsFieldMap || {};
   const accountName = data.account?.name;
   const showAccountProfileTabs = tab !== ACCOUNT_INSIGHTS_TAB;
+  //const showTabBar = showAccountProfileTabs && tab !== 'referral-dynamics'//For Referraland dynamics
 
   useEffect(() => {
     setAttributeRows(data.accountAttributeRows || []);
@@ -321,6 +323,7 @@ export default function AccountProfile({ data, initialTab, onNotify, isReadOnly 
 
   return (
     <section className="page page-account-profile mock-profile-page">
+      {/* {showTabBar && ( //For Referraland dynamics */}
       {showAccountProfileTabs && (
         <article className="mock-control-panel account-profile-tabs-card">
           <div className="bd-tab-row account-profile-tabs">

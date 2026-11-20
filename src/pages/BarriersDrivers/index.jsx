@@ -456,6 +456,12 @@ const categoryOptionsForFilter = (picklists, tab, indicationFilter, records) => 
     seenLabels.add(key);
     labels.push(label);
   }
+  const isOther = (label) => String(label || '').trim().toLowerCase === 'other';
+  labels.sort((a,b) => {
+    if(isOther(a) && !isOther(b)) return 1;
+    if(!isOther(a) && isOther(b)) return -1;
+    return String(a).localeCompare(String(b), undefined,{sensitivity:'base'});
+  })
   return ['All', ...labels];
 };
 
