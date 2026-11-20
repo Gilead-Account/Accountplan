@@ -2,7 +2,7 @@ import { buildIdMatchWhere, inClause, runQuery, salesforceIdVariants, unwrap, up
 import { requireCurrentAccountPlanId, resolveShellContextForPlanId } from '@/lib/dataservice/accountPlan/shared';
 import {
   CHECKLIST_COMMENT_LIMIT, CHECKLIST_FUNCTIONS, CHECKLIST_STATUSES,
-  calculateReach, checklistRecordKey, eligibleReachHcpIds, normalizeChecklistStatus, sortChecklistItems,
+  calculateReach, calendarDay, checklistRecordKey, eligibleReachHcpIds, normalizeChecklistStatus, sortChecklistItems,
 } from '@/lib/postLaunchChecklist';
 
 export const POST_LAUNCH_OBJECT = 'KPH_Post_Launch_Checklist_Item__c';
@@ -10,6 +10,7 @@ export const POST_LAUNCH_FIELDS = [
   'Id', 'KPH_Checklist_Function__c', 'KPH_Checklist_Item__c', 'KPH_Accountable__c',
   'KPH_Due_Date__c', 'KPH_Status__c', 'KPH_Comments__c', 'KPH_Account__c',
 ];
+const MM_CERTIFICATION_DATE_FIELD = 'MM_Certification_Date__c';
 
 const sameId = (a, b) => Boolean(a && b) && checklistRecordKey(a) === checklistRecordKey(b);
 const writeQueues = new Map();
@@ -60,12 +61,35 @@ export const fetchPostLaunchChecklist = async (accountId) => {
     }));
 };
 
+const fetchCertificationMilestone = async (accountId) => {
+  const unavailable = { mmCertificationDate: null, mmCertificationDateStatus: 'unavailable' };
+  const where = buildIdMatchWhere('Id', accountId);
+  if (!where) return unavailable;
+  try {
+    // Isolate this new Account field so missing FLS/offline metadata cannot
+    // prevent the existing checklist or shared Account header from loading.
+    const rows = await runQuery({
+      object: 'Account', fields: ['Id', MM_CERTIFICATION_DATE_FIELD], where, limit: 1,
+    });
+    const account = rows.map(unwrap).find((row) => sameId(row?.Id, accountId));
+    if (!account || !Object.prototype.hasOwnProperty.call(account, MM_CERTIFICATION_DATE_FIELD)) return unavailable;
+    const value = account[MM_CERTIFICATION_DATE_FIELD];
+    if (value !== null && value !== '' && calendarDay(value) === null) return unavailable;
+    return { mmCertificationDate: value || null, mmCertificationDateStatus: 'ready' };
+  } catch {
+    return unavailable;
+  }
+};
+
 export const loadPostCallExecution = async () => {
   const selectedPlanId = await requireCurrentAccountPlanId();
   const context = await resolveShellContextForPlanId(selectedPlanId);
   const accountId = context.account?.id || context.plan?.accountId;
-  const checklistItems = await fetchPostLaunchChecklist(accountId);
-  return { ...context, accountId, checklistItems };
+  const [checklistItems, milestones] = await Promise.all([
+    fetchPostLaunchChecklist(accountId),
+    fetchCertificationMilestone(accountId),
+  ]);
+  return { ...context, accountId, checklistItems, milestones };
 };
 
 export const savePostLaunchChecklistItem = (item, changes) => {

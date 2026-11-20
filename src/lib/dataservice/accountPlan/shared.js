@@ -72,6 +72,7 @@ const PLAN_FIELDS_BASE = [
   'KPH_Is_Submitted__c',
   'KPH_Dry_Run_Date__c',
   'KPH_Last_Refresh_Date__c',
+  'Account_Team_Member_vod__c'
   // 'KPH_Potential_ATC__c',
   // 'KPH_Account_Phase__c',
 ];
@@ -461,7 +462,10 @@ const toAccountLookupOption = (row) => {
     accountIdentifier,
     eid: r.EID_GILD__c || accountIdentifier,
     territory: r.Territory_vod__c || null,
-    isChildAccount:isTruthy(unwrap(row)?.KPH_Is_Child_Account__c)
+    isChildAccount:isTruthy(unwrap(row)?.KPH_Is_Child_Account__c),
+    // Only populated for stakeholder (person account) searches.
+    phone: r.Phone ?? null,
+    email: r.KPH_Primary_Email__c ?? null,
   };
 };
 
@@ -494,15 +498,32 @@ const accountNameWhere = (searchTerm) => {
   return `${personAccountWhere} AND (${variants.map((term) => `Name LIKE ${quoteSoqlValue(`%${term}%`)}`).join(' OR ')})`;
 };
 
+// Contact details of the stakeholder's person Account. These are what the
+// Stakeholder modal shows in its Phone / Email inputs.
+export const STAKEHOLDER_ACCOUNT_CONTACT_FIELDS = ['Phone', 'KPH_Primary_Email__c'];
+
+const STAKEHOLDER_ACCOUNT_LOOKUP_FIELDS = [
+  ...ACCOUNT_LOOKUP_FIELDS,
+  ...STAKEHOLDER_ACCOUNT_CONTACT_FIELDS,
+];
+
 export const searchStakeholderAccounts = (searchTerm = '', limit = 60) => {
   const rowLimit = Math.max(1, Math.min(Number.parseInt(limit, 10) || 60, 60));
-  return runQuery({
-    object: 'Account',
-    fields: ACCOUNT_LOOKUP_FIELDS,
-    where: accountNameWhere(searchTerm),
-    sort: ['Name ASC'],
-    limit: rowLimit,
-  })
+  const runSearch = (fields) =>
+    runQuery({
+      object: 'Account',
+      fields,
+      where: accountNameWhere(searchTerm),
+      sort: ['Name ASC'],
+      limit: rowLimit,
+    });
+  // If the user's profile cannot read Phone / KPH_Primary_Email__c the query
+  // fails as a whole; retry without them so the name lookup keeps working.
+  return runSearch(STAKEHOLDER_ACCOUNT_LOOKUP_FIELDS)
+    .catch((error) => {
+      console.warn('[stakeholderAccountLookup] contact fields unavailable, retrying without', error);
+      return runSearch(ACCOUNT_LOOKUP_FIELDS);
+    })
     .then((rows) =>
       rows
         .map(toAccountLookupOption)
@@ -2246,15 +2267,50 @@ const buildStakeholderWriteFields = (form) => {
   return fields;
 };
 
+// Load Phone / KPH_Primary_Email__c for one stakeholder person Account.
+// Resolves to { phone, email } (either may be null) or null when unavailable.
+export const fetchStakeholderAccountContact = (accountId) => {
+  const where = buildIdMatchWhere('Id', accountId);
+  if (!where) return Promise.resolve(null);
+  return runQuery({
+    object: 'Account',
+    fields: ['Id', ...STAKEHOLDER_ACCOUNT_CONTACT_FIELDS],
+    where,
+    limit: 1,
+  })
+    .then((rows) => {
+      const r = unwrap(rows?.[0]);
+      if (!r) return null;
+      return { phone: r.Phone ?? null, email: r.KPH_Primary_Email__c ?? null };
+    })
+    .catch((error) => {
+      console.warn('[stakeholderAccountContact] lookup failed', error);
+      return null;
+    });
+};
+
+// Phone / email edits are stored on the stakeholder's Account, the same place
+// they are read from. Only written when the modal reports the user changed
+// them, so an untouched save never writes to the Account record.
+const buildStakeholderAccountContactFields = (form) => ({
+  Phone: cleanedTextOrNull(form.phone),
+  KPH_Primary_Email__c: cleanedTextOrNull(form.email),
+});
+
+const saveStakeholderAccountContact = (form) => {
+  if (!form?.accountContactChanged || !form.profileRecordId) return Promise.resolve();
+  return updateRecord('Account', form.profileRecordId, buildStakeholderAccountContactFields(form));
+};
+
 export const updateStakeholder = (id, form) => {
   if (!id) return Promise.reject(new Error('Missing stakeholder id.'));
   const fields = buildStakeholderWriteFields(form || {});
   if (!cleanedTextOrNull(form?.name) && !fields.KPH_Account__c) {
     return Promise.reject(new Error('Stakeholder name is required.'));
   }
-  return updateRecord(STAKEHOLDER_OBJECT, id, fields).then(() =>
-    toStakeholder({ Id: id, ...stakeholderDisplayFields(form || {}), ...fields })
-  );
+  return updateRecord(STAKEHOLDER_OBJECT, id, fields)
+    .then(() => saveStakeholderAccountContact(form))
+    .then(() => toStakeholder({ Id: id, ...stakeholderDisplayFields(form || {}), ...fields }));
 };
 
 export const deleteStakeholder = (id) => {
@@ -2274,7 +2330,9 @@ export const createStakeholder = (planId, form) => {
   return createRecord(STAKEHOLDER_OBJECT, fields).then((result) => {
     const id = createdRecordId(result);
     if (!id) throw new Error('Unable to create stakeholder record.');
-    return toStakeholder({ Id: id, ...stakeholderDisplayFields(form || {}), ...fields });
+    return saveStakeholderAccountContact(form).then(() =>
+      toStakeholder({ Id: id, ...stakeholderDisplayFields(form || {}), ...fields })
+    );
   });
 };
 

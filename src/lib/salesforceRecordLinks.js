@@ -50,3 +50,9 @@ export const salesforceRecordHostForPage = (
 
 export const salesforceRecordBaseUrl = (objectApiName, pageAddress, currentUsername) =>
   `${salesforceRecordHostForPage(pageAddress, currentUsername)}/lightning/r/${objectApiName}`;
+
+export const salesforceAccountRecordUrl = (accountId, currentUsername,pageAddress)=>{
+  const id = String(accountId ||'').trim();
+  if(!id) return null;
+  return `${salesforceRecordBaseUrl('Account', pageAddress, currentUsername)}/${encodeURIComponent(id)}/view`; 
+}
